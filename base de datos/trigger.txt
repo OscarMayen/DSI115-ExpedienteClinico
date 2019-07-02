@@ -1,0 +1,6 @@
+TRIGGER
+
+CREATE TRIGGER insertar_usuario
+BEFORE INSERT ON usuario
+for each row 
+set new.password = SHA2(new.password, 256)

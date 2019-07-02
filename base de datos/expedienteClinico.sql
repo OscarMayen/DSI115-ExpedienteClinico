@@ -4,7 +4,7 @@
 /*==============================================================*/
 create table especialidad
 (
-   idEspecialidad       int not null,
+   idEspecialidad       int not null auto_increment,
    nombreEspecialidad   varchar(100) not null,
    primary key (idEspecialidad)
 );
@@ -14,7 +14,7 @@ create table especialidad
 /*==============================================================*/
 create table medico
 (
-   idMedico             int not null,
+   idMedico             int not null auto_increment,
    idEspecialidad       int,
    idPersona            int,
    emailMedico          varchar(100) not null,
@@ -27,7 +27,7 @@ create table medico
 /*==============================================================*/
 create table Paciente
 (
-   idPaciente           int not null,
+   idPaciente           int not null auto_increment,
    idPersona            int,
    nombreResponsable    varchar(100) not null,
    telefonoEmergencia   varchar(30) not null,
@@ -42,7 +42,7 @@ create table Paciente
 /*==============================================================*/
 create table persona
 (
-   idPersona            int not null,
+   idPersona            int not null auto_increment,
    nombrePersona        varchar(100) not null,
    apellidoPersona      varchar(100) not null,
    departamento         varchar(100) not null,
@@ -59,7 +59,7 @@ create table persona
 /*==============================================================*/
 create table rol
 (
-   idRol                int not null,
+   idRol                int not null auto_increment,
    nombreRol            varchar(100) not null,
    primary key (idRol)
 );
@@ -69,7 +69,7 @@ create table rol
 /*==============================================================*/
 create table usuario
 (
-   idUsuario            int not null,
+   idUsuario            int not null auto_increment,
    idRol                int,
    idPersona            int,
    username             varchar(100) not null,
