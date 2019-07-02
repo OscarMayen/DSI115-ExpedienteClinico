@@ -6,8 +6,8 @@
 package com.entities;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -77,11 +77,11 @@ public class PersonaEntity implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date fechaNacimiento;
     @OneToMany(mappedBy = "idPersona")
-    private Collection<PacienteEntity> pacienteEntityCollection;
+    private List<PacienteEntity> pacienteEntityList;
     @OneToMany(mappedBy = "idPersona")
-    private Collection<MedicoEntity> medicoEntityCollection;
+    private List<MedicoEntity> medicoEntityList;
     @OneToMany(mappedBy = "idPersona")
-    private Collection<Usuario> usuarioCollection;
+    private List<Usuario> usuarioList;
 
     public PersonaEntity() {
     }
@@ -173,28 +173,28 @@ public class PersonaEntity implements Serializable {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public Collection<PacienteEntity> getPacienteEntityCollection() {
-        return pacienteEntityCollection;
+    public List<PacienteEntity> getPacienteEntityList() {
+        return pacienteEntityList;
     }
 
-    public void setPacienteEntityCollection(Collection<PacienteEntity> pacienteEntityCollection) {
-        this.pacienteEntityCollection = pacienteEntityCollection;
+    public void setPacienteEntityList(List<PacienteEntity> pacienteEntityList) {
+        this.pacienteEntityList = pacienteEntityList;
     }
 
-    public Collection<MedicoEntity> getMedicoEntityCollection() {
-        return medicoEntityCollection;
+    public List<MedicoEntity> getMedicoEntityList() {
+        return medicoEntityList;
     }
 
-    public void setMedicoEntityCollection(Collection<MedicoEntity> medicoEntityCollection) {
-        this.medicoEntityCollection = medicoEntityCollection;
+    public void setMedicoEntityList(List<MedicoEntity> medicoEntityList) {
+        this.medicoEntityList = medicoEntityList;
     }
 
-    public Collection<Usuario> getUsuarioCollection() {
-        return usuarioCollection;
+    public List<Usuario> getUsuarioList() {
+        return usuarioList;
     }
 
-    public void setUsuarioCollection(Collection<Usuario> usuarioCollection) {
-        this.usuarioCollection = usuarioCollection;
+    public void setUsuarioList(List<Usuario> usuarioList) {
+        this.usuarioList = usuarioList;
     }
 
     @Override

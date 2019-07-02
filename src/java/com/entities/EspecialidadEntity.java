@@ -6,7 +6,7 @@
 package com.entities;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -41,7 +41,7 @@ public class EspecialidadEntity implements Serializable {
     @Size(min = 1, max = 100)
     private String nombreEspecialidad;
     @OneToMany(mappedBy = "idEspecialidad")
-    private Collection<MedicoEntity> medicoEntityCollection;
+    private List<MedicoEntity> medicoEntityList;
 
     public EspecialidadEntity() {
     }
@@ -71,12 +71,12 @@ public class EspecialidadEntity implements Serializable {
         this.nombreEspecialidad = nombreEspecialidad;
     }
 
-    public Collection<MedicoEntity> getMedicoEntityCollection() {
-        return medicoEntityCollection;
+    public List<MedicoEntity> getMedicoEntityList() {
+        return medicoEntityList;
     }
 
-    public void setMedicoEntityCollection(Collection<MedicoEntity> medicoEntityCollection) {
-        this.medicoEntityCollection = medicoEntityCollection;
+    public void setMedicoEntityList(List<MedicoEntity> medicoEntityList) {
+        this.medicoEntityList = medicoEntityList;
     }
 
     @Override
