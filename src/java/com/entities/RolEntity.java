@@ -6,9 +6,11 @@
 package com.entities;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -31,15 +33,15 @@ public class RolEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     private Integer idRol;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
     private String nombreRol;
     @OneToMany(mappedBy = "idRol")
-    private List<Usuario> usuarioList;
+    private Collection<Usuario> usuarioCollection;
 
     public RolEntity() {
     }
@@ -69,12 +71,12 @@ public class RolEntity implements Serializable {
         this.nombreRol = nombreRol;
     }
 
-    public List<Usuario> getUsuarioList() {
-        return usuarioList;
+    public Collection<Usuario> getUsuarioCollection() {
+        return usuarioCollection;
     }
 
-    public void setUsuarioList(List<Usuario> usuarioList) {
-        this.usuarioList = usuarioList;
+    public void setUsuarioCollection(Collection<Usuario> usuarioCollection) {
+        this.usuarioCollection = usuarioCollection;
     }
 
     @Override

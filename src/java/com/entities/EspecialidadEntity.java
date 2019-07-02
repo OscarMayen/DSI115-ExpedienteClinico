@@ -6,9 +6,11 @@
 package com.entities;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -31,15 +33,15 @@ public class EspecialidadEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     private Integer idEspecialidad;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
     private String nombreEspecialidad;
     @OneToMany(mappedBy = "idEspecialidad")
-    private List<MedicoEntity> medicoEntityList;
+    private Collection<MedicoEntity> medicoEntityCollection;
 
     public EspecialidadEntity() {
     }
@@ -69,12 +71,12 @@ public class EspecialidadEntity implements Serializable {
         this.nombreEspecialidad = nombreEspecialidad;
     }
 
-    public List<MedicoEntity> getMedicoEntityList() {
-        return medicoEntityList;
+    public Collection<MedicoEntity> getMedicoEntityCollection() {
+        return medicoEntityCollection;
     }
 
-    public void setMedicoEntityList(List<MedicoEntity> medicoEntityList) {
-        this.medicoEntityList = medicoEntityList;
+    public void setMedicoEntityCollection(Collection<MedicoEntity> medicoEntityCollection) {
+        this.medicoEntityCollection = medicoEntityCollection;
     }
 
     @Override

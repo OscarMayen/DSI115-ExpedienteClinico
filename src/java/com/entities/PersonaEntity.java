@@ -6,10 +6,12 @@
 package com.entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -41,8 +43,8 @@ public class PersonaEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     private Integer idPersona;
     @Basic(optional = false)
     @NotNull
@@ -75,11 +77,11 @@ public class PersonaEntity implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date fechaNacimiento;
     @OneToMany(mappedBy = "idPersona")
-    private List<PacienteEntity> pacienteEntityList;
+    private Collection<PacienteEntity> pacienteEntityCollection;
     @OneToMany(mappedBy = "idPersona")
-    private List<MedicoEntity> medicoEntityList;
+    private Collection<MedicoEntity> medicoEntityCollection;
     @OneToMany(mappedBy = "idPersona")
-    private List<Usuario> usuarioList;
+    private Collection<Usuario> usuarioCollection;
 
     public PersonaEntity() {
     }
@@ -171,28 +173,28 @@ public class PersonaEntity implements Serializable {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public List<PacienteEntity> getPacienteEntityList() {
-        return pacienteEntityList;
+    public Collection<PacienteEntity> getPacienteEntityCollection() {
+        return pacienteEntityCollection;
     }
 
-    public void setPacienteEntityList(List<PacienteEntity> pacienteEntityList) {
-        this.pacienteEntityList = pacienteEntityList;
+    public void setPacienteEntityCollection(Collection<PacienteEntity> pacienteEntityCollection) {
+        this.pacienteEntityCollection = pacienteEntityCollection;
     }
 
-    public List<MedicoEntity> getMedicoEntityList() {
-        return medicoEntityList;
+    public Collection<MedicoEntity> getMedicoEntityCollection() {
+        return medicoEntityCollection;
     }
 
-    public void setMedicoEntityList(List<MedicoEntity> medicoEntityList) {
-        this.medicoEntityList = medicoEntityList;
+    public void setMedicoEntityCollection(Collection<MedicoEntity> medicoEntityCollection) {
+        this.medicoEntityCollection = medicoEntityCollection;
     }
 
-    public List<Usuario> getUsuarioList() {
-        return usuarioList;
+    public Collection<Usuario> getUsuarioCollection() {
+        return usuarioCollection;
     }
 
-    public void setUsuarioList(List<Usuario> usuarioList) {
-        this.usuarioList = usuarioList;
+    public void setUsuarioCollection(Collection<Usuario> usuarioCollection) {
+        this.usuarioCollection = usuarioCollection;
     }
 
     @Override
