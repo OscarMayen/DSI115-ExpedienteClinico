@@ -13,9 +13,12 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <meta name="charset=utf-8"/>
         <meta name="author" content="grupo 12" />
+        <ui:insert name="css"/>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
         <!-- Custom styles for this template -->
-        <link href="../resources/css/simple-sidebar.css" rel="stylesheet"/>
+        <h:outputStylesheet name="css/simple-sidebar.css"/>
+        
+        <!--<link href="../resources/css/simple-sidebar.css" rel="stylesheet"/>-->
 
     </h:head>
     <h:body>
@@ -69,9 +72,7 @@ and open the template in the editor.
                 </nav>
 
                 <div class="container-fluid">
-                    <h1 class="mt-4">Simple Sidebar</h1>
-                    <p>The starting state of the menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will change.</p>
-                    <p>Make sure to keep all page content within the <code>#page-content-wrapper</code>. The top navbar is optional, and just for demonstration. Just create an element with the <code>#menu-toggle</code> ID which will toggle the menu when clicked.</p>
+                    <ui:insert name="contenido"/>
                 </div>
             </div>
             <!-- /#page-content-wrapper -->
@@ -80,8 +81,9 @@ and open the template in the editor.
         <!-- /#wrapper -->
 
         <!-- Bootstrap core JavaScript -->
-        <script src="../resources/vendor/jquery/jquery.min.js"></script>
-        <script src="../resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!--<script src="https://code.jquery.com/jquery-3.3.1.js"/>-->
+        <h:outputScript name="/vendor/jquery/jquery.min.js"/>
+        <h:outputScript name="/vendor/bootstrap/js/bootstrap.bundle.min.js"/> 
 
         <!-- Menu Toggle Script -->
         <script>
@@ -90,7 +92,9 @@ and open the template in the editor.
                 $("#wrapper").toggleClass("toggled");
             });
         </script>
-
         
+        <ui:insert name="scripts"/>
+        
+        <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     </h:body>
 </html>

@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../../plantillas/plantilla.xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:define name="titulo">
+        Listar médico
+    </ui:define>
+    
+    <ui:define name="css">
+        <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/>
+    </ui:define>
+
+    <ui:define name="contenido">
+        <div class="row">
+            <div class="col-md-10">
+                <f:view>
+
+
+                    <h:form>
+                        <h1><h:outputText value="Listado de médicos"/></h1>
+                        <h:dataTable value="#{usuarioMedicoBean.listaMedico}" var="item"
+                                     class="table table-bordered" id="tabla">
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Nombres"/>
+                                </f:facet>
+                                <h:outputText value="#{item.idPersona.nombrePersona}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Apellidos"/>
+                                </f:facet>
+                                <h:outputText value="#{item.idPersona.apellidoPersona}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Dui"/>
+                                </f:facet>
+                                <h:outputText value="#{item.idPersona.dui}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Email"/>
+                                </f:facet>
+                                <h:outputText value="#{item.emailMedico}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Especialidad"/>
+                                </f:facet>
+                                <h:outputText value="#{item.idEspecialidad.nombreEspecialidad}"/>
+                            </h:column>
+                        </h:dataTable>
+                    </h:form>
+                </f:view>
+
+            </div>
+        </div>
+        
+        
+    </ui:define>
+    
+    <ui:define name="scripts">
+        <script>
+            $(document).ready(function(){
+                var tabla = $(".table")[0];
+                $(tabla).DataTable();
+            });
+        </script>
+    </ui:define>
+    
+</ui:composition>
