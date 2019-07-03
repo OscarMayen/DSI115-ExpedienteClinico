@@ -13,10 +13,14 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <meta name="charset=utf-8"/>
         <meta name="author" content="grupo 12" />
-        <ui:insert name="css"/>
+        <!--<ui:insert name="css"/>-->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
         <!-- Custom styles for this template -->
         <h:outputStylesheet name="css/simple-sidebar.css"/>
+        <h:outputStylesheet name="css/plantilla.css"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css"/>
+        <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
         
         <!--<link href="../resources/css/simple-sidebar.css" rel="stylesheet"/>-->
 
@@ -81,8 +85,8 @@ and open the template in the editor.
         <!-- /#wrapper -->
 
         <!-- Bootstrap core JavaScript -->
-        <!--<script src="https://code.jquery.com/jquery-3.3.1.js"/>-->
-        <h:outputScript name="/vendor/jquery/jquery.min.js"/>
+        <!--<script src="https://code.jquery.com/jquery-3.3.1.js"/>
+        <h:outputScript name="/vendor/jquery/jquery.min.js"/>-->
         <h:outputScript name="/vendor/bootstrap/js/bootstrap.bundle.min.js"/> 
 
         <!-- Menu Toggle Script -->
@@ -95,6 +99,6 @@ and open the template in the editor.
         
         <ui:insert name="scripts"/>
         
-        <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+        <!--<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>-->
     </h:body>
 </html>

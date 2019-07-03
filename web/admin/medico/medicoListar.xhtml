@@ -8,21 +8,21 @@
     <ui:define name="titulo">
         Listar médico
     </ui:define>
-    
+    <!--
     <ui:define name="css">
         <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/>
     </ui:define>
-
+    -->
     <ui:define name="contenido">
         <div class="row">
-            <div class="col-md-10">
+            <div class="col">
                 <f:view>
 
 
                     <h:form>
                         <h1><h:outputText value="Listado de médicos"/></h1>
                         <h:dataTable value="#{usuarioMedicoBean.listaMedico}" var="item"
-                                     class="table table-bordered" id="tabla">
+                                     class="table table-bordered display" id="tabla">
                             <h:column>
                                 <f:facet name="header">
                                     <h:outputText value="Nombres"/>
