@@ -64,8 +64,11 @@
                         </div>
                         
                         <div class="form-group">
-                            <label for="sexo">Sexo</label>
-                            <h:inputText value="#{usuarioMedicoBean.medico.idPersona.genero}" class="form-control" id="sexo" required="true"/>
+                            <label for="sexo">Genero</label>
+                            <h:selectOneRadio value="#{usuarioMedicoBean.medico.idPersona.genero}" id="sexo">
+                                <f:selectItem itemValue="Masculino" itemLabel="MASCULINO "/>
+                                <f:selectItem itemValue="Femenino" itemLabel="FEMENINO "/>
+                            </h:selectOneRadio>
                         </div>
                         
                         <div class="form-group">
@@ -88,8 +91,8 @@
                             <h:inputText  value="#{usuarioMedicoBean.medico.emailMedico}" class="form-control" id="email" required="true"/>
                         </div>
                         <div class="form-group">
-                            <label for="estado">Estado </label>
-                            <input type="checkbox" value="#{usuarioMedicoBean.medico.estadoMedico}" id="estado"/>
+                            <label for="estadoMedico">Estado</label>
+                            <h:selectBooleanCheckbox id="estadoMedico" value="#{usuarioMedicoBean.medico.estadoMedico}" />
                         </div>
 
                         <div class="form-group">

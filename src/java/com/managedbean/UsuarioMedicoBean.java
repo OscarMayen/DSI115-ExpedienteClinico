@@ -35,8 +35,6 @@ import javax.servlet.http.HttpServletRequest;
 @RequestScoped
 public class UsuarioMedicoBean implements Serializable {
 
-    Date txtFechaNac;
-
     List<MedicoEntity> listaMedico;
 
     @EJB
@@ -118,16 +116,8 @@ public class UsuarioMedicoBean implements Serializable {
         return this.especialidadEJB.especialidadListar();
     }
 
-    public Date getTxtFechaNac() {
-        return txtFechaNac;
-    }
-
-    public void setTxtFechaNac(Date txtFechaNac) {
-        this.txtFechaNac = txtFechaNac;
-    }
-
     public String insertarUsuarioMedico() {
-
+        
         this.medico.setIdPersona(persona);
 
         if (medicoEJB.insertMedico(medico) == 0) {
@@ -136,10 +126,7 @@ public class UsuarioMedicoBean implements Serializable {
         } else {
             usuario.setIdPersona(persona);
             int b = usuarioMedicoEJB.insertUsuarioMedico(usuario);
-            System.out.println("///////////");
-            System.out.println("VALOR B: " + b);
-            System.out.println("FECHA " + persona.getFechaNacimiento());
-            System.out.println("///////////");
+            
         }
 
         this.usuario = new Usuario();
@@ -148,18 +135,6 @@ public class UsuarioMedicoBean implements Serializable {
 
         return "/admin/medico/medicoListar?faces-redirect=true";
     }
-
-    /*public String obtenerMedico() {
-        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-        String codigo = request.getParameter("codigo");
-        System.out.println("codigo: " + codigo);
-        this.medico = medicoEJB.obtenerMedico(Integer.parseInt(codigo));
-        System.out.println("////////////////////////////////////");
-        System.out.println("Nombre Medico: " + medico.getIdPersona().getNombrePersona());
-        System.out.println("Nombre Medico: " + medico.getIdPersona().getApellidoPersona());
-        System.out.println("////////////////////////////////////");
-        return "/admin/medico/medicoEditar?faces-redirect=true";
-    }*/
     
     public String editMedico(int id)
     {
