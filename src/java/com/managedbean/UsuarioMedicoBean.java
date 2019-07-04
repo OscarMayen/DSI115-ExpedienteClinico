@@ -32,6 +32,7 @@ public class UsuarioMedicoBean implements Serializable {
 
     List<MedicoEntity> listaMedico;
     
+    
     @EJB
     private MedicoEJB medicoEJB;
 
@@ -104,12 +105,7 @@ public class UsuarioMedicoBean implements Serializable {
     public void setListaMedico(List<MedicoEntity> listaMedico) {
         this.listaMedico = listaMedico;
     }
-    
-    
 
-    /**
-     * **Obtenemos las listas para llenar los combobox***
-     */
     public List<RolEntity> getListaRoles() {
         return rolEJB.listarRoles();
     }
@@ -121,33 +117,29 @@ public class UsuarioMedicoBean implements Serializable {
     
     public String insertarUsuarioMedico(){
         
-        System.out.println("alv :v--------------------------------------------------------");
-        System.out.println("nombre:"+this.persona.getNombrePersona());
-        System.out.println("apellido:"+this.persona.getApellidoPersona());
-        System.out.println("email:"+this.medico.getEmailMedico());
-        System.out.println("id:"+this.medico.getIdEspecialidad());
-        //this.usuario.setIdPersona(persona);
-        //this.medico.setIdPersona(persona);
+        this.usuario.setIdPersona(persona);
+        this.medico.setIdPersona(persona);
         
         
-        /*if(usuarioMedicoEJB.insertUsuarioMedico(usuario) == 0){
+        if(usuarioMedicoEJB.insertUsuarioMedico(usuario) == 0){
             FacesContext.getCurrentInstance().addMessage("usuario", new FacesMessage("Ya existe un usuario con ese codigo"));
             return null;
         }
         
-        
         if(medicoEJB.insertMedico(medico) == 0){
-            FacesContext.getCurrentInstance().addMessage("usuario", new FacesMessage("Ya existe un usuario con ese codigo"));
+            FacesContext.getCurrentInstance().addMessage("usuario", new FacesMessage("Ya existe un medico con ese codigo"));
             return null;
         }
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("exito","usuario insertado con exito");
+        this.persona = new PersonaEntity();
         this.usuario = new Usuario();
         this.medico = new MedicoEntity();
-        this.persona = new PersonaEntity();*/
         return "/medico/listadoMedicos?faces-redirect=true";
     }
     
     public void imprimir(){
         System.out.println("alv tu madre :v--------------------------------------------------------");
+        System.out.println("nombre"+persona.getNombrePersona());
+        System.out.println("apellido"+persona.getApellidoPersona());
     }
 }
