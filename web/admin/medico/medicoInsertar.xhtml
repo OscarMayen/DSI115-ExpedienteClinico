@@ -60,6 +60,12 @@
                             <label for="exampleFormControlInput5">Telefono</label>
                             <h:inputText value="#{usuarioMedicoBean.persona.telefono}" class="form-control" id="exampleFormControlInput5" maxlength="9" required="true"/>
                         </div>
+                        
+                        <div class="form-group">
+                            <label for="sexo">Sexo</label>
+                            <h:inputText value="#{usuarioMedicoBean.persona.genero}" class="form-control" id="sexo" required="true"/>
+                        </div>
+                        
                         <div class="form-group">
                             <label for="exampleFormControlInput6">Dui</label>
                             <h:inputText value="#{usuarioMedicoBean.persona.dui}" class="form-control" id="exampleFormControlInput6" maxlength="10" required="true"/>
