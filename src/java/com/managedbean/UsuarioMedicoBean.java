@@ -14,6 +14,7 @@ import com.entities.MedicoEntity;
 import com.entities.PersonaEntity;
 import com.entities.RolEntity;
 import com.entities.Usuario;
+import edu.utilidades.JsfUtils;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
@@ -22,6 +23,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import java.sql.Date;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -146,6 +148,21 @@ public class UsuarioMedicoBean implements Serializable {
         
         return "/admin/medico/medicoListar?faces-redirect=true";
     }
+    
+    public String obtenerMedico()
+    {
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        String codigo  = request.getParameter("codigo");
+        System.out.println("codigo: " + codigo);
+        this.medico = medicoEJB.obtenerMedico(Integer.parseInt(codigo));
+        System.out.println("////////////////////////////////////");
+        System.out.println("Nombre Medico: " + medico.getIdPersona().getNombrePersona());
+        System.out.println("Nombre Medico: " + medico.getIdPersona().getApellidoPersona());
+        System.out.println("////////////////////////////////////");
+        return "/admin/medico/medicoEditar?faces-redirect=true";
+    }
+    
+    
 
     
 }
