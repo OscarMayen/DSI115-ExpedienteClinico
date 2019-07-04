@@ -23,14 +23,16 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import java.sql.Date;
+import java.util.Map;
+import javax.faces.bean.RequestScoped;
 import javax.servlet.http.HttpServletRequest;
 
 /**
  *
  * @author josue
  */
-@ManagedBean
-@ViewScoped
+@ManagedBean(name = "usuarioMedicoBean")
+@RequestScoped
 public class UsuarioMedicoBean implements Serializable {
 
     Date txtFechaNac;
@@ -124,10 +126,8 @@ public class UsuarioMedicoBean implements Serializable {
         this.txtFechaNac = txtFechaNac;
     }
 
-
     public String insertarUsuarioMedico() {
 
-        
         this.medico.setIdPersona(persona);
 
         if (medicoEJB.insertMedico(medico) == 0) {
@@ -141,18 +141,17 @@ public class UsuarioMedicoBean implements Serializable {
             System.out.println("FECHA " + persona.getFechaNacimiento());
             System.out.println("///////////");
         }
-        
+
         this.usuario = new Usuario();
         this.medico = new MedicoEntity();
         this.persona = new PersonaEntity();
-        
+
         return "/admin/medico/medicoListar?faces-redirect=true";
     }
-    
-    public String obtenerMedico()
-    {
+
+    /*public String obtenerMedico() {
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-        String codigo  = request.getParameter("codigo");
+        String codigo = request.getParameter("codigo");
         System.out.println("codigo: " + codigo);
         this.medico = medicoEJB.obtenerMedico(Integer.parseInt(codigo));
         System.out.println("////////////////////////////////////");
@@ -160,9 +159,17 @@ public class UsuarioMedicoBean implements Serializable {
         System.out.println("Nombre Medico: " + medico.getIdPersona().getApellidoPersona());
         System.out.println("////////////////////////////////////");
         return "/admin/medico/medicoEditar?faces-redirect=true";
+    }*/
+    
+    public String editMedico(int id)
+    {
+        this.medico = new MedicoEntity();
+        medico = medicoEJB.obtenerMedico(id);
+        Map<String, Object> sessionMap=FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+        sessionMap.put("medico", medico);
+        return "/admin/medico/medicoEditar.xhtml"; 
     }
-    
-    
 
     
+
 }

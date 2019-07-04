@@ -39,27 +39,28 @@
                                 Datos personales <!--Padding is optional-->
                             </span>
                         </div>
+                        <div class="form-group">
+                           
+                            <label for="nombre">Nombre</label>
+                            <h:inputText  value="#{usuarioMedicoBean.medico.idPersona.nombrePersona}" class="form-control" id="nombre" required="true"/>
+                        </div>
                         
                         <div class="form-group">
-                            <label for="exampleFormControlInput1">Nombres</label>
-                            <h:inputText value="#{usuarioMedicoBean.medico.idPersona.nombrePersona}" class="form-control" id="exampleFormControlInput1"  required="true"></h:inputText>
-                        </div>
-                        <div class="form-group">
                             
-                            <label for="exampleFormControlInput2">Apellidos</label>
-                            <h:inputText  value="#{usuarioMedicoBean.medico.idPersona.apellidoPersona}" class="form-control" id="exampleFormControlInput2" required="true"/>
+                            <label for="apellido">Apellidos</label>
+                            <h:inputText  value="#{usuarioMedicoBean.medico.idPersona.apellidoPersona}" class="form-control" id="apellido" required="true"/>
                         </div>
                         <div class="form-group">
-                            <label for="exampleFormControlInput3">Departamento</label>
-                            <h:inputText value="#{usuarioMedicoBean.medico.idPersona.departamento}" class="form-control" id="exampleFormControlInput3" required="true"/>
+                            <label for="departamento">Departamento</label>
+                            <h:inputText value="#{usuarioMedicoBean.medico.idPersona.departamento}" class="form-control" id="departamento" required="true"/>
                         </div>
                         <div class="form-group">
-                            <label for="exampleFormControlInput4">Municipio</label>
-                            <h:inputText value="#{usuarioMedicoBean.medico.idPersona.municipio}" class="form-control" id="exampleFormControlInput4" required="true"/>
+                            <label for="municipio">Municipio</label>
+                            <h:inputText value="#{usuarioMedicoBean.medico.idPersona.municipio}" class="form-control" id="municipio" required="true"/>
                         </div>
                         <div class="form-group">
-                            <label for="exampleFormControlInput5">Telefono</label>
-                            <h:inputText value="#{usuarioMedicoBean.medico.idPersona.telefono}" class="form-control" id="exampleFormControlInput5" maxlength="9" required="true"/>
+                            <label for="telefono">Telefono</label>
+                            <h:inputText value="#{usuarioMedicoBean.medico.idPersona.telefono}" class="form-control" id="telefono" maxlength="9" required="true"/>
                         </div>
                         
                         <div class="form-group">
@@ -68,12 +69,12 @@
                         </div>
                         
                         <div class="form-group">
-                            <label for="exampleFormControlInput6">Dui</label>
-                            <h:inputText value="#{usuarioMedicoBean.medico.idPersona.dui}" class="form-control" id="exampleFormControlInput6" maxlength="10" required="true"/>
+                            <label for="dui">Dui</label>
+                            <h:inputText value="#{usuarioMedicoBean.medico.idPersona.dui}" class="form-control" id="dui" maxlength="10" required="true"/>
                         </div>
                         <div class="form-group">
-                            <label for="exampleFormControlInput7">Fecha naciemiento</label>
-                            <h:inputText  value="#{usuarioMedicoBean.medico.idPersona.fechaNacimiento}" class="form-control" id="exampleFormControlInput7" required="true"/>
+                            <label for="fechaNacimiento">Fecha naciemiento</label>
+                            <h:inputText  value="#{usuarioMedicoBean.medico.idPersona.fechaNacimiento}" class="form-control" id="fechaNacimiento" required="true"/>
                         </div>
 
                         <div style="width: 100%; height: 20px; border-bottom: 1px solid black; margin-top: 3%; margin-bottom: 3%; text-align: center">
@@ -83,12 +84,12 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="exampleFormControlInput8">Email</label>
-                            <h:inputText  value="#{usuarioMedicoBean.medico.emailMedico}" class="form-control" id="exampleFormControlInput8" required="true"/>
+                            <label for="email">Email</label>
+                            <h:inputText  value="#{usuarioMedicoBean.medico.emailMedico}" class="form-control" id="email" required="true"/>
                         </div>
                         <div class="form-group">
-                            <label for="exampleFormControlInput9">Estado </label>
-                            <input type="checkbox" value="#{usuarioMedicoBean.medico.estadoMedico}" id="exampleFormControlInput9"/>
+                            <label for="estado">Estado </label>
+                            <input type="checkbox" value="#{usuarioMedicoBean.medico.estadoMedico}" id="estado"/>
                         </div>
 
                         <div class="form-group">
