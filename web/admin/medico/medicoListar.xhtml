@@ -61,17 +61,11 @@
                                 <f:facet name="header">
                                     <h:outputText value="Operaciones" />
                                 </f:facet>
-                                <h:commandLink class="btn btn-info" action="#{usuarioMedicoBean.EditMedico(id)}">
+                                <h:commandLink class="btn btn-info" action="#{usuarioMedicoBean.editMedico(item.idMedico)}">
                                     <i class="glyphicon glyphicon-edit" ></i>
-                                    <f:param name="codigo" value="#{item.idMedico}"/>
                                 </h:commandLink>
-                            </h:column>
-
-                            <h:column>
-				<f:facet name="header">Editar</f:facet>
                                 <h:commandButton action="#{usuarioMedicoBean.editMedico(item.idMedico)}" value="Editar"></h:commandButton>
-			</h:column>
-
+                            </h:column>
 
                         </h:dataTable>
                     </h:form>
