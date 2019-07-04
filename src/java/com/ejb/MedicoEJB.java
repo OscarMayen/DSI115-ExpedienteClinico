@@ -24,7 +24,9 @@ public class MedicoEJB {
     @PersistenceContext(unitName = "ExpedienteClinicoBBraunPU")
     private EntityManager em;
 
-    
+     public void persist(Object object) {
+        em.persist(object);
+    }
     
     public int insertMedico(MedicoEntity medico){
         try{
@@ -35,10 +37,21 @@ public class MedicoEJB {
             return 0;
         }
     }
-
-    public void persist(Object object) {
-        em.persist(object);
+    
+    public int modificarMedico(MedicoEntity medico) {
+        try {
+            em.merge(medico);
+            em.flush();
+            return 1;
+        } catch (Exception e) {
+            return 0;
+        }
     }
+    
+    public MedicoEntity obtenerMedico(int codigo){
+         return em.find(MedicoEntity.class, codigo);
+     }
+
     
      public List<MedicoEntity> listarMedico(){
         Query query = em.createNamedQuery("MedicoEntity.findAll");

@@ -21,6 +21,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import java.sql.Date;
 
 /**
  *
@@ -30,9 +31,10 @@ import javax.faces.context.FacesContext;
 @ViewScoped
 public class UsuarioMedicoBean implements Serializable {
 
+    Date txtFechaNac;
+
     List<MedicoEntity> listaMedico;
-    
-    
+
     @EJB
     private MedicoEJB medicoEJB;
 
@@ -44,8 +46,6 @@ public class UsuarioMedicoBean implements Serializable {
 
     @EJB
     private EspecialidadEJB especialidadEJB;
-    
-    
 
     Usuario usuario = new Usuario();
     RolEntity rol = new RolEntity();
@@ -109,33 +109,43 @@ public class UsuarioMedicoBean implements Serializable {
     public List<RolEntity> getListaRoles() {
         return rolEJB.listarRoles();
     }
-    
-    public List<EspecialidadEntity> getListarEspecialidades(){
+
+    public List<EspecialidadEntity> getListarEspecialidades() {
         return this.especialidadEJB.especialidadListar();
     }
-    
-    
-    public String insertarUsuarioMedico(){
+
+    public Date getTxtFechaNac() {
+        return txtFechaNac;
+    }
+
+    public void setTxtFechaNac(Date txtFechaNac) {
+        this.txtFechaNac = txtFechaNac;
+    }
+
+
+    public String insertarUsuarioMedico() {
+
         
-        this.usuario.setIdPersona(persona);
-        this.medico.setIdPersona(persona); 
-        
-        
-        if(usuarioMedicoEJB.insertUsuarioMedico(usuario) == 0){
-            FacesContext.getCurrentInstance().addMessage("usuario", new FacesMessage("Ya existe un usuario con ese codigo"));
+        this.medico.setIdPersona(persona);
+
+        if (medicoEJB.insertMedico(medico) == 0) {
+            FacesContext.getCurrentInstance().addMessage("usuario", new FacesMessage("ERROR AL INSERTAR"));
             return null;
+        } else {
+            usuario.setIdPersona(persona);
+            int b = usuarioMedicoEJB.insertUsuarioMedico(usuario);
+            System.out.println("///////////");
+            System.out.println("VALOR B: " + b);
+            System.out.println("FECHA " + persona.getFechaNacimiento());
+            System.out.println("///////////");
         }
         
-        if(medicoEJB.insertMedico(medico) == 0){
-            FacesContext.getCurrentInstance().addMessage("usuario", new FacesMessage("Ya existe un medico con ese codigo"));
-            return null;
-        }
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("exito","usuario insertado con exito");
-        System.out.println("nombre: "+ persona.getNombrePersona());
-        System.out.println("apellido: "+ persona.getApellidoPersona());
-        System.out.println("id:" +persona.getIdPersona());
         this.usuario = new Usuario();
         this.medico = new MedicoEntity();
-        return "/medico/listadoMedicos?faces-redirect=true";
+        this.persona = new PersonaEntity();
+        
+        return "/admin/medico/medicoListar?faces-redirect=true";
     }
+
+    
 }

@@ -21,6 +21,9 @@
 
                     <h:form>
                         <h1><h:outputText value="Listado de médicos"/></h1>
+                        <h:link outcome="/admin/medico/medicoInsertar" value="Nuevo Medico" class="btn btn-success"/>
+                        <br>
+                        </br>
                         <h:dataTable value="#{usuarioMedicoBean.listaMedico}" var="item"
                                      class="table table-bordered display" id="tabla">
                             <h:column>
@@ -53,23 +56,34 @@
                                 </f:facet>
                                 <h:outputText value="#{item.idEspecialidad.nombreEspecialidad}"/>
                             </h:column>
+                            
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Operaciones"/>
+                                </f:facet>
+                                <h:commandLink class="btn btn-info" >
+                                    <i class="glyphicon glyphicon-edit" ></i>
+                                    <f:param name="codigo" value="#{item.idPersona}"/>
+                                </h:commandLink>
+                                
+                            </h:column>
                         </h:dataTable>
                     </h:form>
                 </f:view>
 
             </div>
         </div>
-        
-        
+
+
     </ui:define>
-    
+
     <ui:define name="scripts">
         <script>
-            $(document).ready(function(){
+            $(document).ready(function () {
                 var tabla = $(".table")[0];
                 $(tabla).DataTable();
             });
         </script>
     </ui:define>
-    
+
 </ui:composition>
