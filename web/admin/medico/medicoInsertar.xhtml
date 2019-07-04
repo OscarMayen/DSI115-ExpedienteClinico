@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../../plantillas/plantilla.xhtml">
+
+            <ui:define name="titulo">
+                Nuevo médico
+            </ui:define>
+
+            <ui:define name="css">
+                <style>
+                    .btn{
+                        
+                        margin-top: 2%;
+                        margin-bottom: 2%;
+                        
+                    }
+                    
+                    #btn{
+                        margin-left: 35%;
+                    }
+                </style>
+
+            </ui:define>
+
+            <ui:define name="contenido">
+                <div class="col-md-8 offset-md-2"> 
+                    <h2>Nuevo médico</h2>
+                    <h:form>
+                        <div style="width: 100%; height: 20px; border-bottom: 1px solid black; margin-top: 3%; margin-bottom: 3%; text-align: center">
+                            <span style="font-size: 1.5em; background-color: #F3F5F6; padding: 0 10px;">
+                                Datos personales <!--Padding is optional-->
+                            </span>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1">Nombres</label>
+                            <input type="text" value="#{usuarioMedicoBean.persona.nombrePersona}" class="form-control" id="exampleFormControlInput1" placeholder="Nombres" required=""/>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlInput2">Apellidos</label>
+                            <input type="text" value="#{usuarioMedicoBean.persona.apellidoPersona}" class="form-control" id="exampleFormControlInput2" placeholder="Apellidos" required=""/>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlInput3">Departamento</label>
+                            <input type="text" value="#{usuarioMedicoBean.persona.departamento}" class="form-control" id="exampleFormControlInput3" placeholder="Ej: San Salvador" required=""/>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlInput4">Municipio</label>
+                            <input type="text" value="#{usuarioMedicoBean.persona.municipio}" class="form-control" id="exampleFormControlInput4" placeholder="Ej:Ilopango" required=""/>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlInput5">Telefono</label>
+                            <input type="tel" value="#{usuarioMedicoBean.persona.telefono}" class="form-control" id="exampleFormControlInput5" maxlength="9" placeholder="Ej:7565-4535" required=""/>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlInput6">Dui</label>
+                            <input type="text" value="#{usuarioMedicoBean.persona.dui}" class="form-control" id="exampleFormControlInput6" maxlength="10" placeholder="Dui" required=""/>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlInput7">Fecha naciemiento</label>
+                            <input type="date" value="#{usuarioMedicoBean.persona.fechaNacimiento}" class="form-control" id="exampleFormControlInput7" placeholder="Fecha de nacimiento" required=""/>
+                        </div>
+
+                        <div style="width: 100%; height: 20px; border-bottom: 1px solid black; margin-top: 3%; margin-bottom: 3%; text-align: center">
+                            <span style="font-size: 1.5em; background-color: #F3F5F6; padding: 0 10px;">
+                                Datos del médico <!--Padding is optional-->
+                            </span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleFormControlInput8">Email</label>
+                            <input type="email" value="#{usuarioMedicoBean.medico.emailMedico}" class="form-control" id="exampleFormControlInput8" placeholder="Ej: example@gmail.com" required=""/>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlInput9">Estado </label>
+                            <input type="checkbox" value="#{usuarioMedicoBean.medico.estadoMedico}" id="exampleFormControlInput9"/>
+                        </div>
+
+                        <div class="form-group">
+                            <h:outputLabel value="Seleccione una especialidad:" for="codigoEspecialidad" />
+                            <h:selectOneMenu id="codigoEspecialidad" class="form-control"
+                                             value="#{usuarioMedicoBean.especialidad.idEspecialidad}" title="Especialidad">
+                                <f:selectItems value="#{usuarioMedicoBean.listarEspecialidades}" var="especialidad"
+                                               itemValue="#{especialidad}"
+                                               itemLabel="#{especialidad.nombreEspecialidad}"/>
+                            </h:selectOneMenu>
+                        </div>
+                        
+                        <div style="width: 100%; height: 20px; border-bottom: 1px solid black; margin-top: 3%; margin-bottom: 3%; text-align: center">
+                            <span style="font-size: 1.5em; background-color: #F3F5F6; padding: 0 10px;">
+                                Datos del usuario <!--Padding is optional-->
+                            </span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleFormControlInput10">Usuario</label>
+                            <input type="text" value="#{usuarioMedicoBean.usuario.username}" class="form-control" id="exampleFormControlInput10" placeholder="Nombre de usuario" required=""/>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlInput11">Contraseña</label>
+                            <input type="password" value="#{usuarioMedicoBean.usuario.password}" class="form-control" id="exampleFormControlInput11" required=""/>
+                        </div>
+                        
+                        <div class="form-group">
+                            <h:outputLabel value="Seleccione un rol:" for="codigoRol" />
+                            <h:selectOneMenu id="codigoRol" class="form-control"
+                                             value="#{usuarioMedicoBean.rol.idRol}" title="Rol">
+                                <f:selectItems value="#{usuarioMedicoBean.listaRoles}" var="rol"
+                                               itemValue="#{rol}"
+                                               itemLabel="#{rol.nombreRol}"/>
+                            </h:selectOneMenu>
+                        </div>
+                        
+                        <button id="btn" type="button" action="#{usuarioMedicoBean.insertarUsuarioMedico()}" class="btn btn-success">Guardar</button>
+                        <button type="button" class="btn btn-danger">Cancelar</button>
+                    </h:form>
+                </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

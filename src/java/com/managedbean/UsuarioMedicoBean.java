@@ -121,11 +121,16 @@ public class UsuarioMedicoBean implements Serializable {
     
     public String insertarUsuarioMedico(){
         
-        this.usuario.setIdPersona(persona);
-        this.medico.setIdPersona(persona);
+        System.out.println("alv :v--------------------------------------------------------");
+        System.out.println("nombre:"+this.persona.getNombrePersona());
+        System.out.println("apellido:"+this.persona.getApellidoPersona());
+        System.out.println("email:"+this.medico.getEmailMedico());
+        System.out.println("id:"+this.medico.getIdEspecialidad());
+        //this.usuario.setIdPersona(persona);
+        //this.medico.setIdPersona(persona);
         
         
-        if(usuarioMedicoEJB.insertUsuarioMedico(usuario) == 0){
+        /*if(usuarioMedicoEJB.insertUsuarioMedico(usuario) == 0){
             FacesContext.getCurrentInstance().addMessage("usuario", new FacesMessage("Ya existe un usuario con ese codigo"));
             return null;
         }
@@ -136,6 +141,13 @@ public class UsuarioMedicoBean implements Serializable {
             return null;
         }
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("exito","usuario insertado con exito");
+        this.usuario = new Usuario();
+        this.medico = new MedicoEntity();
+        this.persona = new PersonaEntity();*/
         return "/medico/listadoMedicos?faces-redirect=true";
+    }
+    
+    public void imprimir(){
+        System.out.println("alv tu madre :v--------------------------------------------------------");
     }
 }

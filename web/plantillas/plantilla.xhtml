@@ -13,7 +13,6 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <meta name="charset=utf-8"/>
         <meta name="author" content="grupo 12" />
-        <!--<ui:insert name="css"/>-->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
         <!-- Custom styles for this template -->
         <h:outputStylesheet name="css/simple-sidebar.css"/>
@@ -21,7 +20,7 @@ and open the template in the editor.
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css"/>
         <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
-        
+        <ui:insert name="css"/>
         <!--<link href="../resources/css/simple-sidebar.css" rel="stylesheet"/>-->
 
     </h:head>
@@ -30,14 +29,12 @@ and open the template in the editor.
 
             <!-- Sidebar -->
             <div class="bg-light border-right" id="sidebar-wrapper">
-                <div class="sidebar-heading">Start Bootstrap </div>
+                <div class="sidebar-heading">Expediente clínico </div>
                 <div class="list-group list-group-flush">
-                    <a href="#" class="list-group-item list-group-item-action bg-light">Dashboard</a>
-                    <a href="#" class="list-group-item list-group-item-action bg-light">Shortcuts</a>
-                    <a href="#" class="list-group-item list-group-item-action bg-light">Overview</a>
-                    <a href="#" class="list-group-item list-group-item-action bg-light">Events</a>
-                    <a href="#" class="list-group-item list-group-item-action bg-light">Profile</a>
-                    <a href="#" class="list-group-item list-group-item-action bg-light">Status</a>
+                    <a href="#" class="list-group-item list-group-item-action bg-light">Médicos</a>
+                    <a href="#" class="list-group-item list-group-item-action bg-light">Usuarios</a>
+                    <a href="#" class="list-group-item list-group-item-action bg-light">Pacientes</a>
+                    
                 </div>
             </div>
             <!-- /#sidebar-wrapper -->
@@ -46,7 +43,7 @@ and open the template in the editor.
             <div id="page-content-wrapper">
 
                 <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-                    <button class="btn btn-primary" id="menu-toggle">Toggle Menu</button>
+                    <button class="btn btn-primary" id="menu-toggle">Menú</button>
 
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -99,6 +96,6 @@ and open the template in the editor.
         
         <ui:insert name="scripts"/>
         
-        <!--<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>-->
+        
     </h:body>
 </html>
