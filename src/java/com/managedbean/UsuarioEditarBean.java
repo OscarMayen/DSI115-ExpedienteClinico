@@ -6,6 +6,7 @@ import com.ejb.UsuarioEJB;
 import com.entities.PersonaEntity;
 import com.entities.RolEntity;
 import com.entities.Usuario;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -24,7 +25,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @ManagedBean(name = "usuarioEditarBean")
 @ViewScoped
-public class UsuarioEditarBean {
+public class UsuarioEditarBean implements Serializable{
 
     @EJB
     private RolEJB rolEJB;

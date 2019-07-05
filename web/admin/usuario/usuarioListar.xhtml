@@ -10,6 +10,14 @@
         Listar usuario
     </ui:define>
     
+    <ui:define name="css">
+        <style>
+            .btn{
+                margin:1%;
+            }
+        </style>
+    </ui:define>
+    
     <ui:define name="contenido">
         <div class="row">
             <div class="col">
@@ -60,6 +68,9 @@
                                     <h:outputText value="Operaciones" />
                                 </f:facet>
                                 <h:commandButton class="btn btn-info" action="#{usuarioListarBean.editUsuario(item.idUsuario)}" value="Editar">
+                                    <f:param name="id"  value="#{item.idUsuario}"/>
+                                </h:commandButton>
+                                <h:commandButton class="btn btn-primary" action="#{usuarioListarBean.detalleUsuario(item.idUsuario)}" value="Ver">
                                     <f:param name="id"  value="#{item.idUsuario}"/>
                                 </h:commandButton>
                             </h:column>

@@ -9,11 +9,15 @@
     <ui:define name="titulo">
         Listar médico
     </ui:define>
-    <!--
+    
     <ui:define name="css">
-        <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/>
+        <style>
+            .btn{
+                margin:1%;
+            }
+        </style>
     </ui:define>
-    -->
+    
     <ui:define name="contenido">
         <div class="row">
             <div class="col">
@@ -63,6 +67,9 @@
                                     <h:outputText value="Operaciones" />
                                 </f:facet>
                                 <h:commandButton class="btn btn-info" action="#{medicoListar.editMedico(item.idMedico)}" value="Editar">
+                                    <f:param name="id"  value="#{item.idMedico}"/>
+                                </h:commandButton>
+                                <h:commandButton class="btn btn-primary" action="#{medicoListar.detalleMedico(item.idMedico)}" value="Ver">
                                     <f:param name="id"  value="#{item.idMedico}"/>
                                 </h:commandButton>
                             </h:column>

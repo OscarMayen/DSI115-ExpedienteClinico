@@ -66,4 +66,10 @@ public class UsuarioListarBean implements Serializable{
     {
         return "/admin/usuario/usuarioEditar.xhtml"; 
     }
+    
+    public String detalleUsuario(int id)
+    {
+
+        return "/admin/usuario/usuarioDetalle.xhtml"; 
+    }
 }

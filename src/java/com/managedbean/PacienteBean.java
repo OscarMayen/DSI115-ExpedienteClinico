@@ -93,5 +93,11 @@ public class PacienteBean implements Serializable {
 
         return "/admin/paciente/pacienteListar?faces-redirect=true";
     }
+    
+    public String detallePaciente(int id)
+    {
+
+        return "/admin/paciente/pacienteDetalle.xhtml"; 
+    }
 
 }

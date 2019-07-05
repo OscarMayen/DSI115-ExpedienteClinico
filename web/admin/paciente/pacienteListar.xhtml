@@ -9,11 +9,13 @@
     <ui:define name="titulo">
         Listar paciente
     </ui:define>
-    <!--
     <ui:define name="css">
-        <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/>
+        <style>
+            .btn{
+                margin:1%;
+            }
+        </style>
     </ui:define>
-    -->
     <ui:define name="contenido">
         <div class="row">
             <div class="col">
@@ -25,7 +27,7 @@
                         <h:link outcome="/admin/paciente/pacienteInsertar" value="Nuevo Paciente" class="btn btn-success"/>
                         <br>
                         </br>
-                        <h:dataTable value="#" var="item"
+                        <h:dataTable value="#{pacienteBean.listaPaciente}" var="item"
                                      class="table table-bordered display" id="tabla">
                             <h:column>
                                 <f:facet name="header">
@@ -66,6 +68,9 @@
                                     <i class="glyphicon glyphicon-edit" ></i>
                                     <f:param name="codigo" value=""/>
                                 </h:commandLink>
+                                <h:commandButton class="btn btn-primary" action="#{pacienteBean.detallePaciente(item.idPaciente)}" value="Ver">
+                                    <f:param name="id"  value="#{item.idPaciente}"/>
+                                </h:commandButton>
                             </h:column>
                         </h:dataTable>
                     </h:form>

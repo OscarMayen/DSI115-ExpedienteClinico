@@ -81,6 +81,12 @@ public class MedicoListar implements Serializable {
 //        persona = personaEJB.obtenerPersona(this.medico.getIdPersona().getIdPersona());
         return "/admin/medico/medicoEditar.xhtml"; 
     }
+     
+    public String detalleMedico(int id)
+    {
+
+        return "/admin/medico/medicoDetalle.xhtml"; 
+    }
     
     
     
