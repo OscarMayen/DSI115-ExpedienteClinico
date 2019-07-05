@@ -11,18 +11,18 @@
         <ui:composition template="./../../plantillas/plantilla.xhtml">
 
             <ui:define name="titulo">
-                Nuevo usuario
+                Editar usuario
             </ui:define>
 
             <ui:define name="css">
                 <style>
                     .btn{
-
+                        
                         margin-top: 2%;
                         margin-bottom: 2%;
-
+                        
                     }
-
+                    
                     #btn{
                         margin-left: 35%;
                     }
@@ -33,63 +33,57 @@
             </ui:define>
 
             <ui:define name="contenido">
-                
-                  <div class="col-md-8 offset-md-2 bootstrap-iso"> 
-                
-                    <h2>Nuevo médico</h2>
-
+                <div class="col-md-8 offset-md-2"> 
+                    <h2>Editar usuario</h2>
+                    
                     <h:form>
                         <div style="width: 100%; height: 20px; border-bottom: 1px solid black; margin-top: 3%; margin-bottom: 3%; text-align: center">
                             <span style="font-size: 1.5em; background-color: #F3F5F6; padding: 0 10px;">
                                 Datos personales <!--Padding is optional-->
                             </span>
                         </div>
-
                         <div class="form-group">
-                            <label for="nombres">Nombres</label>
-                            <h:inputText value="#{usuarioInsertarBean.persona.nombrePersona}" class="form-control" id="nombres"  required="true"></h:inputText>
+                           
+                            <label for="nombre">Nombre</label>
+                            <h:inputText  value="#{usuarioEditarBean.usuario.idPersona.nombrePersona}" class="form-control" id="nombre" required="true"/>
                         </div>
                         
-                                                <div class="form-group">
-                            <label for="apellidos">Apellidos</label>
-                            <h:inputText value="#{usuarioInsertarBean.persona.apellidoPersona}" class="form-control" id="apellidos" required="true"/>
+                        <div class="form-group">
+                            
+                            <label for="apellido">Apellidos</label>
+                            <h:inputText  value="#{usuarioEditarBean.usuario.idPersona.apellidoPersona}" class="form-control" id="apellido" required="true"/>
                         </div>
                         <div class="form-group">
                             <label for="departamento">Departamento</label>
-                            <h:inputText value="#{usuarioInsertarBean.persona.departamento}" class="form-control" id="departamento" required="true"/>
+                            <h:inputText value="#{usuarioEditarBean.usuario.idPersona.departamento}" class="form-control" id="departamento" required="true"/>
                         </div>
                         <div class="form-group">
                             <label for="municipio">Municipio</label>
-                            <h:inputText value="#{usuarioInsertarBean.persona.municipio}" class="form-control" id="municipio" required="true"/>
+                            <h:inputText value="#{usuarioEditarBean.usuario.idPersona.municipio}" class="form-control" id="municipio" required="true"/>
                         </div>
                         <div class="form-group">
                             <label for="telefono">Telefono</label>
-                            <h:inputText value="#{usuarioInsertarBean.persona.telefono}" alt="Ej: 2245-5462" class="form-control" id="telefono" maxlength="9" required="true" validatorMessage="Ej: ####-####">
-                                <f:validateRegex pattern="[0-9]{4}-[0-9]{4}" />
-                            </h:inputText>
+                            <h:inputText value="#{usuarioEditarBean.usuario.idPersona.telefono}" class="form-control" id="telefono" maxlength="9" required="true"/>
                         </div>
-
+                        
                         <div class="form-group">
                             <label for="sexo">Genero</label>
-                            <h:selectOneRadio value="#{usuarioInsertarBean.persona.genero}" id="sexo">
-                                <f:selectItem itemValue="Masculino" itemLabel="Masculino"/>
-                                <f:selectItem itemValue="Femenino" itemLabel="Femenino"/>
+                            <h:selectOneRadio value="#{usuarioEditarBean.usuario.idPersona.genero}" id="sexo">
+                                <f:selectItem itemValue="Masculino" itemLabel="MASCULINO "/>
+                                <f:selectItem itemValue="Femenino" itemLabel="FEMENINO "/>
                             </h:selectOneRadio>
                         </div>
-
+                        
                         <div class="form-group">
                             <label for="dui">Dui</label>
-                            <h:inputText value="#{usuarioInsertarBean.persona.dui}" class="form-control" id="dui" maxlength="10" required="true" validatorMessage="Ej: ########-#">
-                                <f:validateRegex pattern="[0-9]{8}-[0-9]{1}" />
-                            </h:inputText>
+                            <h:inputText value="#{usuarioEditarBean.usuario.idPersona.dui}" class="form-control" id="dui" maxlength="10" required="true"/>
                         </div>
                         <div class="form-group">
                             <label for="fechaNacimiento">Fecha de nacimiento </label><br/>
-                            <p:calendar id="fechaNacimiento" value="#{usuarioInsertarBean.persona.fechaNacimiento}" placeholder="yyyy/MM/dd" 
+                            <p:calendar id="fechaNacimiento" value="#{usuarioEditarBean.usuario.idPersona.fechaNacimiento}" placeholder="yyyy/MM/dd" 
                                         locale="es"  pattern="yyyy/MM/dd" required="true"/>
                         </div>
 
-                        
                         <div style="width: 100%; height: 20px; border-bottom: 1px solid black; margin-top: 3%; margin-bottom: 3%; text-align: center">
                             <span style="font-size: 1.5em; background-color: #F3F5F6; padding: 0 10px;">
                                 Datos del usuario <!--Padding is optional-->
@@ -97,31 +91,32 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="username">Usuario</label>
-                            <h:inputText value="#{usuarioInsertarBean.usuario.username}" class="form-control" id="username" required="true"/>
+                            <label for="usuario">Usuario</label>
+                            <h:inputText  value="#{usuarioEditarBean.usuario.username}" class="form-control" id="usuario" required="true"/>
                         </div>
+                        
                         <div class="form-group">
-                            <label for="password">Contraseña</label>
-                            <h:inputSecret value="#{usuarioInsertarBean.usuario.password}" class="form-control" id="password" required="true"/>
-                        </div>
+                            <label for="password">Password</label>
+                            <h:inputText  value="#{usuarioEditarBean.usuario.password}" class="form-control" id="password" required="true"/>
+                        </div>                        
 
+                        
                         <div class="form-group">
-                            <h:outputLabel value="Seleccione un rol:" for="codigoRol" />
-                            <h:selectOneMenu id="codigoRol" class="form-control"
-                                             value="#{usuarioInsertarBean.usuario.idRol}" title="Rol">
-                                <f:selectItems value="#{usuarioInsertarBean.listaRoles}" var="rol"
+                            <h:outputLabel value="Seleccione un rol:" for="codRol" />
+                            <h:selectOneMenu id="codRol" class="form-control"
+                                             value="#{usuarioEditarBean.usuario.idRol}" title="Rol">
+                                <f:selectItems value="#{usuarioEditarBean.listaRoles}" var="rol"
                                                itemValue="#{rol}"
                                                itemLabel="#{rol.nombreRol}"/>
                             </h:selectOneMenu>
                         </div>
                         
-                        <h:commandButton value="Guardar" action="#{usuarioInsertarBean.insertarUsuario()}"  class="btn btn-success"/>
-                        <h:link outcome="/admin/medico/medicoListar" value="Cancelar" class="btn btn-danger"/>
                         
+                        <h:commandButton value="Modificar" action="#{usuarioEditarBean.updateUsuario()}" class="btn btn-success"/>
+                        <h:link outcome="/admin/usuario/usuarioListar" value="Cancelar" class="btn btn-danger"/>
                     </h:form>
                     
                 </div>
-                
             </ui:define>
 
             <ui:define name="scripts">

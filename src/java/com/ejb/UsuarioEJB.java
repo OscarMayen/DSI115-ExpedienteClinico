@@ -40,6 +40,10 @@ public class UsuarioEJB {
             return 0;
         }
     }
+    
+    public Usuario obtenerUsuario(int codigo) {
+        return em.find(Usuario.class, codigo);
+    }
 
     public int modificarUsuario(Usuario usuario) throws Exception {
         try {
