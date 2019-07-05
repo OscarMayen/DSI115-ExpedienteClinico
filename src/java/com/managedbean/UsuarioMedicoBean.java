@@ -7,6 +7,7 @@ package com.managedbean;
 
 import com.ejb.EspecialidadEJB;
 import com.ejb.MedicoEJB;
+import com.ejb.PersonaEJB;
 import com.ejb.RolEJB;
 import com.ejb.UsuarioMedicoEJB;
 import com.entities.EspecialidadEntity;
@@ -35,6 +36,9 @@ import javax.servlet.http.HttpServletRequest;
 @RequestScoped
 public class UsuarioMedicoBean implements Serializable {
 
+    @EJB
+    private PersonaEJB personaEJB;
+
     List<MedicoEntity> listaMedico;
 
     @EJB
@@ -48,6 +52,8 @@ public class UsuarioMedicoBean implements Serializable {
 
     @EJB
     private EspecialidadEJB especialidadEJB;
+    
+    
 
     Usuario usuario = new Usuario();
     RolEntity rol = new RolEntity();
@@ -139,12 +145,36 @@ public class UsuarioMedicoBean implements Serializable {
     public String editMedico(int id)
     {
         this.medico = new MedicoEntity();
+        this.persona = new PersonaEntity();
         medico = medicoEJB.obtenerMedico(id);
         Map<String, Object> sessionMap=FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
         sessionMap.put("medico", medico);
+        persona = personaEJB.obtenerPersona(this.medico.getIdPersona().getIdPersona());
         return "/admin/medico/medicoEditar.xhtml"; 
     }
-
     
+    public String updateMedico(){
+        
+        /*if(this.personaEJB.updatePerson(persona)==true){
+            FacesContext.getCurrentInstance().addMessage("usuario", new FacesMessage("ERROR AL INSERTAR"));
+            return null;
+        }
+        
+        if(this.medicoEJB.updateDoctor(medico)==1){
+            FacesContext.getCurrentInstance().addMessage("usuario", new FacesMessage("ERROR AL INSERTAR"));
+            return null;
+        }*/
+        
+        
+        this.medico.setIdPersona(persona);
+
+        if (medicoEJB.modificarMedico(medico) == 0) {
+            FacesContext.getCurrentInstance().addMessage("usuario", new FacesMessage("ERROR AL INSERTAR"));
+            return null;
+        }
+        
+        
+        return "/admin/medico/medicoListar?faces-redirect=true";
+    }
 
 }

@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
     <body>
 
@@ -26,7 +27,9 @@
                         margin-left: 35%;
                     }
                 </style>
-
+                <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+                <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+                <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
             </ui:define>
 
             <ui:define name="contenido">
@@ -42,30 +45,30 @@
                         <div class="form-group">
                            
                             <label for="nombre">Nombre</label>
-                            <h:inputText  value="#{usuarioMedicoBean.medico.idPersona.nombrePersona}" class="form-control" id="nombre" required="true"/>
+                            <h:inputText  value="#{usuarioMedicoBean.persona.nombrePersona}" class="form-control" id="nombre" required="true"/>
                         </div>
                         
                         <div class="form-group">
                             
                             <label for="apellido">Apellidos</label>
-                            <h:inputText  value="#{usuarioMedicoBean.medico.idPersona.apellidoPersona}" class="form-control" id="apellido" required="true"/>
+                            <h:inputText  value="#{usuarioMedicoBean.persona.apellidoPersona}" class="form-control" id="apellido" required="true"/>
                         </div>
                         <div class="form-group">
                             <label for="departamento">Departamento</label>
-                            <h:inputText value="#{usuarioMedicoBean.medico.idPersona.departamento}" class="form-control" id="departamento" required="true"/>
+                            <h:inputText value="#{usuarioMedicoBean.persona.departamento}" class="form-control" id="departamento" required="true"/>
                         </div>
                         <div class="form-group">
                             <label for="municipio">Municipio</label>
-                            <h:inputText value="#{usuarioMedicoBean.medico.idPersona.municipio}" class="form-control" id="municipio" required="true"/>
+                            <h:inputText value="#{usuarioMedicoBean.persona.municipio}" class="form-control" id="municipio" required="true"/>
                         </div>
                         <div class="form-group">
                             <label for="telefono">Telefono</label>
-                            <h:inputText value="#{usuarioMedicoBean.medico.idPersona.telefono}" class="form-control" id="telefono" maxlength="9" required="true"/>
+                            <h:inputText value="#{usuarioMedicoBean.persona.telefono}" class="form-control" id="telefono" maxlength="9" required="true"/>
                         </div>
                         
                         <div class="form-group">
                             <label for="sexo">Genero</label>
-                            <h:selectOneRadio value="#{usuarioMedicoBean.medico.idPersona.genero}" id="sexo">
+                            <h:selectOneRadio value="#{usuarioMedicoBean.persona.genero}" id="sexo">
                                 <f:selectItem itemValue="Masculino" itemLabel="MASCULINO "/>
                                 <f:selectItem itemValue="Femenino" itemLabel="FEMENINO "/>
                             </h:selectOneRadio>
@@ -73,11 +76,12 @@
                         
                         <div class="form-group">
                             <label for="dui">Dui</label>
-                            <h:inputText value="#{usuarioMedicoBean.medico.idPersona.dui}" class="form-control" id="dui" maxlength="10" required="true"/>
+                            <h:inputText value="#{usuarioMedicoBean.persona.dui}" class="form-control" id="dui" maxlength="10" required="true"/>
                         </div>
                         <div class="form-group">
-                            <label for="fechaNacimiento">Fecha naciemiento</label>
-                            <h:inputText  value="#{usuarioMedicoBean.medico.idPersona.fechaNacimiento}" class="form-control" id="fechaNacimiento" required="true"/>
+                            <label for="fechaNacimiento">Fecha de nacimiento </label><br/>
+                            <p:calendar id="fechaNacimiento" value="#{usuarioMedicoBean.persona.fechaNacimiento}" placeholder="yyyy/MM/dd" 
+                                        locale="es"  pattern="yyyy/MM/dd" required="true"/>
                         </div>
 
                         <div style="width: 100%; height: 20px; border-bottom: 1px solid black; margin-top: 3%; margin-bottom: 3%; text-align: center">
@@ -106,11 +110,15 @@
                         </div>
                         
                         
-                        <h:commandButton value="Modificar" class="btn btn-success"/>
-                        <h:commandButton class="btn btn-danger" value="Cancelar"/>
+                        <h:commandButton value="Modificar" action="#{usuarioMedicoBean.updateMedico()}" class="btn btn-success"/>
+                        <h:link outcome="/admin/medico/medicoListar" value="Cancelar" class="btn btn-danger"/>
                     </h:form>
                     
                 </div>
+            </ui:define>
+            
+            <ui:define name="scripts">
+                <h:outputScript name="js/spanishLocale.js"/>
             </ui:define>
 
         </ui:composition>
