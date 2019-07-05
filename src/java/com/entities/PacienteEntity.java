@@ -7,6 +7,7 @@ package com.entities;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -60,7 +62,7 @@ public class PacienteEntity implements Serializable {
     @NotNull
     private boolean estadoPaciente;
     @JoinColumn(name = "idPersona", referencedColumnName = "idPersona")
-    @ManyToOne
+    @OneToOne( cascade = CascadeType.PERSIST )
     private PersonaEntity idPersona;
 
     public PacienteEntity() {
