@@ -53,21 +53,6 @@ public class MedicoEJB {
             
         }
     }
-    //prueba
-//    public int updateDoctor(MedicoEntity medico) {
-//        EntityManager m = factory.createEntityManager();
-//        m.getTransaction().begin();
-//
-//        MedicoEntity medicox = em.find(MedicoEntity.class, medico.getIdMedico());
-//        medicox.setEmailMedico(medico.getEmailMedico());
-//        medicox.setEstadoMedico(medico.getEstadoMedico());
-//        medicox.setIdEspecialidad(medico.getIdEspecialidad());
-//        m.merge(medicox);
-//        m.getTransaction().commit();
-//        m.close();
-//        return 0;
-//
-//    }
 
     public MedicoEntity obtenerMedico(int codigo) {
         return em.find(MedicoEntity.class, codigo);

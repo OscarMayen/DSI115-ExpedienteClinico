@@ -32,9 +32,10 @@ and open the template in the editor.
             <div class="bg-light border-right" id="sidebar-wrapper">
                 <div class="sidebar-heading">Expediente clínico </div>
                 <div class="list-group list-group-flush">
-                    <a href="#" class="list-group-item list-group-item-action bg-light">Médicos</a>
-                    <a href="#" class="list-group-item list-group-item-action bg-light">Usuarios</a>
-                    <a href="#" class="list-group-item list-group-item-action bg-light">Pacientes</a>
+                    <h:link outcome="/admin/medico/medicoListar" value="Gestion médicos" class="list-group-item list-group-item-action bg-light"/>
+                    <h:link outcome="/admin/usuario/usuarioListar" value="Gestion usuarios" class="list-group-item list-group-item-action bg-light"/>
+                    <h:link outcome="/admin/paciente/pacienteListar" value="Gestion pacientes" class="list-group-item list-group-item-action bg-light"/>
+                    
                     
                 </div>
             </div>
@@ -55,18 +56,15 @@ and open the template in the editor.
                             <li class="nav-item active">
                                 <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Link</a>
-                            </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Dropdown
+                                    Nombre usuario
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
+                                    <a class="dropdown-item" href="#">Perfil</a>
+                                    <a class="dropdown-item" href="#">Settings</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Something else here</a>
+                                    <a class="dropdown-item" href="#">Cerrar sesión</a>
                                 </div>
                             </li>
                         </ul>

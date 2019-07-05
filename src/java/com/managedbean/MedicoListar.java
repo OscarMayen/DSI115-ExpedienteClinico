@@ -44,7 +44,7 @@ public class MedicoListar implements Serializable {
     
     private List<MedicoEntity> listaMedico = new ArrayList();
     
-     public List<MedicoEntity> getListaMedico() {
+    public List<MedicoEntity> getListaMedico() {
         return listaMedico;
     }
 

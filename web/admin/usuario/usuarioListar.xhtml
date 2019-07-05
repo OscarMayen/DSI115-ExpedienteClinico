@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../../plantillas/plantilla.xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <ui:define name="titulo">
+        Listar usuario
+    </ui:define>
+    
+    <ui:define name="contenido">
+        <div class="row">
+            <div class="col">
+                <f:view>
+
+
+                    <h:form>
+                        <h1><h:outputText value="Listado de usuarios"/></h1>
+                        <h:link outcome="/admin/usuario/usuarioInsertar" value="Nuevo Usuario" class="btn btn-success"/>
+                        <br>
+                        </br>
+                        <h:dataTable value="#{usuarioListarBean.listaUsuario}" var="item"
+                                     class="table table-bordered display" id="tabla">
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Nombres"/>
+                                </f:facet>
+                                <h:outputText value="#{item.idPersona.nombrePersona}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Apellidos"/>
+                                </f:facet>
+                                <h:outputText value="#{item.idPersona.apellidoPersona}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Dui"/>
+                                </f:facet>
+                                <h:outputText value="#{item.idPersona.dui}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Nombre usuario"/>
+                                </f:facet>
+                                <h:outputText value="#{item.username}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Rol"/>
+                                </f:facet>
+                                <h:outputText value="#{item.idRol.nombreRol}"/>
+                            </h:column>
+                            
+
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Operaciones" />
+                                </f:facet>
+                                <h:commandButton class="btn btn-info" action="#{usuarioListarBean.editUsuario(item.idUsuario)}" value="Editar">
+                                    <f:param name="id"  value="#{item.idUsuario}"/>
+                                </h:commandButton>
+                            </h:column>
+
+                        </h:dataTable>
+                    </h:form>
+                </f:view>
+
+            </div>
+        </div>
+
+
+    </ui:define>
+
+    <ui:define name="scripts">
+        <script>
+            $(document).ready(function () {
+                var tabla = $(".table")[0];
+                $(tabla).DataTable();
+            });
+        </script>
+    </ui:define>
+
+</ui:composition>
+

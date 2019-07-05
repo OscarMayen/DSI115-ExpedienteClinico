@@ -158,7 +158,7 @@ public class UsuarioMedicoBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage("usuario", new FacesMessage("ERROR AL INSERTAR " + ex.getMessage() ));
         }
 //        
-        return "";
+        return "/admin/medico/medicoListar?faces-redirect=true";
       //  return "/admin/medico/medicoListar?faces-redirect=true";
     }
 

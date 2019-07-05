@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../../plantillas/plantilla.xhtml">
+
+            <ui:define name="titulo">
+                Nuevo usuario
+            </ui:define>
+
+            <ui:define name="css">
+                <style>
+                    .btn{
+
+                        margin-top: 2%;
+                        margin-bottom: 2%;
+
+                    }
+
+                    #btn{
+                        margin-left: 35%;
+                    }
+                </style>
+                <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+                <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+                <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+            </ui:define>
+
+            <ui:define name="contenido">
+                <div class="col-md-8 offset-md-2 bootstrap-iso"> 
+                    <h2>Nuevo usuario</h2>
+
+                    <h:form>
+                        <div style="width: 100%; height: 20px; border-bottom: 1px solid black; margin-top: 3%; margin-bottom: 3%; text-align: center">
+                            <span style="font-size: 1.5em; background-color: #F3F5F6; padding: 0 10px;">
+                                Datos personales <!--Padding is optional-->
+                            </span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1">Nombres</label>
+                            <h:inputText value="#{usuarioInsertarBean.persona.nombrePersona}" class="form-control" id="exampleFormControlInput1"  required="true"></h:inputText>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlInput2">Apellidos</label>
+                            <h:inputText value="#{usuarioInsertarBean.persona.apellidoPersona}" class="form-control" id="exampleFormControlInput2" required="true"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlInput3">Departamento</label>
+                            <h:inputText value="#{usuarioInsertarBean.persona.departamento}" class="form-control" id="exampleFormControlInput3" required="true"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlInput4">Municipio</label>
+                            <h:inputText value="#{usuarioInsertarBean.persona.municipio}" class="form-control" id="exampleFormControlInput4" required="true"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlInput5">Telefono</label>
+                            <h:inputText value="#{usuarioInsertarBean.persona.telefono}" alt="Ej: 2245-5462" class="form-control" id="exampleFormControlInput5" maxlength="9" required="true" validatorMessage="Ej: ####-####">
+                                <f:validateRegex pattern="[0-9]{4}-[0-9]{4}" />
+                            </h:inputText>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="sexo">Genero</label>
+                            <h:selectOneRadio value="#{usuarioInsertarBean.persona.genero}" id="sexo">
+                                <f:selectItem itemValue="Masculino" itemLabel="Masculino"/>
+                                <f:selectItem itemValue="Femenino" itemLabel="Femenino"/>
+                            </h:selectOneRadio>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleFormControlInput6">Dui</label>
+                            <h:inputText value="#{usuarioInsertarBean.persona.dui}" class="form-control" id="exampleFormControlInput6" maxlength="10" required="true" validatorMessage="Ej: ########-#">
+                                <f:validateRegex pattern="[0-9]{8}-[0-9]{1}" />
+                            </h:inputText>
+                        </div>
+                        <div class="form-group">
+                            <label for="fechaNacimiento">Fecha de nacimiento </label><br/>
+                            <p:calendar id="fechaNacimiento" value="#{usuarioInsertarBean.persona.fechaNacimiento}" placeholder="yyyy/MM/dd" 
+                                        locale="es"  pattern="yyyy/MM/dd" required="true"/>
+                        </div>
+
+                        <div style="width: 100%; height: 20px; border-bottom: 1px solid black; margin-top: 3%; margin-bottom: 3%; text-align: center">
+                            <span style="font-size: 1.5em; background-color: #F3F5F6; padding: 0 10px;">
+                                Datos del usuario <!--Padding is optional-->
+                            </span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleFormControlInput10">Usuario</label>
+                            <h:inputText value="#{usuarioInsertarBean.usuario.username}" class="form-control" id="exampleFormControlInput10" required="true"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlInput11">Contraseña</label>
+                            <h:inputSecret value="#{usuarioInsertarBean.usuario.password}" class="form-control" id="exampleFormControlInput11" required="true"/>
+                        </div>
+
+                        <div class="form-group">
+                            <h:outputLabel value="Seleccione un rol:" for="codigoRol" />
+                            <h:selectOneMenu id="codigoRol" class="form-control"
+                                             value="#{usuarioInsertarBean.usuario.idRol}" title="Rol">
+                                <f:selectItems value="#{usuarioInsertarBean.listaRoles}" var="rol"
+                                               itemValue="#{rol}"
+                                               itemLabel="#{rol.nombreRol}"/>
+                            </h:selectOneMenu>
+                        </div>
+
+                        <h:commandButton value="Guardar" action="#{usuarioInsertarBean.insertarUsuario()}" class="btn btn-success"/>
+                        <h:link outcome="/admin/usuario/usuarioListar" value="Cancelar" class="btn btn-danger"/>
+                    </h:form>
+
+                </div>
+            </ui:define>
+            <ui:define name="scripts">
+                <h:outputScript name="js/spanishLocale.js"/>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>
