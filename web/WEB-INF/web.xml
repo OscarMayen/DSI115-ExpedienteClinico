@@ -33,14 +33,5 @@
     <welcome-file-list>
         <welcome-file>faces/index.xhtml</welcome-file>
     </welcome-file-list>
-    <ejb-local-ref>
-        <ejb-ref-name>RolEJB</ejb-ref-name>
-        <ejb-ref-type>Session</ejb-ref-type>
-        <ejb-link>#RolEJB</ejb-link>
-    </ejb-local-ref>
-    <ejb-local-ref>
-        <ejb-ref-name>RolEJB1</ejb-ref-name>
-        <ejb-ref-type>Session</ejb-ref-type>
-        <ejb-link>#RolEJB</ejb-link>
-    </ejb-local-ref>
+    
 </web-app>

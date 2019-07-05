@@ -25,8 +25,8 @@ import javax.faces.view.ViewScoped;
 @ViewScoped
 public class UsuarioInsertarBean implements Serializable{
 
-    @EJB
-    private RolEJB rolEJB;
+//    @EJB
+  //  private RolEJB rolEJB;
 
     @EJB
     private UsuarioEJB usuarioEJB;
@@ -38,19 +38,19 @@ public class UsuarioInsertarBean implements Serializable{
     
     public UsuarioInsertarBean() {
     }
-    
+    /*
     @PostConstruct
     public void init() {
         System.out.println("!!!!!!!!!!!!!");
         this.listaRoles = buscarRoles();//Buscar lista de roles del EJB
     
     }
+    */
     
-    
-    private List<RolEntity> buscarRoles() {
-         this.listaRoles = rolEJB.listarRoles();
-        return listaRoles;
-    }
+    //private List<RolEntity> buscarRoles() {
+      //   this.listaRoles = rolEJB.listarRoles();
+        //return listaRoles;
+    //}
 
     public Usuario getUsuario() {
         return usuario;
