@@ -26,8 +26,7 @@ public class MedicoEJB {
     @PersistenceContext(unitName = "ExpedienteClinicoBBraunPU")
     private EntityManager em;
     private static final String PERSISTENCE_UNIT_NAME = "ExpedienteClinicoBBraunPU";
-     private static EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-
+   
     public void persist(Object object) {
         em.persist(object);
     }
@@ -42,30 +41,33 @@ public class MedicoEJB {
         }
     }
 
-    public int modificarMedico(MedicoEntity medico) {
+    public int modificarMedico(MedicoEntity medico) throws Exception {
         try {
+            System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>");
+            System.out.println(medico);
             em.merge(medico);
-            em.flush();
+           // em.flush();
             return 1;
         } catch (Exception e) {
-            return 0;
+            throw new Exception("Error al actualizar " + e.getMessage());
+            
         }
     }
     //prueba
-    public int updateDoctor(MedicoEntity medico) {
-        EntityManager m = factory.createEntityManager();
-        m.getTransaction().begin();
-
-        MedicoEntity medicox = em.find(MedicoEntity.class, medico.getIdMedico());
-        medicox.setEmailMedico(medico.getEmailMedico());
-        medicox.setEstadoMedico(medico.getEstadoMedico());
-        medicox.setIdEspecialidad(medico.getIdEspecialidad());
-        m.merge(medicox);
-        m.getTransaction().commit();
-        m.close();
-        return 0;
-
-    }
+//    public int updateDoctor(MedicoEntity medico) {
+//        EntityManager m = factory.createEntityManager();
+//        m.getTransaction().begin();
+//
+//        MedicoEntity medicox = em.find(MedicoEntity.class, medico.getIdMedico());
+//        medicox.setEmailMedico(medico.getEmailMedico());
+//        medicox.setEstadoMedico(medico.getEstadoMedico());
+//        medicox.setIdEspecialidad(medico.getIdEspecialidad());
+//        m.merge(medicox);
+//        m.getTransaction().commit();
+//        m.close();
+//        return 0;
+//
+//    }
 
     public MedicoEntity obtenerMedico(int codigo) {
         return em.find(MedicoEntity.class, codigo);

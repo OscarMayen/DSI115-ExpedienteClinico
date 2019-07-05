@@ -2,9 +2,19 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="ExpedienteClinicoBBraunPU" transaction-type="JTA">
     <jta-data-source>java:app/jdbc/expediente</jta-data-source>
-    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <class>com.entities.EspecialidadEntity</class>
+    <class>com.entities.MedicoEntity</class>
+    <class>com.entities.PacienteEntity</class>
+    <class>com.entities.PersonaEntity</class>
+    <class>com.entities.RolEntity</class>
+    <class>com.entities.Usuario</class>
+    <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
-      <property name="javax.persistence.schema-generation.database.action" value="create"/>
+      <property name="eclipselink.target-server" value="SunAS9"/>
+      <property name="eclipselink.logging.level" value="FINE"/>
+      <property name="eclipselink.allow-zero-id" value="true"/>
+      <property name="eclipselink.logging.parameters" value="true"/>
+      
     </properties>
   </persistence-unit>
 </persistence>

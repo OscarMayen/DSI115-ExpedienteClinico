@@ -25,7 +25,7 @@
                         <h:link outcome="/admin/medico/medicoInsertar" value="Nuevo Medico" class="btn btn-success"/>
                         <br>
                         </br>
-                        <h:dataTable value="#{usuarioMedicoBean.listaMedico}" var="item"
+                        <h:dataTable value="#{medicoListar.listaMedico}" var="item"
                                      class="table table-bordered display" id="tabla">
                             <h:column>
                                 <f:facet name="header">
@@ -62,7 +62,9 @@
                                 <f:facet name="header">
                                     <h:outputText value="Operaciones" />
                                 </f:facet>
-                                <h:commandButton class="btn btn-info" action="#{usuarioMedicoBean.editMedico(item.idMedico)}" value="Editar"></h:commandButton>
+                                <h:commandButton class="btn btn-info" action="#{medicoListar.editMedico(item.idMedico)}" value="Editar">
+                                    <f:param name="id"  value="#{item.idMedico}"/>
+                                </h:commandButton>
                             </h:column>
 
                         </h:dataTable>

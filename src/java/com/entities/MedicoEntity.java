@@ -48,7 +48,7 @@ public class MedicoEntity implements Serializable {
     @NotNull
     private boolean estadoMedico;
     @JoinColumn(name = "idPersona", referencedColumnName = "idPersona")
-    @OneToOne(cascade=CascadeType.PERSIST)
+    @OneToOne(cascade=CascadeType.ALL)
     private PersonaEntity idPersona;
     @JoinColumn(name = "idEspecialidad", referencedColumnName = "idEspecialidad")
     @ManyToOne
