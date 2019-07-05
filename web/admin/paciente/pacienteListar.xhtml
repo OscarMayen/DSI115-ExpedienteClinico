@@ -27,51 +27,51 @@
                         <h:link outcome="/admin/paciente/pacienteInsertar" value="Nuevo Paciente" class="btn btn-success"/>
                         <br>
                         </br>
-                        <h:dataTable value="#{pacienteBean.listaPaciente}" var="item"
+                        <h:dataTable value="#{pacienteListar.listaPaciente}" var="item"
                                      class="table table-bordered display" id="tabla">
                             <h:column>
                                 <f:facet name="header">
                                     <h:outputText value="Nombres"/>
                                 </f:facet>
-                                <h:outputText value=""/>
+                                <h:outputText value="#{item.idPersona.nombrePersona}"/>
                             </h:column>
                             <h:column>
                                 <f:facet name="header">
                                     <h:outputText value="Apellidos"/>
                                 </f:facet>
-                                <h:outputText value=""/>
+                                <h:outputText value="#{item.idPersona.apellidoPersona}"/>
                             </h:column>
                             <h:column>
                                 <f:facet name="header">
                                     <h:outputText value="Dui"/>
                                 </f:facet>
-                                <h:outputText value=""/>
+                                <h:outputText value="#{item.idPersona.dui}"/>
                             </h:column>
                             <h:column>
                                 <f:facet name="header">
                                     <h:outputText value="Telefono de Emergencia"/>
                                 </f:facet>
-                                <h:outputText value=""/>
+                                <h:outputText value="#{item.telefonoEmergencia}"/>
                             </h:column>
                             <h:column>
                                 <f:facet name="header"  >
                                     <h:outputText value="Nombre responsable"/>
                                 </f:facet>
-                                <h:outputText value=""/>
+                                <h:outputText value="#{item.nombreResponsable}"/>
                             </h:column>
-                            
                             <h:column>
                                 <f:facet name="header">
                                     <h:outputText value="Operaciones" />
                                 </f:facet>
-                                <h:commandLink class="btn btn-info" action="#">
-                                    <i class="glyphicon glyphicon-edit" ></i>
-                                    <f:param name="codigo" value=""/>
-                                </h:commandLink>
                                 <h:commandButton class="btn btn-primary" action="#{pacienteBean.detallePaciente(item.idPaciente)}" value="Ver">
                                     <f:param name="id"  value="#{item.idPaciente}"/>
                                 </h:commandButton>
+                                <h:commandButton class="btn btn-primary" action="#{pacienteListar.editPaciente(item.idPaciente)}" value="Editar">
+                                    <f:param name="id"  value="#{item.idPaciente}"/>
+                                </h:commandButton>
+                                
                             </h:column>
+                            
                         </h:dataTable>
                     </h:form>
                 </f:view>

@@ -40,7 +40,7 @@ public class PacienteEJB {
     public int modificarPaciente(PacienteEntity paciente) {
         try {
             em.merge(paciente);
-            em.flush();
+            //em.flush();
             return 1;
         } catch (Exception e) {
             return 0;
