@@ -25,8 +25,11 @@ import javax.faces.view.ViewScoped;
 @ViewScoped
 public class UsuarioInsertarBean implements Serializable{
 
-//    @EJB
-  //  private RolEJB rolEJB;
+    @EJB
+    private PersonaEJB personaEJB;
+
+   @EJB
+    private RolEJB rolEJB;
 
     @EJB
     private UsuarioEJB usuarioEJB;
@@ -38,19 +41,19 @@ public class UsuarioInsertarBean implements Serializable{
     
     public UsuarioInsertarBean() {
     }
-    /*
+   
     @PostConstruct
     public void init() {
         System.out.println("!!!!!!!!!!!!!");
         this.listaRoles = buscarRoles();//Buscar lista de roles del EJB
     
     }
-    */
+  
     
-    //private List<RolEntity> buscarRoles() {
-      //   this.listaRoles = rolEJB.listarRoles();
-        //return listaRoles;
-    //}
+    private List<RolEntity> buscarRoles() {
+         this.listaRoles = rolEJB.listarRoles();
+        return listaRoles;
+    }
 
     public Usuario getUsuario() {
         return usuario;
@@ -79,21 +82,20 @@ public class UsuarioInsertarBean implements Serializable{
     
     
     public String insertarUsuario() {
+        int a =this.personaEJB.insertPersona(this.persona);
         
-        this.usuario.setIdPersona(persona);
-        
-        if (this.usuarioEJB.insertUsuario(usuario) == 0) {
-            FacesContext.getCurrentInstance().addMessage("usuario", new FacesMessage("ERROR AL INSERTAR"));
+        if (a == 0) {
+            FacesContext.getCurrentInstance().addMessage("persona", new FacesMessage("ERROR AL INSERTAR"));
             return null;  
         } 
-        
-        this.usuario = new Usuario();
-        this.persona = new PersonaEntity();
-
+        else{
+            usuario.setIdPersona(persona);
+            int b = this.usuarioEJB.insertUsuario(usuario);
+        }
+        this.persona= new PersonaEntity();
+        this.usuario=new Usuario();
         return "/admin/usuario/usuarioListar?faces-redirect=true";
     }
-    
-    
     
     
 }

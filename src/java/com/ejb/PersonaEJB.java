@@ -25,6 +25,16 @@ public class PersonaEJB {
     public void persist(Object object) {
         em.persist(object);
     }
+    
+    public int insertPersona(PersonaEntity persona) {
+        try {
+            em.persist(persona);
+            //em.flush();
+            return 1;
+        } catch (Exception e) {
+            return 0;
+        }
+    }
    
     
     public PersonaEntity obtenerPersona(int codigo){

@@ -40,6 +40,8 @@ import org.jboss.weld.bean.builtin.FacadeInjectionPoint;
 @ViewScoped
 public class UsuarioMedicoBean implements Serializable {
 
+    @EJB
+    private UsuarioMedicoEJB usuarioMedicoEJB;
 
     List<MedicoEntity> listaMedico;
 
@@ -52,8 +54,6 @@ public class UsuarioMedicoBean implements Serializable {
 
     @EJB
     private EspecialidadEJB especialidadEJB;
-    
-    
 
     Usuario usuario = new Usuario();
     RolEntity rol = new RolEntity();
@@ -147,7 +147,7 @@ public class UsuarioMedicoBean implements Serializable {
     }
     
     public String updateMedico(){
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+      
         try {
             
             medicoEJB.modificarMedico(medico);
@@ -157,9 +157,22 @@ public class UsuarioMedicoBean implements Serializable {
                     .log(Level.SEVERE, null, ex);
             FacesContext.getCurrentInstance().addMessage("usuario", new FacesMessage("ERROR AL INSERTAR " + ex.getMessage() ));
         }
-//        
+   
         return "/admin/medico/medicoListar?faces-redirect=true";
-      //  return "/admin/medico/medicoListar?faces-redirect=true";
+      
+    }
+    
+     public String insertarUsuarioMedico() {
+        this.medico.setIdPersona(persona);
+        if (medicoEJB.insertMedico(medico) == 0) {
+            FacesContext.getCurrentInstance().addMessage("usuario", new FacesMessage("ERROR AL INSERTAR"));
+            return null;
+        } 
+        else {
+            usuario.setIdPersona(persona);
+            int b = usuarioMedicoEJB.insertUsuarioMedico(usuario);
+        }
+        return "/admin/medico/medicoListar?faces-redirect=true";
     }
 
 }
