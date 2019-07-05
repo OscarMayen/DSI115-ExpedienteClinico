@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../../plantillas/plantilla.xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns="http://www.w3.org/1999/xhtml">
+
+    <ui:define name="titulo">
+        Listar paciente
+    </ui:define>
+    <!--
+    <ui:define name="css">
+        <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/>
+    </ui:define>
+    -->
+    <ui:define name="contenido">
+        <div class="row">
+            <div class="col">
+                <f:view>
+
+
+                    <h:form>
+                        <h1><h:outputText value="Listado de Pacientes"/></h1>
+                        <h:link outcome="/admin/paciente/pacienteInsertar" value="Nuevo Paciente" class="btn btn-success"/>
+                        <br>
+                        </br>
+                        <h:dataTable value="#" var="item"
+                                     class="table table-bordered display" id="tabla">
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Nombres"/>
+                                </f:facet>
+                                <h:outputText value=""/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Apellidos"/>
+                                </f:facet>
+                                <h:outputText value=""/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Dui"/>
+                                </f:facet>
+                                <h:outputText value=""/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Telefono de Emergencia"/>
+                                </f:facet>
+                                <h:outputText value=""/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header"  >
+                                    <h:outputText value="Nombre responsable"/>
+                                </f:facet>
+                                <h:outputText value=""/>
+                            </h:column>
+                            
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Operaciones" />
+                                </f:facet>
+                                <h:commandLink class="btn btn-info" action="#">
+                                    <i class="glyphicon glyphicon-edit" ></i>
+                                    <f:param name="codigo" value=""/>
+                                </h:commandLink>
+                            </h:column>
+                        </h:dataTable>
+                    </h:form>
+                </f:view>
+
+            </div>
+        </div>
+
+
+    </ui:define>
+
+    <ui:define name="scripts">
+        <script>
+            $(document).ready(function () {
+                var tabla = $(".table")[0];
+                $(tabla).DataTable();
+            });
+        </script>
+    </ui:define>
+
+</ui:composition>
