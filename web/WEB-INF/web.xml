@@ -31,7 +31,7 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>faces/index.xhtml</welcome-file>
+        <welcome-file>faces/plantillas/usuario/sesion.xhtml</welcome-file>
     </welcome-file-list>
     <security-constraint>
         <display-name>Administrador</display-name>
