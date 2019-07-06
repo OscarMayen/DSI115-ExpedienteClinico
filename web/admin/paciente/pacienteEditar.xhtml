@@ -3,120 +3,126 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
     <body>
 
         <ui:composition template="./../../plantillas/plantilla.xhtml">
 
             <ui:define name="titulo">
-                Nuevo Editar
+                Editar paciente
             </ui:define>
 
             <ui:define name="css">
                 <style>
                     .btn{
-                        
+
                         margin-top: 2%;
                         margin-bottom: 2%;
-                        
+
                     }
-                    
+
                     #btn{
                         margin-left: 35%;
                     }
                 </style>
-
+                <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+                <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+                <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
             </ui:define>
 
             <ui:define name="contenido">
                 <div class="col-md-8 offset-md-2"> 
-                    <h2>Paciente</h2>
-                    
+                    <h2>Editar paciente</h2>
+
                     <h:form>
                         <div style="width: 100%; height: 20px; border-bottom: 1px solid black; margin-top: 3%; margin-bottom: 3%; text-align: center">
                             <span style="font-size: 1.5em; background-color: #F3F5F6; padding: 0 10px;">
                                 Datos personales <!--Padding is optional-->
                             </span>
                         </div>
-                        
+                                                                        
                         <div class="form-group">
-                            <label for="exampleFormControlInput1">Nombres</label>
-                            <h:inputText value="#{usuarioMedicoBean.persona.nombrePersona}" class="form-control" id="exampleFormControlInput1"  required="true"></h:inputText>
+                            <label for="nombre">Nombre</label>
+                            <h:inputText  value="#{pacienteBean.paciente.idPersona.nombrePersona}" class="form-control" id="nombre" required="true"/>
+                        </div>
+
+                        <div class="form-group">
+
+                            <label for="apellido">Apellidos</label>
+                            <h:inputText  value="#{pacienteBean.paciente.idPersona.apellidoPersona}" class="form-control" id="apellido" required="true"/>
                         </div>
                         <div class="form-group">
-                            <label for="exampleFormControlInput2">Apellidos</label>
-                            <h:inputText value="#{usuarioMedicoBean.persona.apellidoPersona}" class="form-control" id="exampleFormControlInput2" required="true"/>
+                            <label for="departamento">Departamento</label>
+                            <h:inputText value="#{pacienteBean.paciente.idPersona.departamento}" class="form-control" id="departamento" required="true"/>
                         </div>
                         <div class="form-group">
-                            <label for="exampleFormControlInput3">Departamento</label>
-                            <h:inputText value="#{usuarioMedicoBean.persona.departamento}" class="form-control" id="exampleFormControlInput3" required="true"/>
+                            <label for="municipio">Municipio</label>
+                            <h:inputText value="#{pacienteBean.paciente.idPersona.municipio}" class="form-control" id="municipio" required="true"/>
                         </div>
                         <div class="form-group">
-                            <label for="exampleFormControlInput4">Municipio</label>
-                            <h:inputText value="#{usuarioMedicoBean.persona.municipio}" class="form-control" id="exampleFormControlInput4" required="true"/>
+                            <label for="telefono">Telefono</label>
+                            <h:inputText value="#{pacienteBean.paciente.idPersona.telefono}" class="form-control" id="telefono" maxlength="9" required="true"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="sexo">Genero</label>
+                            <h:selectOneRadio value="#{pacienteBean.paciente.idPersona.genero}" id="sexo">
+                                <f:selectItem itemValue="Masculino" itemLabel="MASCULINO "/>
+                                <f:selectItem itemValue="Femenino" itemLabel="FEMENINO "/>
+                            </h:selectOneRadio>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="dui">Dui</label>
+                            <h:inputText value="#{pacienteBean.paciente.idPersona.dui}" class="form-control" id="dui" maxlength="10" required="true"/>
                         </div>
                         <div class="form-group">
-                            <label for="exampleFormControlInput5">Telefono</label>
-                            <h:inputText value="#{usuarioMedicoBean.persona.telefono}" class="form-control" id="exampleFormControlInput5" maxlength="9" required="true"/>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="sexo">Sexo</label>
-                            <h:inputText value="#{usuarioMedicoBean.persona.genero}" class="form-control" id="sexo" required="true"/>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="exampleFormControlInput6">Dui</label>
-                            <h:inputText value="#{usuarioMedicoBean.persona.dui}" class="form-control" id="exampleFormControlInput6" maxlength="10" required="true"/>
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleFormControlInput7">Fecha naciemiento</label>
-                            <h:inputText  value="#{usuarioMedicoBean.persona.fechaNacimiento}" class="form-control" id="exampleFormControlInput7" required="true"/>
+                            <label for="fechaNacimiento">Fecha de nacimiento </label><br/>
+                            <p:calendar id="fechaNacimiento" value="#{pacienteBean.paciente.idPersona.fechaNacimiento}" placeholder="yyyy/MM/dd" 
+                                        locale="es"  pattern="yyyy/MM/dd" required="true"/>
                         </div>
 
                         <div style="width: 100%; height: 20px; border-bottom: 1px solid black; margin-top: 3%; margin-bottom: 3%; text-align: center">
                             <span style="font-size: 1.5em; background-color: #F3F5F6; padding: 0 10px;">
-                                Datos del Paciente <!--Padding is optional-->
+                                Datos del paciente <!--Padding is optional-->
                             </span>
                         </div>
 
                         <div class="form-group">
-                            <label for="exampleFormControlInput8">Nombre de responsable</label>
-                            <h:inputText  value="#{usuarioMedicoBean.medico.emailMedico}" class="form-control" id="exampleFormControlInput8" required="true"/>
+                            <label for="exampleFormControlInput7">Nombre de responsable</label>
+                            <h:inputText  value="#{pacienteBean.paciente.nombreResponsable}" class="form-control" id="exampleFormControlInput7" required="true"/>
                         </div>
-                        
                         <div class="form-group">
                             <label for="exampleFormControlInput8">Telefono de emergencia</label>
-                            <h:inputText  value="#{usuarioMedicoBean.medico.emailMedico}" class="form-control" id="exampleFormControlInput8" required="true"/>
+                            <h:inputText  value="#{pacienteBean.paciente.telefonoEmergencia}" class="form-control" id="exampleFormControlInput8" required="true"/>
                         </div>
-                        
-                           <div class="form-group">
-                            <label for="exampleFormControlInput8">Vinculo de responsable</label>
-                            <h:inputText  value="#{usuarioMedicoBean.medico.emailMedico}" class="form-control" id="exampleFormControlInput8" required="true"/>
-                        </div>
-                        
-                             <div class="form-group">
-                            <label for="exampleFormControlInput8">Estado civil</label>
-                            <h:inputText  value="#{usuarioMedicoBean.medico.emailMedico}" class="form-control" id="exampleFormControlInput8" required="true"/>
-                        </div>
-                                               
-                        
                         <div class="form-group">
-                            <label for="exampleFormControlInput9">Estado paciente </label>
-                            <input type="checkbox" value="#{usuarioMedicoBean.medico.estadoMedico}" id="exampleFormControlInput9"/>
+                            <label for="exampleFormControlInput9">Vinculo de responsablea</label>
+                            <h:inputText  value="#{pacienteBean.paciente.vinculoResponsable}" class="form-control" id="exampleFormControlInput9" required="true"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlInput10">estado civil</label>
+                            <h:inputText  value="#{pacienteBean.paciente.estadoCivil}" class="form-control" id="exampleFormControlInput10" required="true"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="estadoPaciente">Estado</label>
+                            <h:selectBooleanCheckbox id="estadoPaciente" value="#{pacienteBean.paciente.estadoPaciente}" />
                         </div>
 
 
-                        <h:commandButton value="Guardar" action="#{usuarioMedicoBean.insertarUsuarioMedico()}" class="btn btn-success"/>
-                        <h:commandButton class="btn btn-danger" value="Cancelar"/>
+                        <h:commandButton value="Modificar" action="#{pacienteBean.updatePaciente()}" class="btn btn-success"/>
+                        <h:link outcome="/admin/paciente/pacienteListar" value="Cancelar" class="btn btn-danger"/>
                     </h:form>
-                    
+
                 </div>
             </ui:define>
 
+            <ui:define name="scripts">
+                <h:outputScript name="js/spanishLocale.js"/>
+            </ui:define>
 
-            
         </ui:composition>
 
     </body>
