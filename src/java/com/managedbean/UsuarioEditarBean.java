@@ -1,6 +1,7 @@
 
 package com.managedbean;
 
+import com.ejb.PersonaEJB;
 import com.ejb.RolEJB;
 import com.ejb.UsuarioEJB;
 import com.entities.PersonaEntity;
@@ -14,29 +15,36 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
+//import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
 /**
  *
  * @author josue
  */
-@ManagedBean(name = "usuarioEditarBean")
+//@ManagedBean(name = "usuarioEditarBean")
+@Named(value = "usuarioEditarBean")
 @ViewScoped
 public class UsuarioEditarBean implements Serializable{
+
+    @EJB
+    private PersonaEJB personaEJB;
 
     @EJB
     private RolEJB rolEJB;
 
     @EJB
     private UsuarioEJB usuarioEJB;
+    
+    
 
-    Usuario usuario = new Usuario();
-    RolEntity rol = new RolEntity();
-    PersonaEntity persona = new PersonaEntity();
-    List<RolEntity> listaRoles = new ArrayList<RolEntity>();
+     Usuario usuario = new Usuario();
+     RolEntity rol = new RolEntity();
+     PersonaEntity persona = new PersonaEntity();
+     List<RolEntity> listaRoles = new ArrayList<RolEntity>();
     
     public UsuarioEditarBean() {
     }
@@ -77,6 +85,7 @@ public class UsuarioEditarBean implements Serializable{
          this.listaRoles = rolEJB.listarRoles();
         return this.listaRoles;
     }
+    
     @PostConstruct
     public void init() {
         System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!");
@@ -91,17 +100,25 @@ public class UsuarioEditarBean implements Serializable{
         if (id == null) {
             System.out.println("Error!!!!");
         } else {
-            System.out.println(":vvvvvvvvvvvvvvvvvvvvvvvvvvvvv"+id);
              this.usuario = new Usuario();
-       
+             
         usuario = usuarioEJB.obtenerUsuario(Integer.valueOf(id));
         }
          
     
     }
     
+     public String editUsuario(int id)
+    {
+        this.usuario = new Usuario();
+        
+        usuario = usuarioEJB.obtenerUsuario(id);
+
+        return "/admin/usuario/usuariooEditar.xhtml"; 
+    }
+    
+    
     public String updateUsuario(){
-      
         try {
             
             usuarioEJB.modificarUsuario(usuario);

@@ -50,7 +50,7 @@ public class UsuarioEJB {
             System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>");
             System.out.println(usuario);
             em.merge(usuario);
-           // em.flush();
+            em.flush();
             return 1;
         } catch (Exception e) {
             throw new Exception("Error al actualizar " + e.getMessage());

@@ -47,7 +47,8 @@ public class Usuario implements Serializable {
     @Size(min = 1, max = 250)
     private String password;
     @JoinColumn(name = "idPersona", referencedColumnName = "idPersona")
-    @ManyToOne
+    //@ManyToOne
+    @OneToOne(cascade = CascadeType.MERGE)
     private PersonaEntity idPersona;
     @JoinColumn(name = "idRol", referencedColumnName = "idRol")
     @ManyToOne

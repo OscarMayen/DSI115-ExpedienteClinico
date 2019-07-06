@@ -43,44 +43,43 @@
                             </span>
                         </div>
                         <div class="form-group">
-                           
-                            <label for="nombre">Nombre</label>
-                            <h:inputText  value="#{usuarioEditarBean.usuario.idPersona.nombrePersona}" class="form-control" id="nombre" required="true"/>
+                            <label for="nombreU">Nombre</label>
+                            <h:inputText  value="#{usuarioEditarBean.usuario.idPersona.nombrePersona}" class="form-control" id="nombreU" required="true"/>
                         </div>
                         
                         <div class="form-group">
                             
-                            <label for="apellido">Apellidos</label>
-                            <h:inputText  value="#{usuarioEditarBean.usuario.idPersona.apellidoPersona}" class="form-control" id="apellido" required="true"/>
+                            <label for="apellidoU">Apellidos</label>
+                            <h:inputText  value="#{usuarioEditarBean.usuario.idPersona.apellidoPersona}" class="form-control" id="apellidoU" required="true"/>
                         </div>
                         <div class="form-group">
-                            <label for="departamento">Departamento</label>
-                            <h:inputText value="#{usuarioEditarBean.usuario.idPersona.departamento}" class="form-control" id="departamento" required="true"/>
+                            <label for="departamentoU">Departamento</label>
+                            <h:inputText value="#{usuarioEditarBean.usuario.idPersona.departamento}" class="form-control" id="departamentoU" required="true"/>
                         </div>
                         <div class="form-group">
-                            <label for="municipio">Municipio</label>
-                            <h:inputText value="#{usuarioEditarBean.usuario.idPersona.municipio}" class="form-control" id="municipio" required="true"/>
+                            <label for="municipioU">Municipio</label>
+                            <h:inputText value="#{usuarioEditarBean.usuario.idPersona.municipio}" class="form-control" id="municipioU" required="true"/>
                         </div>
                         <div class="form-group">
-                            <label for="telefono">Telefono</label>
-                            <h:inputText value="#{usuarioEditarBean.usuario.idPersona.telefono}" class="form-control" id="telefono" maxlength="9" required="true"/>
+                            <label for="telefonoU">Telefono</label>
+                            <h:inputText value="#{usuarioEditarBean.usuario.idPersona.telefono}" class="form-control" id="telefonoU" maxlength="9" required="true"/>
                         </div>
                         
                         <div class="form-group">
-                            <label for="sexo">Genero</label>
-                            <h:selectOneRadio value="#{usuarioEditarBean.usuario.idPersona.genero}" id="sexo">
+                            <label for="sexoU">Genero</label>
+                            <h:selectOneRadio value="#{usuarioEditarBean.usuario.idPersona.genero}" id="sexoU">
                                 <f:selectItem itemValue="Masculino" itemLabel="MASCULINO "/>
                                 <f:selectItem itemValue="Femenino" itemLabel="FEMENINO "/>
                             </h:selectOneRadio>
                         </div>
                         
                         <div class="form-group">
-                            <label for="dui">Dui</label>
-                            <h:inputText value="#{usuarioEditarBean.usuario.idPersona.dui}" class="form-control" id="dui" maxlength="10" required="true"/>
+                            <label for="duiU">Dui</label>
+                            <h:inputText value="#{usuarioEditarBean.usuario.idPersona.dui}" class="form-control" id="duiU" maxlength="10" required="true"/>
                         </div>
                         <div class="form-group">
-                            <label for="fechaNacimiento">Fecha de nacimiento </label><br/>
-                            <p:calendar id="fechaNacimiento" value="#{usuarioEditarBean.usuario.idPersona.fechaNacimiento}" placeholder="yyyy/MM/dd" 
+                            <label for="fechaNacimientoU">Fecha de nacimiento </label><br/>
+                            <p:calendar id="fechaNacimientoU" value="#{usuarioEditarBean.usuario.idPersona.fechaNacimiento}" placeholder="yyyy/MM/dd" 
                                         locale="es"  pattern="yyyy/MM/dd" required="true"/>
                         </div>
 
@@ -91,19 +90,19 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="usuario">Usuario</label>
-                            <h:inputText  value="#{usuarioEditarBean.usuario.username}" class="form-control" id="usuario" required="true"/>
+                            <label for="usuarioU">Usuario</label>
+                            <h:inputText  value="#{usuarioEditarBean.usuario.username}" class="form-control" id="usuarioU" required="true"/>
                         </div>
                         
                         <div class="form-group">
-                            <label for="password">Password</label>
-                            <h:inputText  value="#{usuarioEditarBean.usuario.password}" class="form-control" id="password" required="true"/>
+                            <label for="passwordU">Password</label>
+                            <h:inputText  value="#{usuarioEditarBean.usuario.password}" class="form-control" id="passwordU" required="true"/>
                         </div>                        
 
                         
                         <div class="form-group">
-                            <h:outputLabel value="Seleccione un rol:" for="codRol" />
-                            <h:selectOneMenu id="codRol" class="form-control"
+                            <h:outputLabel value="Seleccione un rol:" for="codRolU" />
+                            <h:selectOneMenu id="codRolU" class="form-control"
                                              value="#{usuarioEditarBean.usuario.idRol}" title="Rol">
                                 <f:selectItems value="#{usuarioEditarBean.listaRoles}" var="rol"
                                                itemValue="#{rol}"

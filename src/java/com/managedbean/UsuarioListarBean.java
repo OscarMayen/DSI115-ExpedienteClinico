@@ -59,7 +59,7 @@ public class UsuarioListarBean implements Serializable{
     
     private List<Usuario> buscarUsuarios() {
          this.listaUsuario = usuarioEJB.listarUsuario();
-        return listaUsuario;
+         return listaUsuario;
     }
     
     public String editUsuario(int id)
