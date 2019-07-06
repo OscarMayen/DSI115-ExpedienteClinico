@@ -31,7 +31,56 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>faces/index.xhtml</welcome-file>
+        <welcome-file>faces/plantillas/usuario/sesion.xhtml</welcome-file>
     </welcome-file-list>
-    
+    <security-constraint>
+        <display-name>Administrador</display-name>
+        <web-resource-collection>
+            <web-resource-name>reourseAdministrador</web-resource-name>
+            <description/>
+            <url-pattern>/admin/medico/*</url-pattern>
+            <url-pattern>/admin/paciente/*</url-pattern>
+            <url-pattern>/admin/usuario/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>admin</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <description/>
+            <transport-guarantee>NONE</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>Archivista</display-name>
+        <web-resource-collection>
+            <web-resource-name>reourseArchivista</web-resource-name>
+            <description/>
+            <url-pattern>/admin/paciente/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>archivista</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <description/>
+            <transport-guarantee>NONE</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <realm-name>expedienteClinicoRealm</realm-name>
+        <form-login-config>
+            <form-login-page>/plantillas/usuario/login.xhtml</form-login-page>
+            <form-error-page>/plantillas/usuario/login.xhtml</form-error-page>
+        </form-login-config>
+    </login-config>
+    <security-role>
+        <description/>
+        <role-name>admin</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>archivista</role-name>
+    </security-role>
 </web-app>
