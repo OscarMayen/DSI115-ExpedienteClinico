@@ -24,10 +24,10 @@
 
                     <h:form>
                         <h1><h:outputText value="Listado de Pacientes"/></h1>
-                        <h:link outcome="/admin/paciente/pacienteInsertar" value="Nuevo Paciente" class="btn btn-success"/>
+                        <h:commandButton actionListener="#{pacienteBean.irInsertar()}" value="Nuevo Paciente" class="btn btn-success"/>
                         <br>
                         </br>
-                        <h:dataTable value="#{pacienteListar.listaPaciente}" var="item"
+                        <h:dataTable value="#{pacienteBean.listarPacientes()}" var="item"
                                      class="table table-bordered display" id="tabla">
                             <h:column>
                                 <f:facet name="header">
@@ -63,10 +63,10 @@
                                 <f:facet name="header">
                                     <h:outputText value="Operaciones" />
                                 </f:facet>
-                                <h:commandButton class="btn btn-primary" action="#{pacienteBean.detallePaciente(item.idPaciente)}" value="Ver">
-                                    <f:param name="id"  value="#{item.idPaciente}"/>
+                                <h:commandButton class="btn btn-primary" actionListener="#{pacienteBean.detallePaciente()}" value="Ver">
+                                <f:param name="id"  value="#{item.idPaciente}"/>
                                 </h:commandButton>
-                                <h:commandButton class="btn btn-primary" action="#{pacienteListar.editPaciente(item.idPaciente)}" value="Editar">
+                                <h:commandButton class="btn btn-primary" actionListener="#{pacienteBean.irEditar()}" value="Editar">
                                     <f:param name="id"  value="#{item.idPaciente}"/>
                                 </h:commandButton>
                                 

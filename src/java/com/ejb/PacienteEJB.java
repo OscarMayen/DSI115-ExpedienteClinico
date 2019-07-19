@@ -6,6 +6,7 @@
 package com.ejb;
 
 import com.entities.PacienteEntity;
+import java.io.Serializable;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -17,7 +18,7 @@ import javax.persistence.Query;
  * @author DTO
  */
 @Stateless
-public class PacienteEJB {
+public class PacienteEJB implements Serializable {
 
     @PersistenceContext(unitName = "ExpedienteClinicoBBraunPU")
 

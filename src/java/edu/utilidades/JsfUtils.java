@@ -1,6 +1,7 @@
 
 package edu.utilidades;
 
+import java.io.IOException;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
@@ -27,5 +28,10 @@ public class JsfUtils
     {
         return (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
     
+    }
+    
+    public static void  Redireccionar(String url) throws IOException
+    {
+        FacesContext.getCurrentInstance().getExternalContext().redirect(url);
     }
 }

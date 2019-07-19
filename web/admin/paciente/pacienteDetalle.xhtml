@@ -36,7 +36,7 @@
                 <div class="col-md-8 offset-md-2"> 
                     <h2>Datos del paciente</h2>
                     
-                    <h:form>
+                    <h:form  >
                         <div style="width: 100%; height: 20px; border-bottom: 1px solid black; margin-top: 3%; margin-bottom: 3%; text-align: center">
                             <span style="font-size: 1.5em; background-color: #F3F5F6; padding: 0 10px;">
                                 Datos personales <!--Padding is optional-->
@@ -45,37 +45,37 @@
                         
                         <div class="form-group">
                             <label for="exampleFormControlInput1">Nombres</label>
-                            <h:inputText value="#{pacienteDetalleBean.paciente.idPersona.nombrePersona}" class="form-control" id="exampleFormControlInput1"  required="true" disabled="true"></h:inputText>
+                            <h:inputText value="#{pacienteBean.paciente.idPersona.nombrePersona}" class="form-control" id="exampleFormControlInput1"  required="true" disabled="true" ></h:inputText>
                         </div>
                         <div class="form-group">
                             <label for="exampleFormControlInput2">Apellidos</label>
-                            <h:inputText value="#{pacienteDetalleBean.paciente.idPersona.apellidoPersona}" class="form-control" id="exampleFormControlInput2" required="true" disabled="true"/>
+                            <h:inputText value="#{pacienteBean.paciente.idPersona.apellidoPersona}" class="form-control" id="exampleFormControlInput2" required="true" disabled="true"/>
                         </div>
                         <div class="form-group">
                             <label for="exampleFormControlInput3">Departamento</label>
-                            <h:inputText value="#{pacienteDetalleBean.paciente.idPersona.departamento}" class="form-control" id="exampleFormControlInput3" required="true" disabled="true"/>
+                            <h:inputText value="#{pacienteBean.paciente.idPersona.departamento}" class="form-control" id="exampleFormControlInput3" required="true" disabled="true"/>
                         </div>
                         <div class="form-group">
                             <label for="exampleFormControlInput4">Municipio</label>
-                            <h:inputText value="#{pacienteDetalleBean.paciente.idPersona.municipio}" class="form-control" id="exampleFormControlInput4" required="true" disabled="true"/>
+                            <h:inputText value="#{pacienteBean.paciente.idPersona.municipio}" class="form-control" id="exampleFormControlInput4" required="true" disabled="true"/>
                         </div>
                         <div class="form-group">
                             <label for="exampleFormControlInput5">Telefono</label>
-                            <h:inputText value="#{pacienteDetalleBean.paciente.idPersona.telefono}" class="form-control" id="exampleFormControlInput5" maxlength="9" required="true" disabled="true"/>
+                            <h:inputText value="#{pacienteBean.paciente.idPersona.telefono}" class="form-control" id="exampleFormControlInput5" maxlength="9" required="true" disabled="true"/>
                         </div>
                         
                         <div class="form-group">
                             <label for="sexo">Sexo</label>
-                            <h:inputText value="#{pacienteDetalleBean.paciente.idPersona.genero}" class="form-control" id="sexo" required="true" disabled="true"/>
+                            <h:inputText value="#{pacienteBean.paciente.idPersona.genero}" class="form-control" id="sexo" required="true" disabled="true"/>
                         </div>
                         
                         <div class="form-group">
                             <label for="exampleFormControlInput6">Dui</label>
-                            <h:inputText value="#{pacienteDetalleBean.paciente.idPersona.dui}" class="form-control" id="exampleFormControlInput6" maxlength="10" required="true" disabled="true"/>
+                            <h:inputText value="#{pacienteBean.paciente.idPersona.dui}" class="form-control" id="exampleFormControlInput6" maxlength="10" required="true" disabled="true"/>
                         </div>
                         <div class="form-group">
                             <label for="exampleFormControlInput7">Fecha naciemiento</label>
-                            <h:inputText  value="#{pacienteDetalleBean.paciente.idPersona.fechaNacimiento}" class="form-control" id="exampleFormControlInput7" required="true" disabled="true"/>
+                            <p:calendar  pattern="dd/MM/yyyy" value="#{pacienteBean.paciente.idPersona.fechaNacimiento}"  id="exampleFormControlInput7" required="true" disabled="true"/>
                         </div>
 
                         <div style="width: 100%; height: 20px; border-bottom: 1px solid black; margin-top: 3%; margin-bottom: 3%; text-align: center">
@@ -86,30 +86,27 @@
 
                         <div class="form-group">
                             <label for="exampleFormControlInput13">Nombre de responsable</label>
-                            <h:inputText  value="#{pacienteDetalleBean.paciente.nombreResponsable}" class="form-control" id="exampleFormControlInput13" required="true" disabled="true"/>
+                            <h:inputText  value="#{pacienteBean.paciente.nombreResponsable}" class="form-control" id="exampleFormControlInput13" required="true" disabled="true"/>
                         </div>
                         
                         <div class="form-group">
                             <label for="exampleFormControlInput12">Telefono de emergencia</label>
-                            <h:inputText  value="#{pacienteDetalleBean.paciente.telefonoEmergencia}" class="form-control" id="exampleFormControlInput12" required="true" disabled="true"/>
+                            <h:inputText  value="#{pacienteBean.paciente.telefonoEmergencia}" class="form-control" id="exampleFormControlInput12" required="true" disabled="true"/>
                         </div>
                         
-                           <div class="form-group">
+                         <div class="form-group">
                             <label for="exampleFormControlInput11">Vinculo de responsable</label>
-                            <h:inputText  value="#{pacienteDetalleBean.paciente.vinculoResponsable}" class="form-control" id="exampleFormControlInput11" required="true" disabled="true"/>
+                            <h:inputText  value="#{pacienteBean.paciente.vinculoResponsable}" class="form-control" id="exampleFormControlInput11" required="true" disabled="true"/>
                         </div>
                         
-                             <div class="form-group">
+                        <div class="form-group">
                             <label for="exampleFormControlInput10">Estado civil</label>
-                            <h:inputText  value="#{pacienteDetalleBean.paciente.estadoCivil}" class="form-control" id="exampleFormControlInput10" required="true" disabled="true"/>
+                            <h:inputText  value="#{pacienteBean.paciente.estadoCivil}" class="form-control" id="exampleFormControlInput10" required="true" disabled="true"/>
                         </div>
-                                               
-                        
                         <div class="form-group">
                             <label for="exampleFormControlInput9">Estado paciente </label>
                             <h:selectBooleanCheckbox value="#{pacienteBean.paciente.estadoPaciente}" id="exampleFormControlInput9" disabled="true" />
                         </div>
-
                         <h:link outcome="/admin/paciente/pacienteListar" value="Volver" class="btn btn-primary"/>
                     </h:form>
                     

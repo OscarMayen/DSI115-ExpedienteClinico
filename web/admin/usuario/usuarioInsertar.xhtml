@@ -70,7 +70,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="sexo">Genero</label>
+                            <label for="sexo">Sexo</label>
                             <h:selectOneRadio value="#{usuarioInsertarBean.persona.genero}" id="sexo">
                                 <f:selectItem itemValue="Masculino" itemLabel="Masculino"/>
                                 <f:selectItem itemValue="Femenino" itemLabel="Femenino"/>
@@ -86,7 +86,7 @@
                         <div class="form-group">
                             <label for="fechaNacimiento">Fecha de nacimiento </label><br/>
                             <p:calendar id="fechaNacimiento" value="#{usuarioInsertarBean.persona.fechaNacimiento}" placeholder="yyyy/MM/dd" 
-                                        locale="es"  pattern="yyyy/MM/dd" required="true"/>
+                                        locale="es"  pattern="dd/MM/yyyy" required="true"/>
                         </div>
 
                         

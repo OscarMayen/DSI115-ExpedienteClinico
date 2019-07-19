@@ -65,7 +65,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="sexo">Genero</label>
+                            <label for="sexo">Sexo</label>
                             <h:selectOneRadio value="#{pacienteBean.persona.genero}" id="sexo">
                                 <f:selectItem itemValue="Masculino" itemLabel="Masculino"/>
                                 <f:selectItem itemValue="Femenino" itemLabel="Femenino"/>
@@ -78,8 +78,8 @@
                         </div>
                         <div class="form-group">
                             <label for="fechaNacimiento">Fecha de nacimiento </label><br/>
-                            <p:calendar id="fechaNacimiento" value="#{pacienteBean.persona.fechaNacimiento}" placeholder="yyyy/MM/dd" 
-                                        locale="es"  pattern="yyyy/MM/dd" required="true"/>
+                            <p:calendar id="fechaNacimiento" value="#{pacienteBean.persona.fechaNacimiento}" placeholder="dd/MM/yyyy" 
+                                        locale="es"  pattern="dd/MM/yyyy" required="true"/>
                         </div>
 
                         <div style="width: 100%; height: 20px; border-bottom: 1px solid black; margin-top: 3%; margin-bottom: 3%; text-align: center">
@@ -97,7 +97,7 @@
                             <h:inputText  value="#{pacienteBean.paciente.telefonoEmergencia}" class="form-control" id="exampleFormControlInput8" required="true"/>
                         </div>
                         <div class="form-group">
-                            <label for="exampleFormControlInput9">Vinculo de responsablea</label>
+                            <label for="exampleFormControlInput9">Vinculo de responsable</label>
                             <h:inputText  value="#{pacienteBean.paciente.vinculoResponsable}" class="form-control" id="exampleFormControlInput9" required="true"/>
                         </div>
                         <div class="form-group">
@@ -110,8 +110,8 @@
                         </div>
 
                 
-                <h:commandButton value="Guardar" action="#{pacienteBean.insertarPaciente()}" class="btn btn-success"/>
-                <h:commandButton class="btn btn-danger" value="Cancelar"/>
+                <h:commandButton value="Guardar" actionListener="#{pacienteBean.insertarPaciente()}" class="btn btn-success"/>
+                <h:commandButton class="btn btn-danger" action="/admin/paciente/pacienteListar.xhtml?faces-redirect=true" immediate="true" value="Cancelar"/>
                 </h:form>
 
                 </div>
