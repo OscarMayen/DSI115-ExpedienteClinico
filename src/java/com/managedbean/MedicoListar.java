@@ -25,8 +25,9 @@ import javax.faces.context.FacesContext;
 
 /**
  *
- * @author Mireya Flores
+ * @author Oscar Mayen
  */
+//ManagedBean
 @ManagedBean(name = "medicoListar")
 @ViewScoped
 public class MedicoListar implements Serializable {
