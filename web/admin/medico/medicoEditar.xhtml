@@ -17,12 +17,12 @@
             <ui:define name="css">
                 <style>
                     .btn{
-                        
+
                         margin-top: 2%;
                         margin-bottom: 2%;
-                        
+
                     }
-                    
+
                     #btn{
                         margin-left: 35%;
                     }
@@ -30,12 +30,15 @@
                 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
                 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
                 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+                <script src="../../resources/js/spanishLocale.js" type="text/javascript"></script>
             </ui:define>
 
             <ui:define name="contenido">
                 <div class="col-md-8 offset-md-2"> 
                     <h2>Editar médico</h2>
-                    
+                    <h:panelGroup layout="block" class="alert-danger" rendered="#{not empty facesContext.messageList}">
+                        <h:messages />
+                    </h:panelGroup>
                     <h:form>
                         <div style="width: 100%; height: 20px; border-bottom: 1px solid black; margin-top: 3%; margin-bottom: 3%; text-align: center">
                             <span style="font-size: 1.5em; background-color: #F3F5F6; padding: 0 10px;">
@@ -43,45 +46,66 @@
                             </span>
                         </div>
                         <div class="form-group">
-                           
-                            <label for="nombre">Nombre</label>
-                            <h:inputText  value="#{usuarioMedicoBean.medico.idPersona.nombrePersona}" class="form-control" id="nombre" required="true"/>
+
+                            <label for="nombresMEdicoE">Nombre</label>
+                            <h:inputText  value="#{usuarioMedicoBean.medico.idPersona.nombrePersona}" title="nombresMEdicoE"
+                                          class="form-control" id="nombresMEdicoE" 
+                                          required="true" requiredMessage="El campo nombres es obligatiorio"/>
                         </div>
-                        
+
                         <div class="form-group">
-                            
-                            <label for="apellido">Apellidos</label>
-                            <h:inputText  value="#{usuarioMedicoBean.medico.idPersona.apellidoPersona}" class="form-control" id="apellido" required="true"/>
-                        </div>
-                        <div class="form-group">
-                            <label for="departamento">Departamento</label>
-                            <h:inputText value="#{usuarioMedicoBean.medico.idPersona.departamento}" class="form-control" id="departamento" required="true"/>
-                        </div>
-                        <div class="form-group">
-                            <label for="municipio">Municipio</label>
-                            <h:inputText value="#{usuarioMedicoBean.medico.idPersona.municipio}" class="form-control" id="municipio" required="true"/>
+
+                            <label for="apellidoMedicoE">Apellidos</label>
+                            <h:inputText  value="#{usuarioMedicoBean.medico.idPersona.apellidoPersona}" title="apellidoMedicoE"
+                                          class="form-control" id="apellidoMedicoE" 
+                                          required="true" requiredMessage="El campo apellidos es obligatorio."/>
                         </div>
                         <div class="form-group">
-                            <label for="telefono">Telefono</label>
-                            <h:inputText value="#{usuarioMedicoBean.medico.idPersona.telefono}" class="form-control" id="telefono" maxlength="9" required="true"/>
+                            <label for="departamentoMedicoE">Departamento</label>
+                            <h:inputText value="#{usuarioMedicoBean.medico.idPersona.departamento}" title="departamentoMedicoE"
+                                         class="form-control" id="departamentoMedicoE" 
+                                         required="true" requiredMessage="El campo departamento es obligatorio."/>
                         </div>
-                        
                         <div class="form-group">
-                            <label for="sexo">Sexo</label>
-                            <h:selectOneRadio value="#{usuarioMedicoBean.medico.idPersona.genero}" id="sexo">
+                            <label for="municipioMedicoE">Municipio</label>
+                            <h:inputText value="#{usuarioMedicoBean.medico.idPersona.municipio}" title="municipioMedicoE"
+                                         class="form-control" id="municipioMedicoE" 
+                                         required="true" requiredMessage="El campo municipio es obligatorio."/>
+                        </div>
+                        <div class="form-group">
+                            <label for="telefonoMedicoE">Telefono</label>
+                            <h:inputText value="#{usuarioMedicoBean.medico.idPersona.telefono}" title="telefonoMedicoE"
+                                         class="form-control" id="telefonoMedicoE" maxlength="9" 
+                                         required="true" requiredMessage="El campo telefono es obligatorio"
+                                         validatorMessage="Telefono con formato incorrecto, debe tener el siguiente formato: 2222-2222" >
+                                <f:validateRegex pattern="[267][0-9]{3}-[0-9]{4}"/>
+                            </h:inputText>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="sexoMedicoE">Sexo</label>
+                            <h:selectOneRadio value="#{usuarioMedicoBean.medico.idPersona.genero}" title="sexoMedicoE" 
+                                              id="sexoMedicoE" required="true" requiredMessage="El campo sexo es obligatorio.">
                                 <f:selectItem itemValue="Masculino" itemLabel="MASCULINO "/>
                                 <f:selectItem itemValue="Femenino" itemLabel="FEMENINO "/>
                             </h:selectOneRadio>
                         </div>
-                        
+
                         <div class="form-group">
-                            <label for="dui">Dui</label>
-                            <h:inputText value="#{usuarioMedicoBean.medico.idPersona.dui}" class="form-control" id="dui" maxlength="10" required="true"/>
+                            <label for="duiMedicoE">Dui</label>
+                            <h:inputText value="#{usuarioMedicoBean.medico.idPersona.dui}" title="duiMedicoE"
+                                         class="form-control" id="duiMedicoE" 
+                                         maxlength="10" validatorMessage="Dui con formato incorrecto, debe tener el siguiente formato: 12345678-1" 
+                                         required="true" requiredMessage="El campo dui es obligatorio.">
+                                 <f:validateRegex pattern="[0-9]{8}-[0-9]{1}" />
+                            </h:inputText>
                         </div>
                         <div class="form-group">
-                            <label for="fechaNacimiento">Fecha de nacimiento </label><br/>
-                            <p:calendar id="fechaNacimiento" value="#{usuarioMedicoBean.medico.idPersona.fechaNacimiento}" placeholder="dd/MM/yyyy" 
-                                        locale="es"  pattern="dd/MM/yyyy" required="true"/>
+                            <label for="fechaNacimientoMedicoE">Fecha de nacimiento </label><br/>
+                            <p:calendar id="fechaNacimientoMedicoE" value="#{usuarioMedicoBean.medico.idPersona.fechaNacimiento}" 
+                                        title="fechaNacimientoMedicoE" placeholder="dd/MM/yyyy" 
+                                        locale="es"  pattern="dd/MM/yyyy" 
+                                        required="true" requiredMessage="El campo fecha de nacimiento es obligatorio."/>
                         </div>
 
                         <div style="width: 100%; height: 20px; border-bottom: 1px solid black; margin-top: 3%; margin-bottom: 3%; text-align: center">
@@ -91,8 +115,10 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="email">Email</label>
-                            <h:inputText  value="#{usuarioMedicoBean.medico.emailMedico}" class="form-control" id="email" required="true"/>
+                            <label for="emailMedicoE">Email</label>
+                            <h:inputText  value="#{usuarioMedicoBean.medico.emailMedico}" title="emailMedicoE"
+                                          class="form-control" id="emailMedicoE"
+                                          required="true" requiredMessage="El campo email es ibligatorio."/>
                         </div>
                         <div class="form-group">
                             <label for="estadoMedico">Estado</label>
@@ -108,15 +134,15 @@
                                                itemLabel="#{especialidad.nombreEspecialidad}"/>
                             </h:selectOneMenu>
                         </div>
-                        
-                        
-                        <h:commandButton value="Modificar" action="#{usuarioMedicoBean.updateMedico()}" class="btn btn-success"/>
+
+
+                        <h:commandButton value="Modificar" action="#{usuarioMedicoBean.updateMedico()}" class="btn btn-success"/>&nbsp;&nbsp;
                         <h:link outcome="/admin/medico/medicoListar" value="Cancelar" class="btn btn-danger"/>
                     </h:form>
-                    
+
                 </div>
             </ui:define>
-            
+
             <ui:define name="scripts">
                 <h:outputScript name="js/spanishLocale.js"/>
             </ui:define>

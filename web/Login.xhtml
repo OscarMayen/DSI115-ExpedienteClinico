@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Iniciar Sesion</title>
+        <!-- Compiled and minified CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css"/>
+        <!-- Compiled and minified JavaScript -->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+        <style>
+            body
+            {
+                background-image:url('resources/img/fondo3.jpg');
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-position: center 0px;
+                background-attachment: fixed;
+            }
+
+        </style>
+    </h:head>
+    <h:body styleClass="cyan lighten-5">
+        <div class="valign-wrapper" id="login-page">
+            <div class="container">
+                <div class="center-align">
+                    <div class="row">
+                        <br></br>  <br></br> <br></br> <br></br> <br></br> 
+                        <div class="col s6 offset-s3">
+                            <div class="card">
+                                <div class="card-content">
+                                    <h:column >
+                                        <h:graphicImage library="img" name="bbraun.jpg" width="60%" height="60%">
+                                        </h:graphicImage>
+                                    </h:column>
+                                    <div class="left-align">
+                                        <h:form id="login-form">
+                                            <p:growl autoUpdate="true"/>
+                                            <div class="row">
+                                                <div class="col s12 input-field">
+                                                    <h:outputLabel for="username" value="USUARIO"/>
+                                                    <h:inputText id="username" required="true" requiredMessage="El campo usuario es obligatorio."/>
+                                                </div>
+                                                <div class="col s12 input-field">
+                                                    <h:outputLabel for="password" value="CONTRASEÑA"/>
+                                                    <h:inputSecret id="password" required="true" requiredMessage="El campo contrasenia es obligatorio."/>
+                                                </div>
+                                                <div class="col s12 input-field">
+                                                    <h:commandLink value="Iniciar Sesion" styleClass="btn btn-large"/>
+                                                </div>
+                                            </div>
+                                        </h:form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <script>
+            $(document).on("ready", function () {
+                $('login-page').css({'height': window.innerHeight + 'px'});
+            });
+        </script>
+    </h:body>
+</html>
+
