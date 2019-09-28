@@ -45,28 +45,20 @@
 
                         <div class="form-group">
                             <label for="exampleFormControlInput1">Nombres</label>
-                            <h:inputText value="#{pacienteBean.persona.nombrePersona}" class="form-control" id="exampleFormControlInput1"  required="true"></h:inputText>
+                            <h:inputText value="#{pacienteInsertarManagedBean.personaEntity.nombrePersona}" class="form-control" id="exampleFormControlInput1"  required="true"></h:inputText>
                         </div>
                         <div class="form-group">
                             <label for="exampleFormControlInput2">Apellidos</label>
-                            <h:inputText value="#{pacienteBean.persona.apellidoPersona}" class="form-control" id="exampleFormControlInput2" required="true"/>
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleFormControlInput3">Departamento</label>
-                            <h:inputText value="#{pacienteBean.persona.departamento}" class="form-control" id="exampleFormControlInput3" required="true"/>
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleFormControlInput4">Municipio</label>
-                            <h:inputText value="#{pacienteBean.persona.municipio}" class="form-control" id="exampleFormControlInput4" required="true"/>
+                            <h:inputText value="#{pacienteInsertarManagedBean.personaEntity.apellidoPersona}" class="form-control" id="exampleFormControlInput2" required="true"/>
                         </div>
                         <div class="form-group">
                             <label for="exampleFormControlInput5">Telefono</label>
-                            <h:inputText value="#{pacienteBean.persona.telefono}" class="form-control" id="exampleFormControlInput5" maxlength="9" required="true"/>
+                            <h:inputText value="#{pacienteInsertarManagedBean.personaEntity.telefono}" class="form-control" id="exampleFormControlInput5" maxlength="9" required="true"/>
                         </div>
 
                         <div class="form-group">
                             <label for="sexo">Sexo</label>
-                            <h:selectOneRadio value="#{pacienteBean.persona.genero}" id="sexo">
+                            <h:selectOneRadio value="#{pacienteInsertarManagedBean.personaEntity.genero}" id="sexo">
                                 <f:selectItem itemValue="Masculino" itemLabel="Masculino"/>
                                 <f:selectItem itemValue="Femenino" itemLabel="Femenino"/>
                             </h:selectOneRadio>
@@ -74,11 +66,11 @@
 
                         <div class="form-group">
                             <label for="exampleFormControlInput6">Dui</label>
-                            <h:inputText value="#{pacienteBean.persona.dui}" class="form-control" id="exampleFormControlInput6" maxlength="10" required="true"/>
+                            <h:inputText value="#{pacienteInsertarManagedBean.personaEntity.dui}" class="form-control" id="exampleFormControlInput6" maxlength="10" required="true"/>
                         </div>
                         <div class="form-group">
                             <label for="fechaNacimiento">Fecha de nacimiento </label><br/>
-                            <p:calendar id="fechaNacimiento" value="#{pacienteBean.persona.fechaNacimiento}" placeholder="dd/MM/yyyy" 
+                            <p:calendar id="fechaNacimiento" value="#{pacienteInsertarManagedBean.personaEntity.fechaNacimiento}" placeholder="dd/MM/yyyy" 
                                         locale="es"  pattern="dd/MM/yyyy" required="true"/>
                         </div>
 
@@ -90,27 +82,27 @@
 
                         <div class="form-group">
                             <label for="exampleFormControlInput7">Nombre de responsable</label>
-                            <h:inputText  value="#{pacienteBean.paciente.nombreResponsable}" class="form-control" id="exampleFormControlInput7" required="true"/>
+                            <h:inputText  value="#{pacienteInsertarManagedBean.pacienteEntity.nombreResponsable}" class="form-control" id="exampleFormControlInput7" required="true"/>
                         </div>
                         <div class="form-group">
                             <label for="exampleFormControlInput8">Telefono de emergencia</label>
-                            <h:inputText  value="#{pacienteBean.paciente.telefonoEmergencia}" class="form-control" id="exampleFormControlInput8" required="true"/>
+                            <h:inputText  value="#{pacienteInsertarManagedBean.pacienteEntity.telefonoEmergencia}" class="form-control" id="exampleFormControlInput8" required="true"/>
                         </div>
                         <div class="form-group">
                             <label for="exampleFormControlInput9">Vinculo de responsable</label>
-                            <h:inputText  value="#{pacienteBean.paciente.vinculoResponsable}" class="form-control" id="exampleFormControlInput9" required="true"/>
+                            <h:inputText  value="#{pacienteInsertarManagedBean.pacienteEntity.vinculoResponsable}" class="form-control" id="exampleFormControlInput9" required="true"/>
                         </div>
                         <div class="form-group">
                             <label for="exampleFormControlInput10">estado civil</label>
-                            <h:inputText  value="#{pacienteBean.paciente.estadoCivil}" class="form-control" id="exampleFormControlInput10" required="true"/>
+                            <h:inputText  value="#{pacienteInsertarManagedBean.pacienteEntity.estadoCivil}" class="form-control" id="exampleFormControlInput10" required="true"/>
                         </div>
                         <div class="form-group">
                             <label for="estadoPaciente">Estado</label>
-                            <h:selectBooleanCheckbox id="estadoPaciente" value="#{pacienteBean.paciente.estadoPaciente}" />
+                            <h:selectBooleanCheckbox id="estadoPaciente" value="#{pacienteInsertarManagedBean.pacienteEntity.estadoPaciente}" />
                         </div>
 
                 
-                <h:commandButton value="Guardar" actionListener="#{pacienteBean.insertarPaciente()}" class="btn btn-success"/>
+                <p:commandButton value="Guardar" actionListener="#{pacienteInsertarManagedBean.insertarPaciente()}"/>
                 <h:commandButton class="btn btn-danger" action="/admin/paciente/pacienteListar.xhtml?faces-redirect=true" immediate="true" value="Cancelar"/>
                 </h:form>
 

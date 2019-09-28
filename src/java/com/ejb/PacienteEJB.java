@@ -58,5 +58,9 @@ public class PacienteEJB implements Serializable {
         return query.getResultList();
     }
     
+    public List filtroPaciente(String nombres, String apellidos, String dui){
+        Query query = em.createQuery("SELECT p FROM PacienteEntity p JOIN p.idPersona per WHERE (per.nombrePersona LIKE '%"+nombres+"%') AND (per.apellidoPersona LIKE '%"+apellidos+"%') AND (per.dui LIKE '%"+dui+"%') ");
+        return query.getResultList();
+    }
     
 }

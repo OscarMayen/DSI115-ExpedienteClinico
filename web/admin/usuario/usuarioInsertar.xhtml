@@ -55,14 +55,6 @@
                             <h:inputText value="#{usuarioInsertarBean.persona.apellidoPersona}" class="form-control" id="apellidos" required="true"/>
                         </div>
                         <div class="form-group">
-                            <label for="departamento">Departamento</label>
-                            <h:inputText value="#{usuarioInsertarBean.persona.departamento}" class="form-control" id="departamento" required="true"/>
-                        </div>
-                        <div class="form-group">
-                            <label for="municipio">Municipio</label>
-                            <h:inputText value="#{usuarioInsertarBean.persona.municipio}" class="form-control" id="municipio" required="true"/>
-                        </div>
-                        <div class="form-group">
                             <label for="telefono">Telefono</label>
                             <h:inputText value="#{usuarioInsertarBean.persona.telefono}" alt="Ej: 2245-5462" class="form-control" id="telefono" maxlength="9" required="true" validatorMessage="Ej: ####-####">
                                 <f:validateRegex pattern="[0-9]{4}-[0-9]{4}" />
@@ -116,7 +108,7 @@
                         </div>
                         
                         <h:commandButton value="Guardar" action="#{usuarioInsertarBean.insertarUsuario()}"  class="btn btn-success"/>
-                        <h:link outcome="/admin/medico/medicoListar" value="Cancelar" class="btn btn-danger"/>
+                        <h:link outcome="/admin/usuario/usuarioListar" value="Cancelar" class="btn btn-danger"/>
                         
                     </h:form>
                     

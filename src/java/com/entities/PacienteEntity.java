@@ -6,6 +6,7 @@
 package com.entities;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -16,17 +17,21 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author admin
+ * @author josue
  */
 @Entity
-@Table(name = "paciente")
+@Table(name = "Paciente")
+@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "PacienteEntity.findAll", query = "SELECT p FROM PacienteEntity p")
     , @NamedQuery(name = "PacienteEntity.findByIdPaciente", query = "SELECT p FROM PacienteEntity p WHERE p.idPaciente = :idPaciente")
@@ -64,6 +69,12 @@ public class PacienteEntity implements Serializable {
     @JoinColumn(name = "idPersona", referencedColumnName = "idPersona")
     @OneToOne( cascade =CascadeType.ALL )
     private PersonaEntity idPersona;
+    @OneToMany(mappedBy = "idPaciente")
+    private List<CitasEntity> citasEntityList;
+    @OneToMany(mappedBy = "idPaciente")
+    private List<ConsultaEntity> consultaEntityList;
+    @OneToMany(mappedBy = "idPaciente")
+    private List<AntecedentesEntity> antecedentesEntityList;
 
     public PacienteEntity() {
     }
@@ -135,6 +146,33 @@ public class PacienteEntity implements Serializable {
 
     public void setIdPersona(PersonaEntity idPersona) {
         this.idPersona = idPersona;
+    }
+
+    @XmlTransient
+    public List<CitasEntity> getCitasEntityList() {
+        return citasEntityList;
+    }
+
+    public void setCitasEntityList(List<CitasEntity> citasEntityList) {
+        this.citasEntityList = citasEntityList;
+    }
+
+    @XmlTransient
+    public List<ConsultaEntity> getConsultaEntityList() {
+        return consultaEntityList;
+    }
+
+    public void setConsultaEntityList(List<ConsultaEntity> consultaEntityList) {
+        this.consultaEntityList = consultaEntityList;
+    }
+
+    @XmlTransient
+    public List<AntecedentesEntity> getAntecedentesEntityList() {
+        return antecedentesEntityList;
+    }
+
+    public void setAntecedentesEntityList(List<AntecedentesEntity> antecedentesEntityList) {
+        this.antecedentesEntityList = antecedentesEntityList;
     }
 
     @Override

@@ -4,7 +4,8 @@
                 template="./../../plantillas/plantilla.xhtml"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns="http://www.w3.org/1999/xhtml">
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="titulo">
         Listar paciente
@@ -14,6 +15,25 @@
             .btn{
                 margin:1%;
             }
+            tr{
+                width: 100%;
+            }
+            td{
+                width: 50%
+            }
+            tbody{
+                width: 100%;
+            }
+            table{
+                width: 100%;
+            }
+            label{
+                width: 100%;
+            }
+            
+            input[id*=filtro]{
+                width: 100%;
+            }
         </style>
     </ui:define>
     <ui:define name="contenido">
@@ -21,74 +41,90 @@
             <div class="col">
                 <f:view>
 
+                    <br/>
+                    <h:form>
+                        <p:growl id="msgs" showDetail="true" />
+
+                        <p:fieldset legend="Filtros" style="margin-bottom:20px">
+                            <h:panelGrid columns="2" cellpadding="5">
+                                <h:outputLabel>
+                                    Dui:
+                                    <h:inputText value="#{pacienteBean.dui}" id="filtroDui"/>
+                                </h:outputLabel>
+                                
+                                <h:outputLabel>
+                                    Nombres:
+                                    <h:inputText value="#{pacienteBean.nombres}" id="filtroNombre"/>
+                                </h:outputLabel>
+                                <h:outputLabel>
+                                    Apellidos:
+                                    <h:inputText value="#{pacienteBean.apellidos}" id="filtroApellido"/>
+                                </h:outputLabel>
+                                <h:outputLabel>
+                                    Buscar:
+                                    <p:commandButton id="filtrar" value="Filtrar" update="@(:tablaP)" actionListener="#{pacienteBean.filtrar()}" />
+                                </h:outputLabel>
+                            </h:panelGrid>
+                        </p:fieldset>
+                    </h:form>
+
+
 
                     <h:form>
                         <h1><h:outputText value="Listado de Pacientes"/></h1>
-                        <h:commandButton actionListener="#{pacienteBean.irInsertar()}" value="Nuevo Paciente" class="btn btn-success"/>
+                        <h:link outcome="/admin/paciente/pacienteInsertar.xhtml" value="Nuevo Paciente" class="btn btn-success"/>
                         <br>
                         </br>
-                        <h:dataTable value="#{pacienteBean.listarPacientes()}" var="item"
-                                     class="table table-bordered display" id="tabla">
-                            <h:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Nombres"/>
-                                </f:facet>
-                                <h:outputText value="#{item.idPersona.nombrePersona}"/>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Apellidos"/>
-                                </f:facet>
-                                <h:outputText value="#{item.idPersona.apellidoPersona}"/>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Dui"/>
-                                </f:facet>
-                                <h:outputText value="#{item.idPersona.dui}"/>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Telefono de Emergencia"/>
-                                </f:facet>
-                                <h:outputText value="#{item.telefonoEmergencia}"/>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header"  >
-                                    <h:outputText value="Nombre responsable"/>
-                                </f:facet>
-                                <h:outputText value="#{item.nombreResponsable}"/>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Operaciones" />
-                                </f:facet>
-                                <h:commandButton class="btn btn-primary" actionListener="#{pacienteBean.detallePaciente()}" value="Ver">
-                                <f:param name="id"  value="#{item.idPaciente}"/>
-                                </h:commandButton>
-                                <h:commandButton class="btn btn-primary" actionListener="#{pacienteBean.irEditar()}" value="Editar">
-                                    <f:param name="id"  value="#{item.idPaciente}"/>
-                                </h:commandButton>
+                        
+                            <p:dataTable id="tablaP" var="paciente" value="#{pacienteBean.listaPaciente}" rows="10"
+                                         paginator="true"
+                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         rowsPerPageTemplate="5,10,15">
+                                <p:column headerText="Dui">
+                                    <h:outputText value="#{paciente.idPersona.dui}" />
+                                </p:column>
+
+                                <p:column headerText="Nombres">
+                                    <h:outputText value="#{paciente.idPersona.nombrePersona}" />
+                                </p:column>
+
+                                <p:column headerText="Apellidos">
+                                    <h:outputText value="#{paciente.idPersona.apellidoPersona}" />
+                                </p:column>
+
+                                <p:column headerText="Telefono de emergencia">
+                                    <h:outputText value="#{paciente.telefonoEmergencia}" />
+                                </p:column>
+
+                                <p:column headerText="Nombre responsable">
+                                    <h:outputText value="#{paciente.nombreResponsable}" />
+                                </p:column>
                                 
-                            </h:column>
-                            
-                        </h:dataTable>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Operaciones" />
+                                    </f:facet>
+                                    
+                                    <h:commandButton class="btn btn-primary" action="#{pacienteBean.detallePaciente(paciente.idPaciente)}" value="Ver">
+                                        <f:param name="id"  value="#{paciente.idPaciente}"/>
+                                    </h:commandButton>
+                                    <h:commandButton class="btn btn-primary" action="#{pacienteBean.editPaciente(paciente.idPaciente)}" value="Editar">
+                                        <f:param name="id"  value="#{paciente.idPaciente}"/>
+                                    </h:commandButton>
+
+                                </p:column>
+                                
+                            </p:dataTable>
+                       
+                        
                     </h:form>
+
                 </f:view>
 
             </div>
         </div>
 
 
-    </ui:define>
-
-    <ui:define name="scripts">
-        <script>
-            $(document).ready(function () {
-                var tabla = $(".table")[0];
-                $(tabla).DataTable();
-            });
-        </script>
     </ui:define>
 
 </ui:composition>

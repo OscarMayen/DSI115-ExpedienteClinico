@@ -4,24 +4,72 @@
                 template="./../../plantillas/plantilla.xhtml"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:h="http://java.sun.com/jsf/html">
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="titulo">
         Listar usuario
     </ui:define>
-    
+
     <ui:define name="css">
         <style>
             .btn{
                 margin:1%;
             }
+            tr{
+                width: 100%;
+            }
+            td{
+                width: 50%
+            }
+            tbody{
+                width: 100%;
+            }
+            table{
+                width: 100%;
+            }
+            label{
+                width: 100%;
+            }
+            
+            input[id*=filtro]{
+                width: 100%;
+            }
+            
         </style>
     </ui:define>
-    
+
     <ui:define name="contenido">
         <div class="row">
             <div class="col">
                 <f:view>
+                    <br/>
+                    <h:form>
+                        <p:growl id="msgs" showDetail="true" />
+
+                        <p:fieldset legend="Filtros" style="margin-bottom:20px">
+                            <h:panelGrid columns="2" cellpadding="5">
+                                <h:outputLabel>
+                                    Dui:
+                                    <h:inputText value="#{usuarioListarBean.dui}" id="filtroDui"/>
+                                </h:outputLabel>
+                                
+                                <h:outputLabel>
+                                    Usuario:
+                                    <h:inputText value="#{usuarioListarBean.username}" id="filtroUsuario"/>
+                                </h:outputLabel>
+                                <h:outputLabel>
+                                    Rol:
+                                    <h:inputText value="#{usuarioListarBean.rol}" id="filtroRol"/>
+                                </h:outputLabel>
+                                <h:outputLabel>
+                                    Buscar:
+                                    <p:commandButton id="filtrar" value="Filtrar" update="@(:tablaP)" actionListener="#{usuarioListarBean.filtrar()}" />
+                                </h:outputLabel>
+                            </h:panelGrid>
+                        </p:fieldset>
+                    </h:form>
+
 
 
                     <h:form>
@@ -29,53 +77,44 @@
                         <h:link outcome="/admin/usuario/usuarioInsertar" value="Nuevo Usuario" class="btn btn-success"/>
                         <br>
                         </br>
-                        <h:dataTable value="#{usuarioListarBean.listaUsuario}" var="item"
-                                     class="table table-bordered display" id="tabla">
-                            <h:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Nombres"/>
-                                </f:facet>
-                                <h:outputText value="#{item.idPersona.nombrePersona}"/>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Apellidos"/>
-                                </f:facet>
-                                <h:outputText value="#{item.idPersona.apellidoPersona}"/>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Dui"/>
-                                </f:facet>
-                                <h:outputText value="#{item.idPersona.dui}"/>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Nombre usuario"/>
-                                </f:facet>
-                                <h:outputText value="#{item.username}"/>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Rol"/>
-                                </f:facet>
-                                <h:outputText value="#{item.idRol.nombreRol}"/>
-                            </h:column>
-                            
+                        <p:dataTable id="tablaP" var="usuario" value="#{usuarioListarBean.listaUsuario}" rows="10"
+                                     paginator="true"
+                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                     rowsPerPageTemplate="5,10,15">
+                            <p:column headerText="Dui">
+                                <h:outputText value="#{usuario.idPersona.dui}" />
+                            </p:column>
 
-                            <h:column>
+                            <p:column headerText="Nombres">
+                                <h:outputText value="#{usuario.idPersona.nombrePersona}" />
+                            </p:column>
+
+                            <p:column headerText="Apellidos">
+                                <h:outputText value="#{usuario.idPersona.apellidoPersona}" />
+                            </p:column>
+
+                            <p:column headerText="Nombre de usuario">
+                                <h:outputText value="#{usuario.username}" />
+                            </p:column>
+
+                            <p:column headerText="Rol">
+                                <h:outputText value="#{usuario.idRol.nombreRol}" />
+                            </p:column>
+
+                            <p:column>
                                 <f:facet name="header">
                                     <h:outputText value="Operaciones" />
                                 </f:facet>
-                                <h:commandButton class="btn btn-info" action="#{usuarioListarBean.editUsuario(item.idUsuario)}" value="Editar">
-                                    <f:param name="id"  value="#{item.idUsuario}"/>
+                                <h:commandButton class="btn btn-info" action="#{usuarioListarBean.editUsuario(usuario.idUsuario)}" value="Editar">
+                                    <f:param name="id"  value="#{usuario.idUsuario}"/>
                                 </h:commandButton>
-                                <h:commandButton class="btn btn-primary" action="#{usuarioListarBean.detalleUsuario(item.idUsuario)}" value="Ver">
-                                    <f:param name="id"  value="#{item.idUsuario}"/>
+                                <h:commandButton class="btn btn-primary" action="#{usuarioListarBean.detalleUsuario(usuario.idUsuario)}" value="Ver">
+                                    <f:param name="id"  value="#{usuario.idUsuario}"/>
                                 </h:commandButton>
-                            </h:column>
+                            </p:column>
 
-                        </h:dataTable>
+                        </p:dataTable>
+                        
                     </h:form>
                 </f:view>
 

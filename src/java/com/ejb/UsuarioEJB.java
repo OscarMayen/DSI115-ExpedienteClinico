@@ -41,6 +41,11 @@ public class UsuarioEJB {
         }
     }
     
+    public List filtrarUsuarios(String user, String rol, String dui){
+        Query query = em.createQuery("SELECT u FROM Usuario u JOIN u.idPersona per WHERE (u.username LIKE '%"+user+"%') AND (u.idRol.nombreRol LIKE '%"+rol+"%') AND (per.dui LIKE '%"+dui+"%') ");
+        return query.getResultList();
+    }
+    
     public Usuario obtenerUsuario(int codigo) {
         return em.find(Usuario.class, codigo);
     }

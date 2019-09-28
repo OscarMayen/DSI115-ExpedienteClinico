@@ -21,24 +21,27 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author admin
+ * @author josue
  */
 @Entity
-@Table(name = "persona")
+@Table(name = "Persona")
+@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "PersonaEntity.findAll", query = "SELECT p FROM PersonaEntity p")
     , @NamedQuery(name = "PersonaEntity.findByIdPersona", query = "SELECT p FROM PersonaEntity p WHERE p.idPersona = :idPersona")
     , @NamedQuery(name = "PersonaEntity.findByNombrePersona", query = "SELECT p FROM PersonaEntity p WHERE p.nombrePersona = :nombrePersona")
     , @NamedQuery(name = "PersonaEntity.findByApellidoPersona", query = "SELECT p FROM PersonaEntity p WHERE p.apellidoPersona = :apellidoPersona")
-    , @NamedQuery(name = "PersonaEntity.findByDepartamento", query = "SELECT p FROM PersonaEntity p WHERE p.departamento = :departamento")
-    , @NamedQuery(name = "PersonaEntity.findByMunicipio", query = "SELECT p FROM PersonaEntity p WHERE p.municipio = :municipio")
     , @NamedQuery(name = "PersonaEntity.findByTelefono", query = "SELECT p FROM PersonaEntity p WHERE p.telefono = :telefono")
     , @NamedQuery(name = "PersonaEntity.findByDui", query = "SELECT p FROM PersonaEntity p WHERE p.dui = :dui")
     , @NamedQuery(name = "PersonaEntity.findByGenero", query = "SELECT p FROM PersonaEntity p WHERE p.genero = :genero")
-    , @NamedQuery(name = "PersonaEntity.findByFechaNacimiento", query = "SELECT p FROM PersonaEntity p WHERE p.fechaNacimiento = :fechaNacimiento")})
+    , @NamedQuery(name = "PersonaEntity.findByFechaNacimiento", query = "SELECT p FROM PersonaEntity p WHERE p.fechaNacimiento = :fechaNacimiento")
+    , @NamedQuery(name = "PersonaEntity.findByTelefonoOpcional", query = "SELECT p FROM PersonaEntity p WHERE p.telefonoOpcional = :telefonoOpcional")
+    , @NamedQuery(name = "PersonaEntity.findByEstadopersonal", query = "SELECT p FROM PersonaEntity p WHERE p.estadopersonal = :estadopersonal")})
 public class PersonaEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -56,14 +59,6 @@ public class PersonaEntity implements Serializable {
     private String apellidoPersona;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 100)
-    private String departamento;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
-    private String municipio;
-    @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 20)
     private String telefono;
     @Basic(optional = false)
@@ -74,14 +69,21 @@ public class PersonaEntity implements Serializable {
     @NotNull
     @Size(min = 1, max = 15)
     private String genero;
+    @Basic(optional = false)
+    @NotNull
     @Temporal(TemporalType.DATE)
     private Date fechaNacimiento;
+    @Size(max = 20)
+    private String telefonoOpcional;
+    @Basic(optional = false)
+    @NotNull
+    private boolean estadopersonal;
     @OneToMany(mappedBy = "idPersona")
     private List<PacienteEntity> pacienteEntityList;
     @OneToMany(mappedBy = "idPersona")
-    private List<MedicoEntity> medicoEntityList;
-    @OneToMany(mappedBy = "idPersona")
     private List<Usuario> usuarioList;
+    @OneToMany(mappedBy = "idPersona")
+    private List<MedicoEntity> medicoEntityList;
 
     public PersonaEntity() {
     }
@@ -90,15 +92,15 @@ public class PersonaEntity implements Serializable {
         this.idPersona = idPersona;
     }
 
-    public PersonaEntity(Integer idPersona, String nombrePersona, String apellidoPersona, String departamento, String municipio, String telefono, String dui, String genero) {
+    public PersonaEntity(Integer idPersona, String nombrePersona, String apellidoPersona, String telefono, String dui, String genero, Date fechaNacimiento, boolean estadopersonal) {
         this.idPersona = idPersona;
         this.nombrePersona = nombrePersona;
         this.apellidoPersona = apellidoPersona;
-        this.departamento = departamento;
-        this.municipio = municipio;
         this.telefono = telefono;
         this.dui = dui;
         this.genero = genero;
+        this.fechaNacimiento = fechaNacimiento;
+        this.estadopersonal = estadopersonal;
     }
 
     public Integer getIdPersona() {
@@ -123,22 +125,6 @@ public class PersonaEntity implements Serializable {
 
     public void setApellidoPersona(String apellidoPersona) {
         this.apellidoPersona = apellidoPersona;
-    }
-
-    public String getDepartamento() {
-        return departamento;
-    }
-
-    public void setDepartamento(String departamento) {
-        this.departamento = departamento;
-    }
-
-    public String getMunicipio() {
-        return municipio;
-    }
-
-    public void setMunicipio(String municipio) {
-        this.municipio = municipio;
     }
 
     public String getTelefono() {
@@ -173,6 +159,23 @@ public class PersonaEntity implements Serializable {
         this.fechaNacimiento = fechaNacimiento;
     }
 
+    public String getTelefonoOpcional() {
+        return telefonoOpcional;
+    }
+
+    public void setTelefonoOpcional(String telefonoOpcional) {
+        this.telefonoOpcional = telefonoOpcional;
+    }
+
+    public boolean getEstadopersonal() {
+        return estadopersonal;
+    }
+
+    public void setEstadopersonal(boolean estadopersonal) {
+        this.estadopersonal = estadopersonal;
+    }
+
+    @XmlTransient
     public List<PacienteEntity> getPacienteEntityList() {
         return pacienteEntityList;
     }
@@ -181,20 +184,22 @@ public class PersonaEntity implements Serializable {
         this.pacienteEntityList = pacienteEntityList;
     }
 
-    public List<MedicoEntity> getMedicoEntityList() {
-        return medicoEntityList;
-    }
-
-    public void setMedicoEntityList(List<MedicoEntity> medicoEntityList) {
-        this.medicoEntityList = medicoEntityList;
-    }
-
+    @XmlTransient
     public List<Usuario> getUsuarioList() {
         return usuarioList;
     }
 
     public void setUsuarioList(List<Usuario> usuarioList) {
         this.usuarioList = usuarioList;
+    }
+
+    @XmlTransient
+    public List<MedicoEntity> getMedicoEntityList() {
+        return medicoEntityList;
+    }
+
+    public void setMedicoEntityList(List<MedicoEntity> medicoEntityList) {
+        this.medicoEntityList = medicoEntityList;
     }
 
     @Override

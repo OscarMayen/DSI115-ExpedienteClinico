@@ -6,33 +6,36 @@
 package com.entities;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author admin
+ * @author josue
  */
 @Entity
-@Table(name = "medico")
+@Table(name = "Medico")
+@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "MedicoEntity.findAll", query = "SELECT m FROM MedicoEntity m")
-    , @NamedQuery(name = "MedicoEntity.findByIdMedico", query = "SELECT m FROM MedicoEntity m WHERE m.idMedico = :idMedico")
-    , @NamedQuery(name = "MedicoEntity.findByEmailMedico", query = "SELECT m FROM MedicoEntity m WHERE m.emailMedico = :emailMedico")
-    , @NamedQuery(name = "MedicoEntity.findByEstadoMedico", query = "SELECT m FROM MedicoEntity m WHERE m.estadoMedico = :estadoMedico")})
+    , @NamedQuery(name = "MedicoEntity.findByIdMedico", query = "SELECT m FROM MedicoEntity m WHERE m.idMedico = :idMedico")})
 public class MedicoEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -40,31 +43,30 @@ public class MedicoEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     private Integer idMedico;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
-    private String emailMedico;
-    @Basic(optional = false)
-    @NotNull
-    private boolean estadoMedico;
+    @JoinTable(name = "RedMedico", joinColumns = {
+        @JoinColumn(name = "idMedico", referencedColumnName = "IdMedico")}, inverseJoinColumns = {
+        @JoinColumn(name = "idRedSocial", referencedColumnName = "idRedSocial")})
+    @ManyToMany(fetch = FetchType.EAGER,
+            cascade = {
+                CascadeType.PERSIST,
+                CascadeType.MERGE
+            })
+    private List<RedSocialEntity> redSocialEntityList;
+    @ManyToMany(mappedBy = "medicoEntityList")
+    private List<EspecialidadEntity> especialidadEntityList;
+    @OneToMany(mappedBy = "idMedico")
+    private List<CitasEntity> citasEntityList;
+    @OneToMany(mappedBy = "idMedico")
+    private List<ConsultaEntity> consultaEntityList;
     @JoinColumn(name = "idPersona", referencedColumnName = "idPersona")
     @OneToOne(cascade=CascadeType.ALL)
     private PersonaEntity idPersona;
-    @JoinColumn(name = "idEspecialidad", referencedColumnName = "idEspecialidad")
-    @ManyToOne
-    private EspecialidadEntity idEspecialidad;
 
     public MedicoEntity() {
     }
 
     public MedicoEntity(Integer idMedico) {
         this.idMedico = idMedico;
-    }
-
-    public MedicoEntity(Integer idMedico, String emailMedico, boolean estadoMedico) {
-        this.idMedico = idMedico;
-        this.emailMedico = emailMedico;
-        this.estadoMedico = estadoMedico;
     }
 
     public Integer getIdMedico() {
@@ -75,20 +77,40 @@ public class MedicoEntity implements Serializable {
         this.idMedico = idMedico;
     }
 
-    public String getEmailMedico() {
-        return emailMedico;
+    @XmlTransient
+    public List<RedSocialEntity> getRedSocialEntityList() {
+        return redSocialEntityList;
     }
 
-    public void setEmailMedico(String emailMedico) {
-        this.emailMedico = emailMedico;
+    public void setRedSocialEntityList(List<RedSocialEntity> redSocialEntityList) {
+        this.redSocialEntityList = redSocialEntityList;
     }
 
-    public boolean getEstadoMedico() {
-        return estadoMedico;
+    @XmlTransient
+    public List<EspecialidadEntity> getEspecialidadEntityList() {
+        return especialidadEntityList;
     }
 
-    public void setEstadoMedico(boolean estadoMedico) {
-        this.estadoMedico = estadoMedico;
+    public void setEspecialidadEntityList(List<EspecialidadEntity> especialidadEntityList) {
+        this.especialidadEntityList = especialidadEntityList;
+    }
+
+    @XmlTransient
+    public List<CitasEntity> getCitasEntityList() {
+        return citasEntityList;
+    }
+
+    public void setCitasEntityList(List<CitasEntity> citasEntityList) {
+        this.citasEntityList = citasEntityList;
+    }
+
+    @XmlTransient
+    public List<ConsultaEntity> getConsultaEntityList() {
+        return consultaEntityList;
+    }
+
+    public void setConsultaEntityList(List<ConsultaEntity> consultaEntityList) {
+        this.consultaEntityList = consultaEntityList;
     }
 
     public PersonaEntity getIdPersona() {
@@ -97,14 +119,6 @@ public class MedicoEntity implements Serializable {
 
     public void setIdPersona(PersonaEntity idPersona) {
         this.idPersona = idPersona;
-    }
-
-    public EspecialidadEntity getIdEspecialidad() {
-        return idEspecialidad;
-    }
-
-    public void setIdEspecialidad(EspecialidadEntity idEspecialidad) {
-        this.idEspecialidad = idEspecialidad;
     }
 
     @Override

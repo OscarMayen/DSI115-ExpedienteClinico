@@ -18,13 +18,16 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author admin
+ * @author josue
  */
 @Entity
-@Table(name = "rol")
+@Table(name = "Rol")
+@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "RolEntity.findAll", query = "SELECT r FROM RolEntity r")
     , @NamedQuery(name = "RolEntity.findByIdRol", query = "SELECT r FROM RolEntity r WHERE r.idRol = :idRol")
@@ -71,6 +74,7 @@ public class RolEntity implements Serializable {
         this.nombreRol = nombreRol;
     }
 
+    @XmlTransient
     public List<Usuario> getUsuarioList() {
         return usuarioList;
     }

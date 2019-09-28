@@ -34,14 +34,44 @@ public class UsuarioListarBean implements Serializable{
     private Usuario usuario = new Usuario();
     private PersonaEntity persona = new PersonaEntity();
     
+    private String username, rol, dui;
+    
     private List<Usuario> listaUsuario = new ArrayList();
 
     public List<Usuario> getListaUsuario() {
         return listaUsuario;
     }
+    
+    public void filtrar(){
+        listaUsuario = this.usuarioEJB.filtrarUsuarios(username,rol,dui);
+    }
 
     public void setListaUsuario(List<Usuario> listaUsuario) {
         this.listaUsuario = listaUsuario;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
+    }
+
+    public String getDui() {
+        return dui;
+    }
+
+    public void setDui(String dui) {
+        this.dui = dui;
     }
     
     

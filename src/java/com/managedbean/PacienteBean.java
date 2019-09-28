@@ -21,73 +21,44 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import edu.utilidades.JsfUtils;
+import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import javax.faces.application.NavigationHandler;
+import javax.faces.bean.ManagedBean;
+import javax.faces.view.ViewScoped;
 
-@Named(value = "pacienteBean")
-@SessionScoped
+@ManagedBean(name = "pacienteBean")
+@ViewScoped
 public class PacienteBean implements Serializable {
 
     @EJB
     private PersonaEJB personaEJB;
     @EJB
     private PacienteEJB pacienteEJB;
-    private List<PacienteEntity> listaPaciente;
+    private List<PacienteEntity> listaPaciente = new ArrayList();
     private PacienteEntity paciente = new PacienteEntity();
     private PersonaEntity persona = new PersonaEntity();
+    private String nombres;
+    private String apellidos;
+    private String dui;
 
-    
-    //Metodo para insertar paciente
-    public void insertarPaciente() throws IOException 
-    {
-        this.paciente.setIdPersona(persona);
-        pacienteEJB.insertPaciente(paciente);
-        JsfUtils.Redireccionar("pacienteListar.xhtml");
+    @PostConstruct
+    public void init() {
+        listaPaciente = this.pacienteEJB.listarPaciente();
     }
-    
-    //Metodo para actualizar paciente
-    public void updatePaciente() throws IOException 
-    {
-        try {
-            pacienteEJB.modificarPaciente(paciente);
 
-        } catch (Exception ex) {
-            Logger.getLogger(PacienteBean.class.getName())
-                    .log(Level.SEVERE, null, ex);
-            FacesContext.getCurrentInstance().addMessage("paciente", new FacesMessage("ERROR AL INSERTAR " + ex.getMessage()));
-        }
-        JsfUtils.Redireccionar("pacienteListar.xhtml");
+    public void filtrar() {
+        this.listaPaciente = this.pacienteEJB.filtroPaciente(nombres, apellidos, dui);
     }
     
     //Metodo para ver los datos del paciente
-    public void detallePaciente() throws IOException 
-    {
-        String id = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id");
-        paciente = pacienteEJB.obtenerPaciente(Integer.valueOf(id));
-        JsfUtils.Redireccionar("pacienteDetalle.xhtml");
+    public String detallePaciente(int idPaciente){
+        
+        return "/admin/paciente/pacienteDetalle.xhtml";
     }
-    
-    
-    //Metodo para Seleccionar al paciente a editar
-    public void irEditar() throws IOException 
-    {
-        String dato = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id");
-        paciente = pacienteEJB.obtenerPaciente(Integer.valueOf(dato));
-        JsfUtils.Redireccionar("pacienteEditar.xhtml");
-
-    }
-
-    //Metodo para recuperar todos los pacientes registrados de la base de datos
-    public List<PacienteEntity> listarPacientes() 
-    {
-        listaPaciente = pacienteEJB.listarPaciente();
-        return listaPaciente;
-    }
-    
-    //Metodo para redireccionar a insersion
-    public void irInsertar() throws IOException
-    {
-        paciente= new PacienteEntity();
-        persona=new PersonaEntity();
-        JsfUtils.Redireccionar("pacienteInsertar.xhtml");
+   
+    public String editPaciente(int id) {
+        return "/admin/paciente/pacienteEditar.xhtml";
     }
 
     public List<PacienteEntity> getListaPaciente() {
@@ -121,4 +92,29 @@ public class PacienteBean implements Serializable {
     public void setPersona(PersonaEntity persona) {
         this.persona = persona;
     }
+
+    public String getNombres() {
+        return nombres;
+    }
+
+    public void setNombres(String nombres) {
+        this.nombres = nombres;
+    }
+
+    public String getApellidos() {
+        return apellidos;
+    }
+
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
+    }
+
+    public String getDui() {
+        return dui;
+    }
+
+    public void setDui(String dui) {
+        this.dui = dui;
+    }
+
 }

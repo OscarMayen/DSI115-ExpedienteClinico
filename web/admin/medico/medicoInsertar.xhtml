@@ -59,18 +59,6 @@
                                          required="true" requiredMessage="El campo apellidos es obligatorio"/>
                         </div>
                         <div class="form-group">
-                            <label for="departamentoMedico">Departamento</label>
-                            <h:inputText value="#{usuarioMedicoBean.persona.departamento}" title="departamentoMedico"
-                                         class="form-control" id="departamentoMedico" 
-                                         required="true" requiredMessage="El campo departamento es obligatorio."/>
-                        </div>
-                        <div class="form-group">
-                            <label for="municipioMedico">Municipio</label>
-                            <h:inputText value="#{usuarioMedicoBean.persona.municipio}" title="municipioMedico" 
-                                         class="form-control" id="municipioMedico" 
-                                         required="true" requiredMessage="El campo municipio es obligatorio."/>
-                        </div>
-                        <div class="form-group">
                             <label for="telefonoMedico">Telefono</label>
                             <h:inputText value="#{usuarioMedicoBean.persona.telefono}" title="telefonoMedico"
                                          class="form-control" id="telefonoMedico" maxlength="9" 
@@ -113,24 +101,14 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="emailMedico">Email</label>
-                            <h:inputText  value="#{usuarioMedicoBean.medico.emailMedico}" title="emailMedico"
+                            <label for="Especialidad">Email</label>
+                            <h:inputText  value="" title="emailMedico"
                                           class="form-control" id="emailMedico" 
                                           required="true" requiredMessage="El campo email es obligatorio"/>
                         </div>
                         <div class="form-group">
                             <label for="estadoMedico">Estado</label>
-                            <h:selectBooleanCheckbox id="estadoMedico" value="#{usuarioMedicoBean.medico.estadoMedico}" />
-                        </div>
-
-                        <div class="form-group">
-                            <h:outputLabel value="Seleccione una especialidad:" for="codigoEspecialidad" />
-                            <h:selectOneMenu id="codigoEspecialidad" class="form-control"
-                                             value="#{usuarioMedicoBean.medico.idEspecialidad}" title="Especialidad">
-                                <f:selectItems value="#{usuarioMedicoBean.listarEspecialidades}" var="especialidad"
-                                               itemValue="#{especialidad}"
-                                               itemLabel="#{especialidad.nombreEspecialidad}"/>
-                            </h:selectOneMenu>
+                            <h:selectBooleanCheckbox id="estadoMedico" value="" />
                         </div>
 
                         <div style="width: 100%; height: 20px; border-bottom: 1px solid black; margin-top: 3%; margin-bottom: 3%; text-align: center">
