@@ -8,7 +8,7 @@ package com.managedbean;
 import com.ejb.RolEJB;
 import com.ejb.UsuarioEJB;
 import com.entities.RolEntity;
-import com.entities.Usuario;
+import com.entities.UsuarioEntity;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -32,7 +32,7 @@ public class UsuarioDetalleBean {
     @EJB
     private UsuarioEJB usuarioEJB;
 
-    Usuario usuario = new Usuario();
+    UsuarioEntity usuario = new UsuarioEntity();
     RolEntity rol = new RolEntity();
     List<RolEntity> list = new ArrayList<RolEntity>();
     
@@ -54,18 +54,18 @@ public class UsuarioDetalleBean {
             System.out.println("Error!!!!");
         } else {
             System.out.println(":vvvvvvvvvvvvvvvvvvvvvvvvvvvvv" + id);
-            this.usuario = new Usuario();
+            this.usuario = new UsuarioEntity();
 
             usuario = usuarioEJB.obtenerUsuario(Integer.valueOf(id));
         }
 
     }
 
-    public Usuario getUsuario() {
+    public UsuarioEntity getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(Usuario usuario) {
+    public void setUsuario(UsuarioEntity usuario) {
         this.usuario = usuario;
     }
 

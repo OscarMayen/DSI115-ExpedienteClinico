@@ -7,7 +7,7 @@ package com.ejb;
 
 import com.entities.EspecialidadEntity;
 import com.entities.MedicoEntity;
-import com.entities.Usuario;
+import com.entities.UsuarioEntity;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;

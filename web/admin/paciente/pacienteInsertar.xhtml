@@ -92,14 +92,7 @@
                             <label for="exampleFormControlInput9">Vinculo de responsable</label>
                             <h:inputText  value="#{pacienteInsertarManagedBean.pacienteEntity.vinculoResponsable}" class="form-control" id="exampleFormControlInput9" required="true"/>
                         </div>
-                        <div class="form-group">
-                            <label for="exampleFormControlInput10">estado civil</label>
-                            <h:inputText  value="#{pacienteInsertarManagedBean.pacienteEntity.estadoCivil}" class="form-control" id="exampleFormControlInput10" required="true"/>
-                        </div>
-                        <div class="form-group">
-                            <label for="estadoPaciente">Estado</label>
-                            <h:selectBooleanCheckbox id="estadoPaciente" value="#{pacienteInsertarManagedBean.pacienteEntity.estadoPaciente}" />
-                        </div>
+                       
 
                 
                 <p:commandButton value="Guardar" actionListener="#{pacienteInsertarManagedBean.insertarPaciente()}"/>

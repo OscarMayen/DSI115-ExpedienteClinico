@@ -5,7 +5,7 @@
  */
 package com.ejb;
 
-import com.entities.Usuario;
+import com.entities.UsuarioEntity;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -24,7 +24,7 @@ public class UsuarioMedicoEJB {
         em.persist(object);
     }
 
-    public int insertUsuarioMedico(Usuario usuario){
+    public int insertUsuarioMedico(UsuarioEntity usuario){
         try{
             em.persist(usuario);
             em.flush();

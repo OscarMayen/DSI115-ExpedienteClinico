@@ -22,16 +22,13 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author josue
+ * @author admin
  */
 @Entity
-@Table(name = "Consulta")
-@XmlRootElement
+@Table(name = "consulta")
 @NamedQueries({
     @NamedQuery(name = "ConsultaEntity.findAll", query = "SELECT c FROM ConsultaEntity c")
     , @NamedQuery(name = "ConsultaEntity.findByIdConsulta", query = "SELECT c FROM ConsultaEntity c WHERE c.idConsulta = :idConsulta")
@@ -49,12 +46,15 @@ public class ConsultaEntity implements Serializable {
     private Date fechaConsulta;
     @OneToMany(mappedBy = "idConsulta")
     private List<DiagnosticoEntity> diagnosticoEntityList;
-    @JoinColumn(name = "idMedico", referencedColumnName = "IdMedico")
+    @JoinColumn(name = "idMedico", referencedColumnName = "idMedico")
     @ManyToOne
     private MedicoEntity idMedico;
     @JoinColumn(name = "idSignosVitales", referencedColumnName = "idSignosVitales")
     @ManyToOne
-    private SignosVitalesEntity idSignosVitales;
+    private SignosvitalesEntity idSignosVitales;
+    @JoinColumn(name = "idSala", referencedColumnName = "idSala")
+    @ManyToOne
+    private SalaEntity idSala;
     @JoinColumn(name = "idPaciente", referencedColumnName = "idPaciente")
     @ManyToOne
     private PacienteEntity idPaciente;
@@ -87,7 +87,6 @@ public class ConsultaEntity implements Serializable {
         this.fechaConsulta = fechaConsulta;
     }
 
-    @XmlTransient
     public List<DiagnosticoEntity> getDiagnosticoEntityList() {
         return diagnosticoEntityList;
     }
@@ -104,12 +103,20 @@ public class ConsultaEntity implements Serializable {
         this.idMedico = idMedico;
     }
 
-    public SignosVitalesEntity getIdSignosVitales() {
+    public SignosvitalesEntity getIdSignosVitales() {
         return idSignosVitales;
     }
 
-    public void setIdSignosVitales(SignosVitalesEntity idSignosVitales) {
+    public void setIdSignosVitales(SignosvitalesEntity idSignosVitales) {
         this.idSignosVitales = idSignosVitales;
+    }
+
+    public SalaEntity getIdSala() {
+        return idSala;
+    }
+
+    public void setIdSala(SalaEntity idSala) {
+        this.idSala = idSala;
     }
 
     public PacienteEntity getIdPaciente() {

@@ -6,7 +6,7 @@ import com.ejb.RolEJB;
 import com.ejb.UsuarioEJB;
 import com.entities.PersonaEntity;
 import com.entities.RolEntity;
-import com.entities.Usuario;
+import com.entities.UsuarioEntity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +41,7 @@ public class UsuarioEditarBean implements Serializable{
     
     
 
-     Usuario usuario = new Usuario();
+     UsuarioEntity usuario = new UsuarioEntity();
      RolEntity rol = new RolEntity();
      PersonaEntity persona = new PersonaEntity();
      List<RolEntity> listaRoles = new ArrayList<RolEntity>();
@@ -49,11 +49,11 @@ public class UsuarioEditarBean implements Serializable{
     public UsuarioEditarBean() {
     }
 
-    public Usuario getUsuario() {
+    public UsuarioEntity getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(Usuario usuario) {
+    public void setUsuario(UsuarioEntity usuario) {
         this.usuario = usuario;
     }
 
@@ -100,7 +100,7 @@ public class UsuarioEditarBean implements Serializable{
         if (id == null) {
             System.out.println("Error!!!!");
         } else {
-             this.usuario = new Usuario();
+             this.usuario = new UsuarioEntity();
              
         usuario = usuarioEJB.obtenerUsuario(Integer.valueOf(id));
         }
@@ -110,7 +110,7 @@ public class UsuarioEditarBean implements Serializable{
     
      public String editUsuario(int id)
     {
-        this.usuario = new Usuario();
+        this.usuario = new UsuarioEntity();
         
         usuario = usuarioEJB.obtenerUsuario(id);
 

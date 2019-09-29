@@ -8,7 +8,7 @@ package com.managedbean;
 import com.ejb.PersonaEJB;
 import com.ejb.UsuarioEJB;
 import com.entities.PersonaEntity;
-import com.entities.Usuario;
+import com.entities.UsuarioEntity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,14 +31,14 @@ public class UsuarioListarBean implements Serializable{
     @EJB
     private PersonaEJB personaEJB;
 
-    private Usuario usuario = new Usuario();
+    private UsuarioEntity usuario = new UsuarioEntity();
     private PersonaEntity persona = new PersonaEntity();
     
     private String username, rol, dui;
     
-    private List<Usuario> listaUsuario = new ArrayList();
+    private List<UsuarioEntity> listaUsuario = new ArrayList();
 
-    public List<Usuario> getListaUsuario() {
+    public List<UsuarioEntity> getListaUsuario() {
         return listaUsuario;
     }
     
@@ -46,7 +46,7 @@ public class UsuarioListarBean implements Serializable{
         listaUsuario = this.usuarioEJB.filtrarUsuarios(username,rol,dui);
     }
 
-    public void setListaUsuario(List<Usuario> listaUsuario) {
+    public void setListaUsuario(List<UsuarioEntity> listaUsuario) {
         this.listaUsuario = listaUsuario;
     }
 
@@ -87,7 +87,7 @@ public class UsuarioListarBean implements Serializable{
     
     }
     
-    private List<Usuario> buscarUsuarios() {
+    private List<UsuarioEntity> buscarUsuarios() {
          this.listaUsuario = usuarioEJB.listarUsuario();
          return listaUsuario;
     }

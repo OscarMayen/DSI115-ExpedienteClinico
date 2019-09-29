@@ -20,15 +20,13 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author josue
+ * @author admin
  */
 @Entity
-@Table(name = "Citas")
-@XmlRootElement
+@Table(name = "citas")
 @NamedQueries({
     @NamedQuery(name = "CitasEntity.findAll", query = "SELECT c FROM CitasEntity c")
     , @NamedQuery(name = "CitasEntity.findByIdCita", query = "SELECT c FROM CitasEntity c WHERE c.idCita = :idCita")
@@ -44,7 +42,7 @@ public class CitasEntity implements Serializable {
     @NotNull
     @Temporal(TemporalType.DATE)
     private Date fechaCita;
-    @JoinColumn(name = "idMedico", referencedColumnName = "IdMedico")
+    @JoinColumn(name = "idMedico", referencedColumnName = "idMedico")
     @ManyToOne
     private MedicoEntity idMedico;
     @JoinColumn(name = "idPaciente", referencedColumnName = "idPaciente")

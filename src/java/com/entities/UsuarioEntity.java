@@ -7,7 +7,6 @@ package com.entities;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,23 +15,22 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author josue
+ * @author admin
  */
 @Entity
-@XmlRootElement
+@Table(name = "usuario")
 @NamedQueries({
-    @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u")
-    , @NamedQuery(name = "Usuario.findByIdUsuario", query = "SELECT u FROM Usuario u WHERE u.idUsuario = :idUsuario")
-    , @NamedQuery(name = "Usuario.findByUsername", query = "SELECT u FROM Usuario u WHERE u.username = :username")
-    , @NamedQuery(name = "Usuario.findByPassword", query = "SELECT u FROM Usuario u WHERE u.password = :password")})
-public class Usuario implements Serializable {
+    @NamedQuery(name = "UsuarioEntity.findAll", query = "SELECT u FROM UsuarioEntity u")
+    , @NamedQuery(name = "UsuarioEntity.findByIdUsuario", query = "SELECT u FROM UsuarioEntity u WHERE u.idUsuario = :idUsuario")
+    , @NamedQuery(name = "UsuarioEntity.findByUsername", query = "SELECT u FROM UsuarioEntity u WHERE u.username = :username")
+    , @NamedQuery(name = "UsuarioEntity.findByPassword", query = "SELECT u FROM UsuarioEntity u WHERE u.password = :password")})
+public class UsuarioEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -48,21 +46,20 @@ public class Usuario implements Serializable {
     @Size(min = 1, max = 250)
     private String password;
     @JoinColumn(name = "idPersona", referencedColumnName = "idPersona")
-    //@ManyToOne
-    @OneToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     private PersonaEntity idPersona;
     @JoinColumn(name = "idRol", referencedColumnName = "idRol")
     @ManyToOne
     private RolEntity idRol;
 
-    public Usuario() {
+    public UsuarioEntity() {
     }
 
-    public Usuario(Integer idUsuario) {
+    public UsuarioEntity(Integer idUsuario) {
         this.idUsuario = idUsuario;
     }
 
-    public Usuario(Integer idUsuario, String username, String password) {
+    public UsuarioEntity(Integer idUsuario, String username, String password) {
         this.idUsuario = idUsuario;
         this.username = username;
         this.password = password;
@@ -118,10 +115,10 @@ public class Usuario implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Usuario)) {
+        if (!(object instanceof UsuarioEntity)) {
             return false;
         }
-        Usuario other = (Usuario) object;
+        UsuarioEntity other = (UsuarioEntity) object;
         if ((this.idUsuario == null && other.idUsuario != null) || (this.idUsuario != null && !this.idUsuario.equals(other.idUsuario))) {
             return false;
         }
@@ -130,7 +127,7 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "com.entities.Usuario[ idUsuario=" + idUsuario + " ]";
+        return "com.entities.UsuarioEntity[ idUsuario=" + idUsuario + " ]";
     }
     
 }

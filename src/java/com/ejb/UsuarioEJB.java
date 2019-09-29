@@ -5,7 +5,7 @@
  */
 package com.ejb;
 
-import com.entities.Usuario;
+import com.entities.UsuarioEntity;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -26,12 +26,12 @@ public class UsuarioEJB {
         em.persist(object);
     }
 
-    public List<Usuario> listarUsuario() {
-        Query query = em.createNamedQuery("Usuario.findAll");
+    public List<UsuarioEntity> listarUsuario() {
+        Query query = em.createNamedQuery("UsuarioEntity.findAll");
         return query.getResultList();
     }
     
-    public int insertUsuario(Usuario usuario) {
+    public int insertUsuario(UsuarioEntity usuario) {
         try {
             em.persist(usuario);
             em.flush();
@@ -46,11 +46,11 @@ public class UsuarioEJB {
         return query.getResultList();
     }
     
-    public Usuario obtenerUsuario(int codigo) {
-        return em.find(Usuario.class, codigo);
+    public UsuarioEntity obtenerUsuario(int codigo) {
+        return em.find(UsuarioEntity.class, codigo);
     }
 
-    public int modificarUsuario(Usuario usuario) throws Exception {
+    public int modificarUsuario(UsuarioEntity usuario) throws Exception {
         try {
             System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>");
             System.out.println(usuario);

@@ -17,15 +17,13 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author josue
+ * @author admin
  */
 @Entity
-@Table(name = "Diagnostico")
-@XmlRootElement
+@Table(name = "diagnostico")
 @NamedQueries({
     @NamedQuery(name = "DiagnosticoEntity.findAll", query = "SELECT d FROM DiagnosticoEntity d")
     , @NamedQuery(name = "DiagnosticoEntity.findByIdDiagnostico", query = "SELECT d FROM DiagnosticoEntity d WHERE d.idDiagnostico = :idDiagnostico")

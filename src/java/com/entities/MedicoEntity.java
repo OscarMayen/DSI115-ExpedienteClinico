@@ -10,7 +10,6 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,16 +22,13 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author josue
+ * @author admin
  */
 @Entity
-@Table(name = "Medico")
-@XmlRootElement
+@Table(name = "medico")
 @NamedQueries({
     @NamedQuery(name = "MedicoEntity.findAll", query = "SELECT m FROM MedicoEntity m")
     , @NamedQuery(name = "MedicoEntity.findByIdMedico", query = "SELECT m FROM MedicoEntity m WHERE m.idMedico = :idMedico")})
@@ -43,24 +39,23 @@ public class MedicoEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     private Integer idMedico;
-    @JoinTable(name = "RedMedico", joinColumns = {
-        @JoinColumn(name = "idMedico", referencedColumnName = "IdMedico")}, inverseJoinColumns = {
-        @JoinColumn(name = "idRedSocial", referencedColumnName = "idRedSocial")})
-    @ManyToMany(fetch = FetchType.EAGER,
-            cascade = {
-                CascadeType.PERSIST,
-                CascadeType.MERGE
-            })
-    private List<RedSocialEntity> redSocialEntityList;
-    @ManyToMany(mappedBy = "medicoEntityList")
+    @JoinTable(name = "medicoespecialidad", joinColumns = {
+        @JoinColumn(name = "idMedico", referencedColumnName = "idMedico")}, inverseJoinColumns = {
+        @JoinColumn(name = "idEspecialidad", referencedColumnName = "idEspecialidad")})
+    @ManyToMany
     private List<EspecialidadEntity> especialidadEntityList;
+    @JoinTable(name = "medicored", joinColumns = {
+        @JoinColumn(name = "idMedico", referencedColumnName = "idMedico")}, inverseJoinColumns = {
+        @JoinColumn(name = "idRedSocial", referencedColumnName = "idRedSocial")})
+    @ManyToMany
+    private List<RedsocialEntity> redsocialEntityList;
     @OneToMany(mappedBy = "idMedico")
     private List<CitasEntity> citasEntityList;
+    @JoinColumn(name = "idPersona", referencedColumnName = "idPersona")
+   @OneToOne(cascade=CascadeType.ALL)
+    private PersonaEntity idPersona;
     @OneToMany(mappedBy = "idMedico")
     private List<ConsultaEntity> consultaEntityList;
-    @JoinColumn(name = "idPersona", referencedColumnName = "idPersona")
-    @OneToOne(cascade=CascadeType.ALL)
-    private PersonaEntity idPersona;
 
     public MedicoEntity() {
     }
@@ -77,16 +72,6 @@ public class MedicoEntity implements Serializable {
         this.idMedico = idMedico;
     }
 
-    @XmlTransient
-    public List<RedSocialEntity> getRedSocialEntityList() {
-        return redSocialEntityList;
-    }
-
-    public void setRedSocialEntityList(List<RedSocialEntity> redSocialEntityList) {
-        this.redSocialEntityList = redSocialEntityList;
-    }
-
-    @XmlTransient
     public List<EspecialidadEntity> getEspecialidadEntityList() {
         return especialidadEntityList;
     }
@@ -95,7 +80,14 @@ public class MedicoEntity implements Serializable {
         this.especialidadEntityList = especialidadEntityList;
     }
 
-    @XmlTransient
+    public List<RedsocialEntity> getRedsocialEntityList() {
+        return redsocialEntityList;
+    }
+
+    public void setRedsocialEntityList(List<RedsocialEntity> redsocialEntityList) {
+        this.redsocialEntityList = redsocialEntityList;
+    }
+
     public List<CitasEntity> getCitasEntityList() {
         return citasEntityList;
     }
@@ -104,21 +96,20 @@ public class MedicoEntity implements Serializable {
         this.citasEntityList = citasEntityList;
     }
 
-    @XmlTransient
-    public List<ConsultaEntity> getConsultaEntityList() {
-        return consultaEntityList;
-    }
-
-    public void setConsultaEntityList(List<ConsultaEntity> consultaEntityList) {
-        this.consultaEntityList = consultaEntityList;
-    }
-
     public PersonaEntity getIdPersona() {
         return idPersona;
     }
 
     public void setIdPersona(PersonaEntity idPersona) {
         this.idPersona = idPersona;
+    }
+
+    public List<ConsultaEntity> getConsultaEntityList() {
+        return consultaEntityList;
+    }
+
+    public void setConsultaEntityList(List<ConsultaEntity> consultaEntityList) {
+        this.consultaEntityList = consultaEntityList;
     }
 
     @Override

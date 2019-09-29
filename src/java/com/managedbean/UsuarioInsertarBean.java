@@ -6,7 +6,7 @@ import com.ejb.RolEJB;
 import com.ejb.UsuarioEJB;
 import com.entities.PersonaEntity;
 import com.entities.RolEntity;
-import com.entities.Usuario;
+import com.entities.UsuarioEntity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +35,7 @@ public class UsuarioInsertarBean implements Serializable{
     private UsuarioEJB usuarioEJB;
 
 
-    private Usuario usuario = new Usuario();
+    private UsuarioEntity usuario = new UsuarioEntity();
     private PersonaEntity persona = new PersonaEntity();
     private List<RolEntity> listaRoles = new ArrayList<RolEntity>();
     
@@ -55,11 +55,11 @@ public class UsuarioInsertarBean implements Serializable{
         return listaRoles;
     }
 
-    public Usuario getUsuario() {
+    public UsuarioEntity getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(Usuario usuario) {
+    public void setUsuario(UsuarioEntity usuario) {
         this.usuario = usuario;
     }
 
@@ -93,7 +93,7 @@ public class UsuarioInsertarBean implements Serializable{
             int b = this.usuarioEJB.insertUsuario(usuario);
         }
         this.persona= new PersonaEntity();
-        this.usuario=new Usuario();
+        this.usuario=new UsuarioEntity();
         return "/admin/usuario/usuarioListar?faces-redirect=true";
     }
     

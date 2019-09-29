@@ -18,21 +18,19 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author josue
+ * @author admin
  */
 @Entity
-@Table(name = "Antecedentes")
-@XmlRootElement
+@Table(name = "antecedentes")
 @NamedQueries({
     @NamedQuery(name = "AntecedentesEntity.findAll", query = "SELECT a FROM AntecedentesEntity a")
     , @NamedQuery(name = "AntecedentesEntity.findByIdAntecedente", query = "SELECT a FROM AntecedentesEntity a WHERE a.idAntecedente = :idAntecedente")
     , @NamedQuery(name = "AntecedentesEntity.findByAlergico", query = "SELECT a FROM AntecedentesEntity a WHERE a.alergico = :alergico")
     , @NamedQuery(name = "AntecedentesEntity.findByAnteFamiliar", query = "SELECT a FROM AntecedentesEntity a WHERE a.anteFamiliar = :anteFamiliar")
-    , @NamedQuery(name = "AntecedentesEntity.findByAntepersonales", query = "SELECT a FROM AntecedentesEntity a WHERE a.antepersonales = :antepersonales")})
+    , @NamedQuery(name = "AntecedentesEntity.findByAntePersonales", query = "SELECT a FROM AntecedentesEntity a WHERE a.antePersonales = :antePersonales")})
 public class AntecedentesEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -51,7 +49,7 @@ public class AntecedentesEntity implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 150)
-    private String antepersonales;
+    private String antePersonales;
     @JoinColumn(name = "idPaciente", referencedColumnName = "idPaciente")
     @ManyToOne
     private PacienteEntity idPaciente;
@@ -63,11 +61,11 @@ public class AntecedentesEntity implements Serializable {
         this.idAntecedente = idAntecedente;
     }
 
-    public AntecedentesEntity(Integer idAntecedente, String alergico, String anteFamiliar, String antepersonales) {
+    public AntecedentesEntity(Integer idAntecedente, String alergico, String anteFamiliar, String antePersonales) {
         this.idAntecedente = idAntecedente;
         this.alergico = alergico;
         this.anteFamiliar = anteFamiliar;
-        this.antepersonales = antepersonales;
+        this.antePersonales = antePersonales;
     }
 
     public Integer getIdAntecedente() {
@@ -94,12 +92,12 @@ public class AntecedentesEntity implements Serializable {
         this.anteFamiliar = anteFamiliar;
     }
 
-    public String getAntepersonales() {
-        return antepersonales;
+    public String getAntePersonales() {
+        return antePersonales;
     }
 
-    public void setAntepersonales(String antepersonales) {
-        this.antepersonales = antepersonales;
+    public void setAntePersonales(String antePersonales) {
+        this.antePersonales = antePersonales;
     }
 
     public PacienteEntity getIdPaciente() {

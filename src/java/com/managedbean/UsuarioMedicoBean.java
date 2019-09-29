@@ -14,7 +14,7 @@ import com.entities.EspecialidadEntity;
 import com.entities.MedicoEntity;
 import com.entities.PersonaEntity;
 import com.entities.RolEntity;
-import com.entities.Usuario;
+import com.entities.UsuarioEntity;
 import edu.utilidades.JsfUtils;
 import java.io.Serializable;
 import java.util.List;
@@ -55,7 +55,7 @@ public class UsuarioMedicoBean implements Serializable {
     @EJB
     private EspecialidadEJB especialidadEJB;
 
-    Usuario usuario = new Usuario();
+    UsuarioEntity usuario = new UsuarioEntity();
     RolEntity rol = new RolEntity();
     EspecialidadEntity especialidad = new EspecialidadEntity();
     private MedicoEntity medico = new MedicoEntity();
@@ -65,11 +65,11 @@ public class UsuarioMedicoBean implements Serializable {
 
     }
 
-    public Usuario getUsuario() {
+    public UsuarioEntity getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(Usuario usuario) {
+    public void setUsuario(UsuarioEntity usuario) {
         this.usuario = usuario;
     }
 

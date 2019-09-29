@@ -18,16 +18,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author josue
+ * @author admin
  */
 @Entity
-@Table(name = "Rol")
-@XmlRootElement
+@Table(name = "rol")
 @NamedQueries({
     @NamedQuery(name = "RolEntity.findAll", query = "SELECT r FROM RolEntity r")
     , @NamedQuery(name = "RolEntity.findByIdRol", query = "SELECT r FROM RolEntity r WHERE r.idRol = :idRol")
@@ -44,7 +41,7 @@ public class RolEntity implements Serializable {
     @Size(min = 1, max = 100)
     private String nombreRol;
     @OneToMany(mappedBy = "idRol")
-    private List<Usuario> usuarioList;
+    private List<UsuarioEntity> usuarioEntityList;
 
     public RolEntity() {
     }
@@ -74,13 +71,12 @@ public class RolEntity implements Serializable {
         this.nombreRol = nombreRol;
     }
 
-    @XmlTransient
-    public List<Usuario> getUsuarioList() {
-        return usuarioList;
+    public List<UsuarioEntity> getUsuarioEntityList() {
+        return usuarioEntityList;
     }
 
-    public void setUsuarioList(List<Usuario> usuarioList) {
-        this.usuarioList = usuarioList;
+    public void setUsuarioEntityList(List<UsuarioEntity> usuarioEntityList) {
+        this.usuarioEntityList = usuarioEntityList;
     }
 
     @Override

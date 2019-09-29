@@ -22,24 +22,19 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author josue
+ * @author admin
  */
 @Entity
-@Table(name = "Paciente")
-@XmlRootElement
+@Table(name = "paciente")
 @NamedQueries({
     @NamedQuery(name = "PacienteEntity.findAll", query = "SELECT p FROM PacienteEntity p")
     , @NamedQuery(name = "PacienteEntity.findByIdPaciente", query = "SELECT p FROM PacienteEntity p WHERE p.idPaciente = :idPaciente")
     , @NamedQuery(name = "PacienteEntity.findByNombreResponsable", query = "SELECT p FROM PacienteEntity p WHERE p.nombreResponsable = :nombreResponsable")
     , @NamedQuery(name = "PacienteEntity.findByTelefonoEmergencia", query = "SELECT p FROM PacienteEntity p WHERE p.telefonoEmergencia = :telefonoEmergencia")
-    , @NamedQuery(name = "PacienteEntity.findByVinculoResponsable", query = "SELECT p FROM PacienteEntity p WHERE p.vinculoResponsable = :vinculoResponsable")
-    , @NamedQuery(name = "PacienteEntity.findByEstadoCivil", query = "SELECT p FROM PacienteEntity p WHERE p.estadoCivil = :estadoCivil")
-    , @NamedQuery(name = "PacienteEntity.findByEstadoPaciente", query = "SELECT p FROM PacienteEntity p WHERE p.estadoPaciente = :estadoPaciente")})
+    , @NamedQuery(name = "PacienteEntity.findByVinculoResponsable", query = "SELECT p FROM PacienteEntity p WHERE p.vinculoResponsable = :vinculoResponsable")})
 public class PacienteEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -59,22 +54,15 @@ public class PacienteEntity implements Serializable {
     @NotNull
     @Size(min = 1, max = 50)
     private String vinculoResponsable;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
-    private String estadoCivil;
-    @Basic(optional = false)
-    @NotNull
-    private boolean estadoPaciente;
+    @OneToMany(mappedBy = "idPaciente")
+    private List<CitasEntity> citasEntityList;
     @JoinColumn(name = "idPersona", referencedColumnName = "idPersona")
     @OneToOne( cascade =CascadeType.ALL )
     private PersonaEntity idPersona;
     @OneToMany(mappedBy = "idPaciente")
-    private List<CitasEntity> citasEntityList;
+    private List<AntecedentesEntity> antecedentesEntityList;
     @OneToMany(mappedBy = "idPaciente")
     private List<ConsultaEntity> consultaEntityList;
-    @OneToMany(mappedBy = "idPaciente")
-    private List<AntecedentesEntity> antecedentesEntityList;
 
     public PacienteEntity() {
     }
@@ -83,13 +71,11 @@ public class PacienteEntity implements Serializable {
         this.idPaciente = idPaciente;
     }
 
-    public PacienteEntity(Integer idPaciente, String nombreResponsable, String telefonoEmergencia, String vinculoResponsable, String estadoCivil, boolean estadoPaciente) {
+    public PacienteEntity(Integer idPaciente, String nombreResponsable, String telefonoEmergencia, String vinculoResponsable) {
         this.idPaciente = idPaciente;
         this.nombreResponsable = nombreResponsable;
         this.telefonoEmergencia = telefonoEmergencia;
         this.vinculoResponsable = vinculoResponsable;
-        this.estadoCivil = estadoCivil;
-        this.estadoPaciente = estadoPaciente;
     }
 
     public Integer getIdPaciente() {
@@ -124,20 +110,12 @@ public class PacienteEntity implements Serializable {
         this.vinculoResponsable = vinculoResponsable;
     }
 
-    public String getEstadoCivil() {
-        return estadoCivil;
+    public List<CitasEntity> getCitasEntityList() {
+        return citasEntityList;
     }
 
-    public void setEstadoCivil(String estadoCivil) {
-        this.estadoCivil = estadoCivil;
-    }
-
-    public boolean getEstadoPaciente() {
-        return estadoPaciente;
-    }
-
-    public void setEstadoPaciente(boolean estadoPaciente) {
-        this.estadoPaciente = estadoPaciente;
+    public void setCitasEntityList(List<CitasEntity> citasEntityList) {
+        this.citasEntityList = citasEntityList;
     }
 
     public PersonaEntity getIdPersona() {
@@ -148,31 +126,20 @@ public class PacienteEntity implements Serializable {
         this.idPersona = idPersona;
     }
 
-    @XmlTransient
-    public List<CitasEntity> getCitasEntityList() {
-        return citasEntityList;
-    }
-
-    public void setCitasEntityList(List<CitasEntity> citasEntityList) {
-        this.citasEntityList = citasEntityList;
-    }
-
-    @XmlTransient
-    public List<ConsultaEntity> getConsultaEntityList() {
-        return consultaEntityList;
-    }
-
-    public void setConsultaEntityList(List<ConsultaEntity> consultaEntityList) {
-        this.consultaEntityList = consultaEntityList;
-    }
-
-    @XmlTransient
     public List<AntecedentesEntity> getAntecedentesEntityList() {
         return antecedentesEntityList;
     }
 
     public void setAntecedentesEntityList(List<AntecedentesEntity> antecedentesEntityList) {
         this.antecedentesEntityList = antecedentesEntityList;
+    }
+
+    public List<ConsultaEntity> getConsultaEntityList() {
+        return consultaEntityList;
+    }
+
+    public void setConsultaEntityList(List<ConsultaEntity> consultaEntityList) {
+        this.consultaEntityList = consultaEntityList;
     }
 
     @Override

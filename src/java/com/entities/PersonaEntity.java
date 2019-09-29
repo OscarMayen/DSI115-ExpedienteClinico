@@ -21,16 +21,13 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author josue
+ * @author admin
  */
 @Entity
-@Table(name = "Persona")
-@XmlRootElement
+@Table(name = "persona")
 @NamedQueries({
     @NamedQuery(name = "PersonaEntity.findAll", query = "SELECT p FROM PersonaEntity p")
     , @NamedQuery(name = "PersonaEntity.findByIdPersona", query = "SELECT p FROM PersonaEntity p WHERE p.idPersona = :idPersona")
@@ -41,7 +38,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "PersonaEntity.findByGenero", query = "SELECT p FROM PersonaEntity p WHERE p.genero = :genero")
     , @NamedQuery(name = "PersonaEntity.findByFechaNacimiento", query = "SELECT p FROM PersonaEntity p WHERE p.fechaNacimiento = :fechaNacimiento")
     , @NamedQuery(name = "PersonaEntity.findByTelefonoOpcional", query = "SELECT p FROM PersonaEntity p WHERE p.telefonoOpcional = :telefonoOpcional")
-    , @NamedQuery(name = "PersonaEntity.findByEstadopersonal", query = "SELECT p FROM PersonaEntity p WHERE p.estadopersonal = :estadopersonal")})
+    , @NamedQuery(name = "PersonaEntity.findByEstadoPersonal", query = "SELECT p FROM PersonaEntity p WHERE p.estadoPersonal = :estadoPersonal")})
 public class PersonaEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -77,13 +74,13 @@ public class PersonaEntity implements Serializable {
     private String telefonoOpcional;
     @Basic(optional = false)
     @NotNull
-    private boolean estadopersonal;
+    private boolean estadoPersonal;
     @OneToMany(mappedBy = "idPersona")
     private List<PacienteEntity> pacienteEntityList;
     @OneToMany(mappedBy = "idPersona")
-    private List<Usuario> usuarioList;
-    @OneToMany(mappedBy = "idPersona")
     private List<MedicoEntity> medicoEntityList;
+    @OneToMany(mappedBy = "idPersona")
+    private List<UsuarioEntity> usuarioEntityList;
 
     public PersonaEntity() {
     }
@@ -92,7 +89,7 @@ public class PersonaEntity implements Serializable {
         this.idPersona = idPersona;
     }
 
-    public PersonaEntity(Integer idPersona, String nombrePersona, String apellidoPersona, String telefono, String dui, String genero, Date fechaNacimiento, boolean estadopersonal) {
+    public PersonaEntity(Integer idPersona, String nombrePersona, String apellidoPersona, String telefono, String dui, String genero, Date fechaNacimiento, boolean estadoPersonal) {
         this.idPersona = idPersona;
         this.nombrePersona = nombrePersona;
         this.apellidoPersona = apellidoPersona;
@@ -100,7 +97,7 @@ public class PersonaEntity implements Serializable {
         this.dui = dui;
         this.genero = genero;
         this.fechaNacimiento = fechaNacimiento;
-        this.estadopersonal = estadopersonal;
+        this.estadoPersonal = estadoPersonal;
     }
 
     public Integer getIdPersona() {
@@ -167,15 +164,14 @@ public class PersonaEntity implements Serializable {
         this.telefonoOpcional = telefonoOpcional;
     }
 
-    public boolean getEstadopersonal() {
-        return estadopersonal;
+    public boolean getEstadoPersonal() {
+        return estadoPersonal;
     }
 
-    public void setEstadopersonal(boolean estadopersonal) {
-        this.estadopersonal = estadopersonal;
+    public void setEstadoPersonal(boolean estadoPersonal) {
+        this.estadoPersonal = estadoPersonal;
     }
 
-    @XmlTransient
     public List<PacienteEntity> getPacienteEntityList() {
         return pacienteEntityList;
     }
@@ -184,22 +180,20 @@ public class PersonaEntity implements Serializable {
         this.pacienteEntityList = pacienteEntityList;
     }
 
-    @XmlTransient
-    public List<Usuario> getUsuarioList() {
-        return usuarioList;
-    }
-
-    public void setUsuarioList(List<Usuario> usuarioList) {
-        this.usuarioList = usuarioList;
-    }
-
-    @XmlTransient
     public List<MedicoEntity> getMedicoEntityList() {
         return medicoEntityList;
     }
 
     public void setMedicoEntityList(List<MedicoEntity> medicoEntityList) {
         this.medicoEntityList = medicoEntityList;
+    }
+
+    public List<UsuarioEntity> getUsuarioEntityList() {
+        return usuarioEntityList;
+    }
+
+    public void setUsuarioEntityList(List<UsuarioEntity> usuarioEntityList) {
+        this.usuarioEntityList = usuarioEntityList;
     }
 
     @Override
