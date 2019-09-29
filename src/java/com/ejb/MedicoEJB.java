@@ -62,6 +62,11 @@ public class MedicoEJB {
         Query query = em.createNamedQuery("MedicoEntity.findAll");
         return query.getResultList();
     }
+    
+    public List filtroMedicoConsulta(String dui, String nombres){
+        Query query = em.createQuery("SELECT p FROM MedicoEntity p JOIN p.idPersona per WHERE (per.dui LIKE '%"+dui+"%') AND (per.nombrePersona LIKE '%"+nombres+"%') AND (per.estadoPersonal=true) ");
+        return query.getResultList();
+    }
 
     public EntityManager getEm() {
         return em;

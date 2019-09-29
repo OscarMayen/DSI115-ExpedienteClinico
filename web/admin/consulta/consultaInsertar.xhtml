@@ -1,0 +1,193 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../../plantillas/plantilla.xhtml">
+
+            <ui:define name="titulo">
+                Nueva Consulta
+            </ui:define>
+
+            <ui:define name="css">
+
+            </ui:define>
+
+
+            <ui:define name="contenido">
+
+                <h:form id="formNuevaConsulta">
+
+                    <p:growl id="growl" showDetail="true" sticky="true" /> 
+                    <br></br>
+                    <h6><strong>DATOS DEL MEDICO</strong></h6>
+                    <p:fieldset style="font-size: 15px; font-weight: bold;" >
+                        <p:panelGrid columns="7"  >
+
+                            <p:outputLabel for="duiM" value="Dui"/>
+                            <p:inputMask id="duiM" value="#{consultaInsertarBean.txtDuiMedico}"  mask="9999999-9" size="15">
+                                <p:ajax/>
+                            </p:inputMask>
+
+                            <p:outputLabel for="nombreM" value="Nombre" />
+                            <p:inputText id="nombreM"   size="30"/>
+
+
+                            <p:outputLabel for="apellidoM" value="Apellido"/>
+                            <p:inputText id="apellidoM"   size="30"/>
+
+                            <p:commandButton id="btnBusqMed" icon="ui-icon-search" type="button"
+                                             onclick="PF('dlgMedico').show();"/>
+
+                        </p:panelGrid>
+                    </p:fieldset><br></br>
+
+                    <h6><strong>DATOS DEL PACIENTE</strong></h6>
+                    <p:fieldset  style="font-size: 15px; font-weight: bold;" >
+                        <p:panelGrid columns="7"  >
+
+                            <p:outputLabel for="duiPa" value="Dui"/>
+                            <p:inputMask id="duiPa" value="#{consultaInsertarBean.txtDuiPaciente}"  mask="9999999-9" size="15">
+                                <p:ajax/>
+                            </p:inputMask>
+
+                            <p:outputLabel for="nombrePa" value="Nombre" />
+                            <p:inputText id="nombrePa"   size="30"/>
+
+
+                            <p:outputLabel for="apellidoPa" value="Apellido"/>
+                            <p:inputText id="apellidoPa"   size="30"/>
+
+                            <p:commandButton id="btnBusqPac" icon="ui-icon-search" type="button"
+                                             onclick="PF('dlgPaciente').show();"/>
+
+                        </p:panelGrid>
+                    </p:fieldset><br></br>
+
+                    <h6><strong>DATOS DE LA CONSULTA</strong></h6>
+                    <p:fieldset  style="font-size: 15px; font-weight: bold;" >
+                        <p:panelGrid columns="4"  >
+
+                            <p:outputLabel for="peso" value="Peso (mts)"/>
+                            <p:spinner id="peso"  stepFactor="0.1" min="0.0"  />
+
+                            <p:outputLabel for="altura" value="Altura (kg)" />
+                            <p:spinner id="altura" stepFactor="0.1" min="0.0"   />
+
+
+                            <p:outputLabel for="presion" value="Presion"/>
+                            <p:inputText id="presion"   size="30"/>
+
+                            <p:outputLabel for="diagnostico" value="Diagnostico"/>
+                            <p:inputTextarea id="diagnostico" rows="6" cols="70" />
+                        </p:panelGrid>
+                    </p:fieldset><br></br>
+
+
+                    <p:dialog id="dlgMedico" header="Buscar Medico" widgetVar="dlgMedico" modal="true" 
+                              width="60%" closeOnEscape="true" style="font-size: 15px; font-weight: bold;" >
+                        <p:menubar>
+                            <p:menuitem id="itemBuscarMedico" value="Buscar" icon="ui-icon-search"  update="tblMedicoBusq" actionListener="#{consultaInsertarBean.itemBuscarListenerMedico()}"/>
+                            <p:menuitem id="itemLimpiarMedico" value="Copiar" icon="ui-icon-pencil"/>
+                        </p:menubar>
+                        <p:panel id="pnlBusMedico" style="margin-top:5px">
+                            <p:panelGrid columns="4" styleClass="ui-panelgrid-blank ui-fluid" 
+                                         columnClasses="ui-grid-col-4,ui-grid-col-8">
+                                <p:outputLabel for="duiMeBusq" value="Dui" style="font-weight: bold;"/>
+                                <p:inputMask id="duiMeBusq" value="#{consultaInsertarBean.duiMedBuscq}" mask="9999999-9"/> 
+                                <p:outputLabel for="nombreMeBusc" value="Nombre de Medico" style="font-weight: bold;"/>
+                                <p:inputText id="nombreMeBusc" value="#{consultaInsertarBean.nomMedBuscq}" /> 
+                            </p:panelGrid>
+                        </p:panel>
+                        <p:panel id="pnlTableMedico" style="margin-top:5px" >
+                            <p:dataTable id="tblMedicoBusq" var="med" value="#{consultaInsertarBean.lstMed}"
+                                         rowIndexVar="index" widgetVar="tblMedicoBusq"
+                                         rows="10" paginator="true"
+                                         selectionMode="single" selection="#{consultaInsertarBean.medSelect}" rowKey="#{med.idMedico}"
+                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                        rowsPerPageTemplate="5,10,15" currentPageReportTemplate="Página:({currentPage} de {totalPages})">
+                                <p:ajax event="rowSelect" listener="#{consultaInsertarBean.onSelecttblMedico}" update="@form"/>
+                                   
+                               <p:column headerText="CORRELATIVO">
+                                   <h:outputText value="#{med.idMedico}" />
+                                </p:column> 
+                                
+                                <p:column headerText="DUI">
+                                    <h:outputText value="#{med.idPersona.dui}" />
+                                </p:column>
+
+                                <p:column headerText="Nombre">
+                                    <h:outputText value="#{med.idPersona.nombrePersona}" />
+                                </p:column>
+
+                                <p:column headerText="Apellido">
+                                    <h:outputText value="#{med.idPersona.apellidoPersona}" />
+                                </p:column>
+
+                            </p:dataTable>
+                        </p:panel>
+                    </p:dialog>
+
+                    
+                    <p:dialog id="dlgPaciente" header="Buscar Paciente" widgetVar="dlgPaciente" modal="true" 
+                              width="60%" closeOnEscape="true" style="font-size: 15px; font-weight: bold;" >
+                        <p:menubar>
+                            <p:menuitem id="itemBuscarPaciente" value="Buscar" icon="ui-icon-search"  update="tblPacienteBusq" actionListener="#{consultaInsertarBean.itemBuscarListenerPaciente()}"/>
+                            <p:menuitem id="itemLimpiarPaciente" value="Copiar" icon="ui-icon-pencil"/>
+                        </p:menubar>
+                        <p:panel id="pnlBusPaciente" style="margin-top:5px">
+                            <p:panelGrid columns="4" styleClass="ui-panelgrid-blank ui-fluid" 
+                                         columnClasses="ui-grid-col-4,ui-grid-col-8">
+                                <p:outputLabel for="duiPaBusq" value="Dui" style="font-weight: bold;"/>
+                                <p:inputMask id="duiPaBusq" value="#{consultaInsertarBean.duiPacBuscq}" mask="9999999-9"/> 
+                                <p:outputLabel for="nombrePaBusc" value="Nombre del Paciente" style="font-weight: bold;"/>
+                                <p:inputText id="nombrePaBusc" value="#{consultaInsertarBean.nomPacBuscq}"/> 
+                            </p:panelGrid>
+                        </p:panel>
+                        <p:panel id="pnlTablePaciente" style="margin-top:5px" >
+                            <p:dataTable id="tblPacienteBusq" var="pac" value="#{consultaInsertarBean.lstPac}"
+                                         rowIndexVar="index" widgetVar="tblPacienteBusq"
+                                         rows="10" paginator="true"
+                                         selectionMode="single" selection="#{consultaInsertarBean.pacSelect}" rowKey="#{pac.idPaciente}"
+                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                        rowsPerPageTemplate="5,10,15" currentPageReportTemplate="Página:({currentPage} de {totalPages})">
+                                <p:ajax event="rowSelect" listener="#{consultaInsertarBean.onSelecttblPaciente}" update="@form"/>
+                               
+                                 <p:column headerText="CORRELATIVO">
+                                     <h:outputText value="#{pac.idPaciente}" />
+                                </p:column>
+                                
+                                <p:column headerText="DUI">
+                                    <h:outputText value="#{pac.idPersona.dui}" />
+                                </p:column>
+
+                                <p:column headerText="Nombre">
+                                    <h:outputText value="#{pac.idPersona.nombrePersona}" />
+                                </p:column>
+
+                                <p:column headerText="Apellido">
+                                    <h:outputText value="#{pac.idPersona.apellidoPersona}" />
+                                </p:column>
+
+                            </p:dataTable>
+                        </p:panel>
+                    </p:dialog>
+                    
+                    
+                </h:form>
+
+            </ui:define>
+
+            <ui:define name="scripts">
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
