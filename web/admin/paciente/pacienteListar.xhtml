@@ -27,103 +27,61 @@
             table{
                 width: 100%;
             }
-            label{
-                width: 100%;
-            }
-            
-            input[id*=filtro]{
-                width: 100%;
-            }
+
+
+
         </style>
     </ui:define>
     <ui:define name="contenido">
-        <div class="row">
-            <div class="col">
-                <f:view>
 
-                    <br/>
-                    <h:form>
-                        <p:growl id="msgs" showDetail="true" />
+   <h:form>
+            <h1><h:outputText value="Listado de Pacientes"/></h1>
+            <h:link outcome="/admin/paciente/pacienteInsertar.xhtml" value="Nuevo Paciente" class="btn btn-success"/>
+            <br>
+            </br>
 
-                        <p:fieldset legend="Filtros" style="margin-bottom:20px">
-                            <h:panelGrid columns="2" cellpadding="5">
-                                <h:outputLabel>
-                                    Dui:
-                                    <h:inputText value="#{pacienteBean.dui}" id="filtroDui"/>
-                                </h:outputLabel>
-                                
-                                <h:outputLabel>
-                                    Nombres:
-                                    <h:inputText value="#{pacienteBean.nombres}" id="filtroNombre"/>
-                                </h:outputLabel>
-                                <h:outputLabel>
-                                    Apellidos:
-                                    <h:inputText value="#{pacienteBean.apellidos}" id="filtroApellido"/>
-                                </h:outputLabel>
-                                <h:outputLabel>
-                                    Buscar:
-                                    <p:commandButton id="filtrar" value="Filtrar" update="@(:tablaP)" actionListener="#{pacienteBean.filtrar()}" />
-                                </h:outputLabel>
-                            </h:panelGrid>
-                        </p:fieldset>
-                    </h:form>
+            <p:dataTable id="tablaP" var="paciente" value="#{pacienteBean.listaPaciente}" rows="10"
+                         paginator="true"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15" currentPageReportTemplate="Página:({currentPage} de {totalPages})">
+                <p:column filterBy="#{paciente.idPersona.dui}" headerText="Dui">
+                    <h:outputText value="#{paciente.idPersona.dui}" />
+                </p:column>
+
+                <p:column filterBy="#{paciente.idPersona.nombrePersona}" headerText="Nombres">
+                    <h:outputText value="#{paciente.idPersona.nombrePersona}" />
+                </p:column>
+
+                <p:column filterBy="#{paciente.idPersona.apellidoPersona}" headerText="Apellidos">
+                    <h:outputText value="#{paciente.idPersona.apellidoPersona}" />
+                </p:column>
+
+                <p:column headerText="Telefono de emergencia">
+                    <h:outputText value="#{paciente.telefonoEmergencia}" />
+                </p:column>
+
+                <p:column headerText="Nombre responsable">
+                    <h:outputText value="#{paciente.nombreResponsable}" />
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Operaciones" />
+                    </f:facet>
+
+                    <h:commandButton class="btn btn-primary" action="#{pacienteBean.detallePaciente(paciente.idPaciente)}" value="Ver">
+                        <f:param name="id"  value="#{paciente.idPaciente}"/>
+                    </h:commandButton>
+                    <h:commandButton class="btn btn-primary" action="#{pacienteBean.editPaciente(paciente.idPaciente)}" value="Editar">
+                        <f:param name="id"  value="#{paciente.idPaciente}"/>
+                    </h:commandButton>
+
+                </p:column>
+
+            </p:dataTable>
 
 
-
-                    <h:form>
-                        <h1><h:outputText value="Listado de Pacientes"/></h1>
-                        <h:link outcome="/admin/paciente/pacienteInsertar.xhtml" value="Nuevo Paciente" class="btn btn-success"/>
-                        <br>
-                        </br>
-                        
-                            <p:dataTable id="tablaP" var="paciente" value="#{pacienteBean.listaPaciente}" rows="10"
-                                         paginator="true"
-                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                         rowsPerPageTemplate="5,10,15">
-                                <p:column headerText="Dui">
-                                    <h:outputText value="#{paciente.idPersona.dui}" />
-                                </p:column>
-
-                                <p:column headerText="Nombres">
-                                    <h:outputText value="#{paciente.idPersona.nombrePersona}" />
-                                </p:column>
-
-                                <p:column headerText="Apellidos">
-                                    <h:outputText value="#{paciente.idPersona.apellidoPersona}" />
-                                </p:column>
-
-                                <p:column headerText="Telefono de emergencia">
-                                    <h:outputText value="#{paciente.telefonoEmergencia}" />
-                                </p:column>
-
-                                <p:column headerText="Nombre responsable">
-                                    <h:outputText value="#{paciente.nombreResponsable}" />
-                                </p:column>
-                                
-                                <p:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="Operaciones" />
-                                    </f:facet>
-                                    
-                                    <h:commandButton class="btn btn-primary" action="#{pacienteBean.detallePaciente(paciente.idPaciente)}" value="Ver">
-                                        <f:param name="id"  value="#{paciente.idPaciente}"/>
-                                    </h:commandButton>
-                                    <h:commandButton class="btn btn-primary" action="#{pacienteBean.editPaciente(paciente.idPaciente)}" value="Editar">
-                                        <f:param name="id"  value="#{paciente.idPaciente}"/>
-                                    </h:commandButton>
-
-                                </p:column>
-                                
-                            </p:dataTable>
-                       
-                        
-                    </h:form>
-
-                </f:view>
-
-            </div>
-        </div>
-
+        </h:form>
 
     </ui:define>
 

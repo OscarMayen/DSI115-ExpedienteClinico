@@ -8,13 +8,17 @@ package com.managedbean;
 
 import com.ejb.MedicoEJB;
 import com.ejb.PacienteEJB;
+import com.ejb.SalaEJB;
+import com.entities.ConsultaEntity;
 import com.entities.MedicoEntity;
 import com.entities.PacienteEntity;
+import com.entities.SalaEntity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -24,12 +28,15 @@ import org.primefaces.event.SelectEvent;
 
 /**
  *
- * @author Mireya Flores
+ * @author Oscar Mayen
  */
 @ManagedBean
 @javax.faces.bean.ViewScoped
 public class ConsultaInsertarBean implements Serializable{
 
+    @EJB
+    private SalaEJB salaEJB;
+    
     @EJB
     private MedicoEJB medicoEJB;
 
@@ -39,8 +46,14 @@ public class ConsultaInsertarBean implements Serializable{
     public ConsultaInsertarBean() {
     }
     
+   
+    private List<SalaEntity> buscarSalas() {
+         this.listaSala = salaEJB.listarSalas();
+         return listaSala;
+    }
+    
     private String txtDuiPaciente;
-     private String txtDuiMedico;
+    private String txtDuiMedico;
     
     
     private String duiMedBuscq;
@@ -52,6 +65,7 @@ public class ConsultaInsertarBean implements Serializable{
     private int idPaciente;
     private int idMedico;
     
+    private ConsultaEntity consulta = new ConsultaEntity();
     private PacienteEntity paciente = new PacienteEntity();
     private MedicoEntity medico = new MedicoEntity();
     
@@ -60,10 +74,9 @@ public class ConsultaInsertarBean implements Serializable{
     
     private List < PacienteEntity > lstPac = new ArrayList();
     private List < MedicoEntity > lstMed = new ArrayList();
-
     
-    
-    
+    private List<SalaEntity> listaSala = new ArrayList();
+   
     public String getDuiMedBuscq() {
         return duiMedBuscq;
     }
@@ -176,12 +189,34 @@ public class ConsultaInsertarBean implements Serializable{
     public void setTxtDuiMedico(String txtDuiMedico) {
         this.txtDuiMedico = txtDuiMedico;
     }
+
     
+    public ConsultaEntity getConsulta() {
+        return consulta;
+    }
+
+    public void setConsulta(ConsultaEntity consulta) {
+        this.consulta = consulta;
+    }
+
+    public List<SalaEntity> getListaSala() {
+        return listaSala;
+    }
+
+    public void setListaSala(List<SalaEntity> listaSala) {
+        this.listaSala = listaSala;
+    }
+
+     @PostConstruct
+    public void init() {
+       System.out.println("!!!!!!!!!!!!!");
+       listaSala = buscarSalas();
     
+    }
     
     
     public void itemBuscarListenerMedico() {
-        
+         System.out.println("/********************");
         try {
             lstMed = medicoEJB.filtroMedicoConsulta(duiPacBuscq, nomPacBuscq);
             System.out.println("/********************");
@@ -194,7 +229,6 @@ public class ConsultaInsertarBean implements Serializable{
         }
         
     }
-    
     
     public void itemBuscarListenerPaciente() {
         
@@ -210,7 +244,6 @@ public class ConsultaInsertarBean implements Serializable{
         }
         
     }
-    
     
     public void onSelecttblPaciente(SelectEvent event) {
        
@@ -238,8 +271,6 @@ public class ConsultaInsertarBean implements Serializable{
          MedicoEntity medSel = (MedicoEntity) event.getObject();
          this.txtDuiMedico = medSel.getIdPersona().getDui();
          
-        
-
         PrimeFaces.current().executeScript("PF('dlgMedico').hide();");
     }
 }

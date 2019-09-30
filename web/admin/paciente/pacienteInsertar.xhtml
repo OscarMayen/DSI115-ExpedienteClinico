@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
 
     <body>
@@ -15,91 +15,85 @@
             </ui:define>
 
             <ui:define name="css">
-                <style>
-                    .btn{
-
-                        margin-top: 2%;
-                        margin-bottom: 2%;
-
-                    }
-
-                    #btn{
-                        margin-left: 35%;
-                    }
-                </style>
-                <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
-                <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-                <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+                
+               
             </ui:define>
 
             <ui:define name="contenido">
-                <div class="col-md-8 offset-md-2 bootstrap-iso"> 
-                    <h2>Nuevo paciente</h2>
 
-                    <h:form>
-                        <div style="width: 100%; height: 20px; border-bottom: 1px solid black; margin-top: 3%; margin-bottom: 3%; text-align: center">
-                            <span style="font-size: 1.5em; background-color: #F3F5F6; padding: 0 10px;">
-                                Datos personales <!--Padding is optional-->
-                            </span>
-                        </div>
 
-                        <div class="form-group">
-                            <label for="exampleFormControlInput1">Nombres</label>
-                            <h:inputText value="#{pacienteInsertarManagedBean.personaEntity.nombrePersona}" class="form-control" id="exampleFormControlInput1"  required="true"></h:inputText>
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleFormControlInput2">Apellidos</label>
-                            <h:inputText value="#{pacienteInsertarManagedBean.personaEntity.apellidoPersona}" class="form-control" id="exampleFormControlInput2" required="true"/>
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleFormControlInput5">Telefono</label>
-                            <h:inputText value="#{pacienteInsertarManagedBean.personaEntity.telefono}" class="form-control" id="exampleFormControlInput5" maxlength="9" required="true"/>
-                        </div>
+                <h:form id="formNuevoPaciente">
 
-                        <div class="form-group">
-                            <label for="sexo">Sexo</label>
-                            <h:selectOneRadio value="#{pacienteInsertarManagedBean.personaEntity.genero}" id="sexo">
-                                <f:selectItem itemValue="Masculino" itemLabel="Masculino"/>
-                                <f:selectItem itemValue="Femenino" itemLabel="Femenino"/>
-                            </h:selectOneRadio>
-                        </div>
+                    <p:growl id="growl" showDetail="true" sticky="true" /> 
+                    <p:fieldset legend="Nuevo Paciente" style="font-size: 15px; font-weight: bold;" >
+                        <p:panelGrid columns="4" >
 
-                        <div class="form-group">
-                            <label for="exampleFormControlInput6">Dui</label>
-                            <h:inputText value="#{pacienteInsertarManagedBean.personaEntity.dui}" class="form-control" id="exampleFormControlInput6" maxlength="10" required="true"/>
-                        </div>
-                        <div class="form-group">
-                            <label for="fechaNacimiento">Fecha de nacimiento </label><br/>
-                            <p:calendar id="fechaNacimiento" value="#{pacienteInsertarManagedBean.personaEntity.fechaNacimiento}" placeholder="dd/MM/yyyy" 
-                                        locale="es"  pattern="dd/MM/yyyy" required="true"/>
-                        </div>
+                            <p:outputLabel for="nombrePa" value="Nombre" />
+                            <p:inputText id="nombrePa" value="#{pacienteInsertarManagedBean.personaEntity.nombrePersona}"   
+                                         size="30" required="true"/>
 
-                        <div style="width: 100%; height: 20px; border-bottom: 1px solid black; margin-top: 3%; margin-bottom: 3%; text-align: center">
-                            <span style="font-size: 1.5em; background-color: #F3F5F6; padding: 0 10px;">
-                                Datos del paciente <!--Padding is optional-->
-                            </span>
-                        </div>
+                            <p:outputLabel for="apellidoPa" value="Apellido"/>
+                            <p:inputText id="apellidoPa" value="#{pacienteInsertarManagedBean.personaEntity.apellidoPersona}"   
+                                         size="30" required="true"/>
 
-                        <div class="form-group">
-                            <label for="exampleFormControlInput7">Nombre de responsable</label>
-                            <h:inputText  value="#{pacienteInsertarManagedBean.pacienteEntity.nombreResponsable}" class="form-control" id="exampleFormControlInput7" required="true"/>
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleFormControlInput8">Telefono de emergencia</label>
-                            <h:inputText  value="#{pacienteInsertarManagedBean.pacienteEntity.telefonoEmergencia}" class="form-control" id="exampleFormControlInput8" required="true"/>
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleFormControlInput9">Vinculo de responsable</label>
-                            <h:inputText  value="#{pacienteInsertarManagedBean.pacienteEntity.vinculoResponsable}" class="form-control" id="exampleFormControlInput9" required="true"/>
-                        </div>
-                       
+                            <p:outputLabel for="telefono1Pa" value="Telefono"/>
+                            <p:inputMask id="telefono1Pa" value="#{pacienteInsertarManagedBean.personaEntity.telefono}"  
+                                         mask="9999-9999" size="30" required="true"/>
 
-                
-                <p:commandButton value="Guardar" actionListener="#{pacienteInsertarManagedBean.insertarPaciente()}"/>
-                <h:commandButton class="btn btn-danger" action="/admin/paciente/pacienteListar.xhtml?faces-redirect=true" immediate="true" value="Cancelar"/>
+                            <p:outputLabel for="telefono2Pa"  value="Telefono  (Opcional)"/>
+                            <p:inputMask  id="telefono2Pa" value="#{pacienteInsertarManagedBean.personaEntity.telefonoOpcional}" 
+                                          mask="9999-9999" size="30"/>
+
+                            <p:outputLabel for="duiPa" value="Dui"/>
+                            <p:inputMask id="duiPa" value="#{pacienteInsertarManagedBean.personaEntity.dui}"  
+                                         mask="9999999-9" size="30" required="true"/>
+
+                            <p:outputLabel for="fechaNacimientoPa" value="Fecha de Nacimiento"/>
+                            <p:calendar   value="#{pacienteInsertarManagedBean.personaEntity.fechaNacimiento}"
+                                id="fechaNacimientoPa" placeholder="dd/MM/yyyy" 
+                                locale="es"  pattern="dd/MM/yyyy" 
+                                required="true" size="30"/>
+
+                            <p:outputLabel value="Sexo" for="generoPa"/>
+                            <p:selectOneRadio id="generoPa" value="#{pacienteInsertarManagedBean.personaEntity.genero}" 
+                                              label="Genero" required="true">
+                                <f:selectItem itemLabel="Masculino" itemValue="Masculino"/>
+                                <f:selectItem itemLabel="Femenino" itemValue="Femenino" />
+                            </p:selectOneRadio>
+
+                            <p:outputLabel value="Estado Paciente en la institucion" />
+                            <p:selectBooleanCheckbox value="#{pacienteInsertarManagedBean.personaEntity.estadoPersonal}"  
+                                                     itemLabel="Activo" />
+                        </p:panelGrid>
+                    </p:fieldset><br></br>
+                    
+                    <h6><strong>DATOS DEL RESPONSABLE</strong></h6>
+                    <p:fieldset  style="font-size: 15px; font-weight: bold;" >
+                        <p:panelGrid columns="4"  >
+
+                            <p:outputLabel for="nombreResponsable" value="Nombre del Responsable" />
+                            <p:inputText id="nombreResponsable" value="#{pacienteInsertarManagedBean.pacienteEntity.nombreResponsable}"  size="30" required="true"/>
+                            
+                            <p:outputLabel for="telefonoResponsable" value="Telefono del Responsable"/>
+                            <p:inputMask id="telefonoResponsable" value="#{pacienteInsertarManagedBean.pacienteEntity.telefonoEmergencia}"   
+                                         mask="9999-9999" size="15" required="true"/>
+
+                            <p:outputLabel for="vinculoResponsable" value="Apellido"/>
+                            <p:inputText id="vinculoResponsable" value="#{pacienteInsertarManagedBean.pacienteEntity.vinculoResponsable}"   
+                                         size="30" required="true"/>
+
+                            
+
+                        </p:panelGrid>
+                    </p:fieldset><br></br>
+
+
+                    &nbsp;&nbsp;<p:commandButton value="Guardar" actionListener="#{pacienteInsertarManagedBean.insertarPaciente()}" update="@form" /> 
+                    &nbsp;&nbsp;<p:linkButton outcome="/admin/paciente/pacienteListar.xhtml" value="Cancelar" />
+
                 </h:form>
 
-                </div>
+
             </ui:define>
             <ui:define name="scripts">
                 <h:outputScript name="js/spanishLocale.js"/>

@@ -85,6 +85,15 @@
 
                             <p:outputLabel for="diagnostico" value="Diagnostico"/>
                             <p:inputTextarea id="diagnostico" rows="6" cols="70" />
+
+                            <p:outputLabel value="Sala" />
+                            <p:selectOneMenu id="sala" value="#{consultaInsertarBean.consulta.idSala}">
+                                <f:selectItems id="salaaa" value="#{consultaInsertarBean.listaSala}" var="sala" 
+                                               itemValue="#{sala}" 
+                                               itemLabel="#{sala.nombreSala}"
+                                               />
+                                
+                            </p:selectOneMenu>
                         </p:panelGrid>
                     </p:fieldset><br></br>
 
@@ -110,13 +119,13 @@
                                          rows="10" paginator="true"
                                          selectionMode="single" selection="#{consultaInsertarBean.medSelect}" rowKey="#{med.idMedico}"
                                          paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                        rowsPerPageTemplate="5,10,15" currentPageReportTemplate="Página:({currentPage} de {totalPages})">
+                                         rowsPerPageTemplate="5,10,15" currentPageReportTemplate="Página:({currentPage} de {totalPages})">
                                 <p:ajax event="rowSelect" listener="#{consultaInsertarBean.onSelecttblMedico}" update="@form"/>
-                                   
-                               <p:column headerText="CORRELATIVO">
-                                   <h:outputText value="#{med.idMedico}" />
+
+                                <p:column headerText="CORRELATIVO">
+                                    <h:outputText value="#{med.idMedico}" />
                                 </p:column> 
-                                
+
                                 <p:column headerText="DUI">
                                     <h:outputText value="#{med.idPersona.dui}" />
                                 </p:column>
@@ -133,7 +142,7 @@
                         </p:panel>
                     </p:dialog>
 
-                    
+
                     <p:dialog id="dlgPaciente" header="Buscar Paciente" widgetVar="dlgPaciente" modal="true" 
                               width="60%" closeOnEscape="true" style="font-size: 15px; font-weight: bold;" >
                         <p:menubar>
@@ -155,13 +164,13 @@
                                          rows="10" paginator="true"
                                          selectionMode="single" selection="#{consultaInsertarBean.pacSelect}" rowKey="#{pac.idPaciente}"
                                          paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                        rowsPerPageTemplate="5,10,15" currentPageReportTemplate="Página:({currentPage} de {totalPages})">
+                                         rowsPerPageTemplate="5,10,15" currentPageReportTemplate="Página:({currentPage} de {totalPages})">
                                 <p:ajax event="rowSelect" listener="#{consultaInsertarBean.onSelecttblPaciente}" update="@form"/>
-                               
-                                 <p:column headerText="CORRELATIVO">
-                                     <h:outputText value="#{pac.idPaciente}" />
+
+                                <p:column headerText="CORRELATIVO">
+                                    <h:outputText value="#{pac.idPaciente}" />
                                 </p:column>
-                                
+
                                 <p:column headerText="DUI">
                                     <h:outputText value="#{pac.idPersona.dui}" />
                                 </p:column>
@@ -177,8 +186,8 @@
                             </p:dataTable>
                         </p:panel>
                     </p:dialog>
-                    
-                    
+
+
                 </h:form>
 
             </ui:define>
