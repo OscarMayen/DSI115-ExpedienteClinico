@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,6 +19,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -50,7 +52,7 @@ public class ConsultaEntity implements Serializable {
     @ManyToOne
     private MedicoEntity idMedico;
     @JoinColumn(name = "idSignosVitales", referencedColumnName = "idSignosVitales")
-    @ManyToOne
+    @OneToOne( cascade =CascadeType.ALL )
     private SignosvitalesEntity idSignosVitales;
     @JoinColumn(name = "idSala", referencedColumnName = "idSala")
     @ManyToOne

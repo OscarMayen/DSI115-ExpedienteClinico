@@ -1,18 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.managedbean;
 
 
+import com.ejb.ConsultaEJB;
+import com.ejb.DiagnosticoEJB;
 import com.ejb.MedicoEJB;
 import com.ejb.PacienteEJB;
 import com.ejb.SalaEJB;
 import com.entities.ConsultaEntity;
+import com.entities.DiagnosticoEntity;
 import com.entities.MedicoEntity;
 import com.entities.PacienteEntity;
 import com.entities.SalaEntity;
+import com.entities.SignosvitalesEntity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,9 +30,15 @@ import org.primefaces.event.SelectEvent;
  *
  * @author Oscar Mayen
  */
-@ManagedBean
+@ManagedBean(name = "consultaInsertarBean")
 @javax.faces.bean.ViewScoped
 public class ConsultaInsertarBean implements Serializable{
+
+    @EJB
+    private DiagnosticoEJB diagnosticoEJB;
+
+    @EJB
+    private ConsultaEJB consultaEJB;
 
     @EJB
     private SalaEJB salaEJB;
@@ -46,7 +52,6 @@ public class ConsultaInsertarBean implements Serializable{
     public ConsultaInsertarBean() {
     }
     
-   
     private List<SalaEntity> buscarSalas() {
          this.listaSala = salaEJB.listarSalas();
          return listaSala;
@@ -55,6 +60,11 @@ public class ConsultaInsertarBean implements Serializable{
     private String txtDuiPaciente;
     private String txtDuiMedico;
     
+    private String txtNombrePaciente;
+    private String txtNombreMedico;
+    
+    private String txtApellidoPaciente;
+    private String txtApellidoMedico;
     
     private String duiMedBuscq;
     private String duiPacBuscq;
@@ -66,8 +76,10 @@ public class ConsultaInsertarBean implements Serializable{
     private int idMedico;
     
     private ConsultaEntity consulta = new ConsultaEntity();
+    private DiagnosticoEntity diagnostico = new  DiagnosticoEntity();
     private PacienteEntity paciente = new PacienteEntity();
     private MedicoEntity medico = new MedicoEntity();
+    private SignosvitalesEntity signosVitables = new SignosvitalesEntity();
     
     private MedicoEntity medSelect = new MedicoEntity();
     private PacienteEntity pacSelect = new PacienteEntity();
@@ -207,6 +219,56 @@ public class ConsultaInsertarBean implements Serializable{
         this.listaSala = listaSala;
     }
 
+    public SignosvitalesEntity getSignosVitables() {
+        return signosVitables;
+    }
+
+    public void setSignosVitables(SignosvitalesEntity signosVitables) {
+        this.signosVitables = signosVitables;
+    }
+
+    public String getTxtNombrePaciente() {
+        return txtNombrePaciente;
+    }
+
+    public void setTxtNombrePaciente(String txtNombrePaciente) {
+        this.txtNombrePaciente = txtNombrePaciente;
+    }
+
+    public String getTxtNombreMedico() {
+        return txtNombreMedico;
+    }
+
+    public void setTxtNombreMedico(String txtNombreMedico) {
+        this.txtNombreMedico = txtNombreMedico;
+    }
+
+    public String getTxtApellidoPaciente() {
+        return txtApellidoPaciente;
+    }
+
+    public void setTxtApellidoPaciente(String txtApellidoPaciente) {
+        this.txtApellidoPaciente = txtApellidoPaciente;
+    }
+
+    public String getTxtApellidoMedico() {
+        return txtApellidoMedico;
+    }
+
+    public void setTxtApellidoMedico(String txtApellidoMedico) {
+        this.txtApellidoMedico = txtApellidoMedico;
+    }
+
+    public DiagnosticoEntity getDiagnostico() {
+        return diagnostico;
+    }
+
+    public void setDiagnostico(DiagnosticoEntity diagnostico) {
+        this.diagnostico = diagnostico;
+    }
+    
+    
+
      @PostConstruct
     public void init() {
        System.out.println("!!!!!!!!!!!!!");
@@ -254,9 +316,11 @@ public class ConsultaInsertarBean implements Serializable{
             return;
         }
           PacienteEntity pacSel = (PacienteEntity) event.getObject();
+          paciente=pacSel;
           this.txtDuiPaciente = pacSel.getIdPersona().getDui();
-
-        PrimeFaces.current().executeScript("PF('dlgPaciente').hide();");
+          this.txtNombrePaciente = pacSel.getIdPersona().getNombrePersona();
+          this.txtApellidoPaciente = pacSel.getIdPersona().getApellidoPersona();
+          PrimeFaces.current().executeScript("PF('dlgPaciente').hide();");
     }
     
     
@@ -269,8 +333,54 @@ public class ConsultaInsertarBean implements Serializable{
             return;
         }
          MedicoEntity medSel = (MedicoEntity) event.getObject();
+         medico = medSel;
          this.txtDuiMedico = medSel.getIdPersona().getDui();
+         this.txtNombreMedico = medSel.getIdPersona().getNombrePersona();
+         this.txtApellidoMedico = medSel.getIdPersona().getApellidoPersona();
          
         PrimeFaces.current().executeScript("PF('dlgMedico').hide();");
+    }
+    
+    public String insertarConsulta() {
+    
+        FacesContext context = FacesContext.getCurrentInstance();
+        
+        this.consulta.setIdMedico(medico);
+        System.out.println("DATOS DEL MEDICO");
+        System.out.println("IdMedico: " + medico.getIdMedico());
+        System.out.println("idPersona: " + medico.getIdPersona().getNombrePersona());
+        
+        this.consulta.setIdPaciente(paciente);
+        System.out.println("DATOS DEL MEDICO");
+        System.out.println("IdPaciente: " + paciente.getIdPaciente());
+        System.out.println("idPersona: " + paciente.getIdPersona());
+        
+        
+        this.consulta.setIdSignosVitales(signosVitables);
+        System.out.println("Peso: " +signosVitables.getPeso());
+        System.out.println("Altura: " +signosVitables.getPeso());
+        System.out.println("Presion: " +signosVitables.getPeso());
+        
+        
+        int a =this.consultaEJB.insertarConsulta(this.consulta);
+        
+        if (a == 0) {
+            FacesContext.getCurrentInstance().addMessage("Consulta", new FacesMessage("ERROR AL INSERTAR"));
+             System.out.println("valor de A: " +a);
+            return null;  
+        } 
+       
+        else{
+            diagnostico.setIdConsulta(consulta);
+            int b = this.diagnosticoEJB.insertarDiagnostico(diagnostico);
+        }
+        this.medico = new MedicoEntity();
+        this.paciente = new PacienteEntity();
+        this.signosVitables = new SignosvitalesEntity();
+        this.consulta= new ConsultaEntity();
+        this.diagnostico=new DiagnosticoEntity();
+        
+        
+        return "/admin/usuario/usuarioListar?faces-redirect=true";
     }
 }

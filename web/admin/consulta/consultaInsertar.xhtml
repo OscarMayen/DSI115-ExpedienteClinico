@@ -35,11 +35,15 @@
                             </p:inputMask>
 
                             <p:outputLabel for="nombreM" value="Nombre" />
-                            <p:inputText id="nombreM"   size="30"/>
+                            <p:inputText id="nombreM" value="#{consultaInsertarBean.txtNombreMedico}" size="30">
+                                <p:ajax/>
+                            </p:inputText>
 
 
                             <p:outputLabel for="apellidoM" value="Apellido"/>
-                            <p:inputText id="apellidoM"   size="30"/>
+                            <p:inputText id="apellidoM" value="#{consultaInsertarBean.txtApellidoMedico}"  size="30">
+                                <p:ajax/>
+                            </p:inputText>
 
                             <p:commandButton id="btnBusqMed" icon="ui-icon-search" type="button"
                                              onclick="PF('dlgMedico').show();"/>
@@ -57,11 +61,15 @@
                             </p:inputMask>
 
                             <p:outputLabel for="nombrePa" value="Nombre" />
-                            <p:inputText id="nombrePa"   size="30"/>
+                            <p:inputText id="nombrePa" value="#{consultaInsertarBean.txtNombrePaciente}"  size="30">
+                                <p:ajax/>
+                            </p:inputText>
 
 
                             <p:outputLabel for="apellidoPa" value="Apellido"/>
-                            <p:inputText id="apellidoPa"   size="30"/>
+                            <p:inputText id="apellidoPa" value="#{consultaInsertarBean.txtApellidoPaciente}" size="30">
+                                <p:ajax/>
+                            </p:inputText>
 
                             <p:commandButton id="btnBusqPac" icon="ui-icon-search" type="button"
                                              onclick="PF('dlgPaciente').show();"/>
@@ -73,28 +81,36 @@
                     <p:fieldset  style="font-size: 15px; font-weight: bold;" >
                         <p:panelGrid columns="4"  >
 
-                            <p:outputLabel for="peso" value="Peso (mts)"/>
-                            <p:spinner id="peso"  stepFactor="0.1" min="0.0"  />
+                            <p:outputLabel for="peso" value="Peso (kg)"/>
+                            <p:spinner id="peso" value="#{consultaInsertarBean.signosVitables.peso}"  
+                                       stepFactor="0.1" min="0.0"  />
 
-                            <p:outputLabel for="altura" value="Altura (kg)" />
-                            <p:spinner id="altura" stepFactor="0.1" min="0.0"   />
+                            <p:outputLabel for="altura" value="Altura (mts)" />
+                            <p:spinner id="altura" value="#{consultaInsertarBean.signosVitables.altura}" 
+                                       stepFactor="0.1" min="0.0"   />
 
 
                             <p:outputLabel for="presion" value="Presion"/>
-                            <p:inputText id="presion"   size="30"/>
+                            <p:inputText id="presion" value="#{consultaInsertarBean.signosVitables.presion}"   
+                                         size="30"/>
 
                             <p:outputLabel for="diagnostico" value="Diagnostico"/>
-                            <p:inputTextarea id="diagnostico" rows="6" cols="70" />
+                            <p:inputTextarea id="diagnostico" value="#{consultaInsertarBean.diagnostico.descripcion}"
+                                             rows="6" cols="70" />
 
                             <p:outputLabel value="Sala" />
                             <p:selectOneMenu id="sala" value="#{consultaInsertarBean.consulta.idSala}">
-                                <f:selectItems id="salaaa" value="#{consultaInsertarBean.listaSala}" var="sala" 
-                                               itemValue="#{sala}" 
-                                               itemLabel="#{sala.nombreSala}"
-                                               />
-                                
+                                <f:selectItems  value="#{consultaInsertarBean.listaSala}" var="sala" 
+                                                itemValue="#{sala}" 
+                                                itemLabel="#{sala.nombreSala}"
+                                                />
+
                             </p:selectOneMenu>
+
+                           
+
                         </p:panelGrid>
+                        &nbsp;&nbsp;<p:commandButton value="Guardar" action="#{consultaInsertarBean.insertarConsulta()}" update="@form" /> 
                     </p:fieldset><br></br>
 
 
@@ -193,7 +209,7 @@
             </ui:define>
 
             <ui:define name="scripts">
-
+                <h:outputScript name="js/spanishLocale.js"/>
             </ui:define>
 
         </ui:composition>
