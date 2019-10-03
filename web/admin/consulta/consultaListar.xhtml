@@ -15,18 +15,13 @@
             </ui:define>
 
             <ui:define name="css">
-                <style>
-                    .btn{
-                        margin:1%;
-                    }
-                </style>
+                
             </ui:define>
 
             <ui:define name="contenido">
                 <h:form>
                     <h1><h:outputText value="Listado de Consultas"/></h1>
-                    <h:link outcome="/admin/consulta/consultaInsertar.xhtml" value="Nueva Consulta" class="btn btn-success"/>
-
+                    <p:commandButton value="Nueva Consulta" action="#{diagnosticosListar.btnNuevaConsulta()}"  style="margin-right:20px;"/>
                     <br>
                     </br>
 

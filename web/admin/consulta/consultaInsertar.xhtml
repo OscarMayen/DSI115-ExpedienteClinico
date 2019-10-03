@@ -31,7 +31,7 @@
 
                             <p:outputLabel for="duiM" value="Dui"/>
                             <p:inputMask id="duiM" value="#{consultaInsertarBean.txtDuiMedico}" readonly="true"
-                                         mask="9999999-9" size="15">
+                                         mask="99999999-9" size="15">
                                 <p:ajax/>
                             </p:inputMask>
 
@@ -60,7 +60,7 @@
 
                             <p:outputLabel for="duiPa" value="Dui"/>
                             <p:inputMask id="duiPa" value="#{consultaInsertarBean.txtDuiPaciente}"  
-                                         mask="9999999-9" size="15" readonly="true">
+                                         mask="99999999-9" size="15" readonly="true">
                                 <p:ajax/>
                             </p:inputMask>
 
@@ -125,7 +125,7 @@
                         <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
                     </p:confirmDialog> 
                     
-                    &nbsp;&nbsp;<p:linkButton outcome="/admin/consulta/consultaListar.xhtml" value="Cancelar" />
+                    &nbsp;&nbsp;<p:commandButton value="CANCELAR" action="#{consultaInsertarBean.btnCancelarConsulta()}"  style="margin-right:20px;"/>
 
                     <p:dialog id="dlgMedico" header="Buscar Medico" widgetVar="dlgMedico" modal="true" 
                               width="60%" closeOnEscape="true" style="font-size: 15px; font-weight: bold;" >

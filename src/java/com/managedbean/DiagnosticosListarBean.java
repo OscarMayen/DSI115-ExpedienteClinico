@@ -47,5 +47,9 @@ public class DiagnosticosListarBean {
         this.listaDiagnostico = listaDiagnostico;
     }
     
-    
+    public String btnNuevaConsulta()
+    {
+        String outcome ="/admin/consulta/consultaInsertar?faces-redirect=true";
+        return outcome;
+    }
 }
