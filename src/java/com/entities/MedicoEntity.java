@@ -10,6 +10,7 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -40,14 +41,21 @@ public class MedicoEntity implements Serializable {
     @Basic(optional = false)
     private Integer idMedico;
     @JoinTable(name = "medicoespecialidad", joinColumns = {
-        @JoinColumn(name = "idMedico", referencedColumnName = "idMedico")}, inverseJoinColumns = {
-        @JoinColumn(name = "idEspecialidad", referencedColumnName = "idEspecialidad")})
-    @ManyToMany
+        @JoinColumn(name = "idMedico", referencedColumnName = "IDMEDICO")}, inverseJoinColumns = {
+        @JoinColumn(name = "idEspecialidad", referencedColumnName = "IDESPECIALIDAD")})
+    @ManyToMany(fetch = FetchType.EAGER,
+            cascade = {
+                CascadeType.MERGE
+            })
     private List<EspecialidadEntity> especialidadEntityList;
     @JoinTable(name = "medicored", joinColumns = {
-        @JoinColumn(name = "idMedico", referencedColumnName = "idMedico")}, inverseJoinColumns = {
-        @JoinColumn(name = "idRedSocial", referencedColumnName = "idRedSocial")})
-    @ManyToMany
+        @JoinColumn(name = "idMedico", referencedColumnName = "IDMEDICO")}, inverseJoinColumns = {
+        @JoinColumn(name = "idRedSocial", referencedColumnName = "IDREDSOCIAL")})
+    @ManyToMany(fetch = FetchType.EAGER,
+            cascade = {
+                CascadeType.PERSIST,
+                CascadeType.MERGE
+            })
     private List<RedsocialEntity> redsocialEntityList;
     @OneToMany(mappedBy = "idMedico")
     private List<CitasEntity> citasEntityList;

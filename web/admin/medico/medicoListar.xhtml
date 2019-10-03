@@ -4,7 +4,8 @@
                 template="./../../plantillas/plantilla.xhtml"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:h="http://java.sun.com/jsf/html">
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="titulo">
         Listar médico
@@ -15,6 +16,30 @@
             .btn{
                 margin:1%;
             }
+            
+            tr{
+                width: 100%;
+            }
+            
+            td{
+                width: 50%
+            }
+            
+            tbody{
+                width: 100%;
+            }
+            
+            table{
+                width: 100%;
+            }
+            
+            label{
+                width: 100%;
+            }
+            
+            input[id*=filtro]{
+                width: 100%;
+            }
         </style>
     </ui:define>
     
@@ -22,7 +47,30 @@
         <div class="row">
             <div class="col">
                 <f:view>
+                    
+                    <br/>
+                    <h:form>
+                        <p:growl id="msgs" showDetail="true" />
 
+                        <p:fieldset legend="Filtros" style="margin-bottom:20px">
+                            <h:panelGrid columns="2" cellpadding="5">
+                                <h:outputLabel>
+                                    Dui:
+                                    <h:inputText value="#{medicoListar.dui}" id="filtroDui"/>
+                                </h:outputLabel>
+                                
+                                <h:outputLabel>
+                                    Especialidad:
+                                    <h:inputText value="#{medicoListar.esp}" id="filtroEsp"/>
+                                </h:outputLabel>
+                                
+                                <h:outputLabel>
+                                    Buscar:
+                                    <p:commandButton id="filtrar" value="Filtrar" update="@(:tabla)" actionListener="#{medicoListar.filtrar()}" />
+                                </h:outputLabel>
+                            </h:panelGrid>
+                        </p:fieldset>
+                    </h:form>
 
                     <h:form>
                         <h1><h:outputText value="Listado de médicos"/></h1>
@@ -49,17 +97,12 @@
                                 </f:facet>
                                 <h:outputText value="#{item.idPersona.dui}"/>
                             </h:column>
+                            
                             <h:column>
                                 <f:facet name="header">
-                                    <h:outputText value="Email"/>
+                                    <h:outputText value="Teléfono"/>
                                 </f:facet>
-                                <h:outputText value="#{item.emailMedico}"/>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header"  >
-                                    <h:outputText value="Especialidad"/>
-                                </f:facet>
-                                <h:outputText value="#{item.idEspecialidad.nombreEspecialidad}"/>
+                                <h:outputText value="#{item.idPersona.telefono}"/>
                             </h:column>
 
                             <h:column>
@@ -85,12 +128,7 @@
     </ui:define>
 
     <ui:define name="scripts">
-        <script>
-            $(document).ready(function () {
-                var tabla = $(".table")[0];
-                $(tabla).DataTable();
-            });
-        </script>
+        
     </ui:define>
 
 </ui:composition>

@@ -102,39 +102,42 @@
                             </span>
                         </div>
 
+                        
+                        <h4>Especialidades del médico</h4>
+
+                        <p:selectManyCheckbox id="grid" value="#{usuarioMedicoBean.especilidadesSeleccionadas}" layout="responsive" columns="3">
+                            <f:selectItems value="#{usuarioMedicoBean.medico.especialidadEntityList}" var="esp" itemLabel="#{esp.nombreEspecialidad}" itemValue="#{esp}" />
+                        </p:selectManyCheckbox>
+
+                        <h4>Redes sociales</h4>
+                        
                         <div class="form-group">
-                            <label for="emailMedicoE">Email</label>
-                            <h:inputText  value="#{usuarioMedicoBean.medico.emailMedico}" title="emailMedicoE"
-                                          class="form-control" id="emailMedicoE"
-                                          required="true" requiredMessage="El campo email es ibligatorio."/>
+                            <label for="redSocialFacebook">Facebook(url):</label>
+                            <h:inputText value="#{usuarioMedicoBean.facebook.url}" title="redSocialFacebook"
+                                         class="form-control" id="redSocialFacebook" />
                         </div>
                         <div class="form-group">
-                            <label for="estadoMedico">Estado</label>
-                            <h:selectBooleanCheckbox id="estadoMedico" value="#{usuarioMedicoBean.medico.estadoMedico}" />
+                            <label for="redSocialTwitter">Twitter(url):</label>
+                            <h:inputText value="#{usuarioMedicoBean.twitter.url}" title="redSocialTwitter"
+                                         class="form-control" id="redSocialTwitter"/>
                         </div>
-
+                        
+                        
                         <div class="form-group">
-                            <h:outputLabel value="Seleccione una especialidad:" for="codigoEspecialidad" />
-                            <h:selectOneMenu id="codigoEspecialidad" class="form-control"
-                                             value="#{usuarioMedicoBean.medico.idEspecialidad}" title="Especialidad">
-                                <f:selectItems value="#{usuarioMedicoBean.listarEspecialidades}" var="especialidad"
-                                               itemValue="#{especialidad}"
-                                               itemLabel="#{especialidad.nombreEspecialidad}"/>
-                            </h:selectOneMenu>
+                            <label for="redSocialGmail">Gmail(url):</label>
+                            <h:inputText value="#{usuarioMedicoBean.gmail.url}" title="redSocialGmail"
+                                         class="form-control" id="redSocialGmail"/>
                         </div>
 
-
-                        <h:commandButton value="Modificar" action="#{usuarioMedicoBean.updateMedico()}" class="btn btn-success"/>&nbsp;&nbsp;
+                        <h:commandButton value="Guardar" action="#{usuarioMedicoBean.updateMedico()}" class="btn btn-success"/>&nbsp;&nbsp;
                         <h:link outcome="/admin/medico/medicoListar" value="Cancelar" class="btn btn-danger"/>
                     </h:form>
 
                 </div>
             </ui:define>
-
             <ui:define name="scripts">
                 <h:outputScript name="js/spanishLocale.js"/>
             </ui:define>
-
         </ui:composition>
 
     </body>

@@ -13,6 +13,7 @@ import com.ejb.UsuarioMedicoEJB;
 import com.entities.EspecialidadEntity;
 import com.entities.MedicoEntity;
 import com.entities.PersonaEntity;
+import com.entities.RedsocialEntity;
 import com.entities.RolEntity;
 import com.entities.UsuarioEntity;
 import edu.utilidades.JsfUtils;
@@ -24,11 +25,15 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.RequestScoped;
+import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import org.jboss.weld.bean.builtin.FacadeInjectionPoint;
 
@@ -43,8 +48,17 @@ public class UsuarioMedicoBean implements Serializable {
     @EJB
     private UsuarioMedicoEJB usuarioMedicoEJB;
 
-    List<MedicoEntity> listaMedico;
-
+    List<MedicoEntity> listaMedico = new ArrayList();
+    
+    private List<EspecialidadEntity> especialidadesMedico = new ArrayList();
+    private List<EspecialidadEntity> especialidadesGuardar = new ArrayList();
+    private EspecialidadEntity[] especilidadesSeleccionadas;
+    
+    private RedsocialEntity facebook = new RedsocialEntity();
+    private RedsocialEntity twitter = new RedsocialEntity();
+    private RedsocialEntity gmail = new RedsocialEntity();
+    private List<RedsocialEntity> redes = new ArrayList();
+    
     @EJB
     private MedicoEJB medicoEJB;
 
@@ -54,9 +68,9 @@ public class UsuarioMedicoBean implements Serializable {
 
     @EJB
     private EspecialidadEJB especialidadEJB;
-
     UsuarioEntity usuario = new UsuarioEntity();
     RolEntity rol = new RolEntity();
+    List<EspecialidadEntity> especialidades;
     EspecialidadEntity especialidad = new EspecialidadEntity();
     private MedicoEntity medico = new MedicoEntity();
     PersonaEntity persona = new PersonaEntity();
@@ -65,6 +79,14 @@ public class UsuarioMedicoBean implements Serializable {
 
     }
 
+    public List<EspecialidadEntity> getEspecialidadesGuardar() {
+        return especialidadesGuardar;
+    }
+
+    public void setEspecialidadesGuardar(List<EspecialidadEntity> especialidadesGuardar) {
+        this.especialidadesGuardar = especialidadesGuardar;
+    }
+    
     public UsuarioEntity getUsuario() {
         return usuario;
     }
@@ -72,7 +94,7 @@ public class UsuarioMedicoBean implements Serializable {
     public void setUsuario(UsuarioEntity usuario) {
         this.usuario = usuario;
     }
-
+    
     public RolEntity getRol() {
         return rol;
     }
@@ -105,7 +127,61 @@ public class UsuarioMedicoBean implements Serializable {
         this.persona = persona;
     }
 
+    public List<EspecialidadEntity> getEspecialidades() {
+        return especialidades;
+    }
 
+    public void setEspecialidades(List<EspecialidadEntity> especialidades) {
+        this.especialidades = especialidades;
+    }
+
+    public List<MedicoEntity> getListaMedico() {
+        return listaMedico;
+    }
+
+    public void setListaMedico(List<MedicoEntity> listaMedico) {
+        this.listaMedico = listaMedico;
+    }
+
+    public List<EspecialidadEntity> getEspecialidadesMedico() {
+        return especialidadesMedico;
+    }
+
+    public void setEspecialidadesMedico(List<EspecialidadEntity> especialidadesMedico) {
+        this.especialidadesMedico = especialidadesMedico;
+    }
+
+    public EspecialidadEntity[] getEspecilidadesSeleccionadas() {
+        return especilidadesSeleccionadas;
+    }
+
+    public void setEspecilidadesSeleccionadas(EspecialidadEntity[] especilidadesSeleccionadas) {
+        this.especilidadesSeleccionadas = especilidadesSeleccionadas;
+    }
+
+    public RedsocialEntity getFacebook() {
+        return facebook;
+    }
+
+    public void setFacebook(RedsocialEntity facebook) {
+        this.facebook = facebook;
+    }
+
+    public RedsocialEntity getTwitter() {
+        return twitter;
+    }
+
+    public void setTwitter(RedsocialEntity twitter) {
+        this.twitter = twitter;
+    }
+
+    public RedsocialEntity getGmail() {
+        return gmail;
+    }
+
+    public void setGmail(RedsocialEntity gmail) {
+        this.gmail = gmail;
+    }
 
     public List<RolEntity> getListaRoles() {
         return rolEJB.listarRoles();
@@ -117,6 +193,7 @@ public class UsuarioMedicoBean implements Serializable {
 
     @PostConstruct
     public void init() {
+        this.especialidadesMedico = this.especialidadEJB.especialidadListar();
         System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!");
         FacesContext fc = FacesContext.getCurrentInstance();
         
@@ -132,6 +209,16 @@ public class UsuarioMedicoBean implements Serializable {
              this.medico = new MedicoEntity();
        
         medico = medicoEJB.obtenerMedico(Integer.valueOf(id));
+            for (RedsocialEntity red : medico.getRedsocialEntityList()) {
+                if(red.getNombre().equals("Facebook")){
+                    this.facebook = red;
+                }else if(red.getNombre().equals("Twitter")){
+                    this.twitter = red;
+                }else{
+                    this.gmail = red;
+                }
+                
+            }
         }
          
     
@@ -163,7 +250,19 @@ public class UsuarioMedicoBean implements Serializable {
     }
     
      public String insertarUsuarioMedico() {
+        for (EspecialidadEntity especialidadesSeleccionada : this.especilidadesSeleccionadas) {
+            this.especialidadesGuardar.add(especialidadesSeleccionada);
+        }
+        System.out.println(this.persona.getNombrePersona());
+        facebook.setNombre("Facebook");
+        twitter.setNombre("Twitter");
+        gmail.setNombre("Gmail");
+        this.redes.add(facebook);
+        this.redes.add(twitter);
+        this.redes.add(gmail);
         this.medico.setIdPersona(persona);
+        this.medico.setRedsocialEntityList(redes);
+        this.medico.setEspecialidadEntityList(especialidadesGuardar);
         if (medicoEJB.insertMedico(medico) == 0) {
             FacesContext.getCurrentInstance().addMessage("usuario", new FacesMessage("ERROR AL INSERTAR"));
             return null;
@@ -174,5 +273,5 @@ public class UsuarioMedicoBean implements Serializable {
         }
         return "/admin/medico/medicoListar?faces-redirect=true";
     }
-
+    
 }

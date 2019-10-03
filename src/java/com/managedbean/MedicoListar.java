@@ -42,7 +42,8 @@ public class MedicoListar implements Serializable {
     private MedicoEntity medico = new MedicoEntity();
     private PersonaEntity persona = new PersonaEntity();
     
-    
+    private String dui;
+    private String esp;
     private List<MedicoEntity> listaMedico = new ArrayList();
     
     public List<MedicoEntity> getListaMedico() {
@@ -88,7 +89,26 @@ public class MedicoListar implements Serializable {
 
         return "/admin/medico/medicoDetalle.xhtml"; 
     }
+
+    public String getDui() {
+        return dui;
+    }
+
+    public void setDui(String dui) {
+        this.dui = dui;
+    }
+
+    public String getEsp() {
+        return esp;
+    }
+
+    public void setEsp(String esp) {
+        this.esp = esp;
+    }
     
+    public void filtrar(){
+        this.listaMedico = this.medicoEJB.filtrar(dui, esp);
+    }
     
     
 }

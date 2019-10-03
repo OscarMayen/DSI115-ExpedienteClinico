@@ -67,6 +67,11 @@ public class MedicoEJB {
         Query query = em.createQuery("SELECT p FROM MedicoEntity p JOIN p.idPersona per WHERE (per.dui LIKE '%"+dui+"%') AND (per.nombrePersona LIKE '%"+nombres+"%') AND (per.estadoPersonal=true) ");
         return query.getResultList();
     }
+    
+    public List filtrar(String dui, String especialidad){
+        Query query = em.createQuery("SELECT m FROM MedicoEntity m JOIN m.idPersona per JOIN m.especialidadEntityList esp WHERE (per.dui LIKE '%"+dui+"%') AND (esp.nombreEspecialidad LIKE '%"+especialidad+"%') ");
+        return query.getResultList();
+    } 
 
     public EntityManager getEm() {
         return em;

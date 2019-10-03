@@ -99,17 +99,33 @@
                                 Datos del médico <!--Padding is optional-->
                             </span>
                         </div>
+                        
+                        <h4>Especialidades del médico</h4>
 
+                        <p:selectManyCheckbox id="grid" value="#{usuarioMedicoBean.especilidadesSeleccionadas}" layout="responsive" columns="3">
+                            <f:selectItems value="#{usuarioMedicoBean.especialidadesMedico}" var="esp" itemLabel="#{esp.nombreEspecialidad}" itemValue="#{esp}" />
+                        </p:selectManyCheckbox>
+
+                        <h4>Redes sociales</h4>
+                        
                         <div class="form-group">
-                            <label for="Especialidad">Email</label>
-                            <h:inputText  value="" title="emailMedico"
-                                          class="form-control" id="emailMedico" 
-                                          required="true" requiredMessage="El campo email es obligatorio"/>
+                            <label for="redSocialFacebook">Facebook(url):</label>
+                            <h:inputText value="#{usuarioMedicoBean.facebook.url}" title="redSocialFacebook"
+                                         class="form-control" id="redSocialFacebook" />
                         </div>
                         <div class="form-group">
-                            <label for="estadoMedico">Estado</label>
-                            <h:selectBooleanCheckbox id="estadoMedico" value="" />
+                            <label for="redSocialTwitter">Twitter(url):</label>
+                            <h:inputText value="#{usuarioMedicoBean.twitter.url}" title="redSocialTwitter"
+                                         class="form-control" id="redSocialTwitter"/>
                         </div>
+                        
+                        
+                        <div class="form-group">
+                            <label for="redSocialGmail">Gmail(url):</label>
+                            <h:inputText value="#{usuarioMedicoBean.gmail.url}" title="redSocialGmail"
+                                         class="form-control" id="redSocialGmail"/>
+                        </div>
+                        
 
                         <div style="width: 100%; height: 20px; border-bottom: 1px solid black; margin-top: 3%; margin-bottom: 3%; text-align: center">
                             <span style="font-size: 1.5em; background-color: #F3F5F6; padding: 0 10px;">

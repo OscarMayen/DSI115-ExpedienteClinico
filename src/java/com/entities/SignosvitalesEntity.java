@@ -40,7 +40,7 @@ public class SignosvitalesEntity implements Serializable {
     private float peso;
     @Basic(optional = false)
     @NotNull
-    private float presion;
+    private String presion;
     @Basic(optional = false)
     @NotNull
     private float altura;
@@ -52,7 +52,7 @@ public class SignosvitalesEntity implements Serializable {
         this.idSignosVitales = idSignosVitales;
     }
 
-    public SignosvitalesEntity(Integer idSignosVitales, float peso, float presion, float altura) {
+    public SignosvitalesEntity(Integer idSignosVitales, float peso, String presion, float altura) {
         this.idSignosVitales = idSignosVitales;
         this.peso = peso;
         this.presion = presion;
@@ -75,11 +75,11 @@ public class SignosvitalesEntity implements Serializable {
         this.peso = peso;
     }
 
-    public float getPresion() {
+    public String getPresion() {
         return presion;
     }
 
-    public void setPresion(float presion) {
+    public void setPresion(String presion) {
         this.presion = presion;
     }
 
