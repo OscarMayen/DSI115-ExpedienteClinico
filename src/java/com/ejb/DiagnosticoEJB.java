@@ -1,9 +1,11 @@
 package com.ejb;
 
 import com.entities.DiagnosticoEntity;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 @Stateless
 public class DiagnosticoEJB {
@@ -23,6 +25,11 @@ public class DiagnosticoEJB {
         } catch (Exception e) {
             return 0;
         }
+    }
+    
+     public List<DiagnosticoEntity> listarDiagnostico() {
+        Query query = em.createNamedQuery("DiagnosticoEntity.findAll");
+        return query.getResultList();
     }
 
 }

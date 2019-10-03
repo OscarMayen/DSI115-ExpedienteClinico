@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../../plantillas/plantilla.xhtml">
+
+            <ui:define name="titulo">
+                Listado de consultas
+            </ui:define>
+
+            <ui:define name="css">
+                <style>
+                    .btn{
+                        margin:1%;
+                    }
+                </style>
+            </ui:define>
+
+            <ui:define name="contenido">
+                <h:form>
+                    <h1><h:outputText value="Listado de Consultas"/></h1>
+                    <h:link outcome="/admin/consulta/consultaInsertar.xhtml" value="Nueva Consulta" class="btn btn-success"/>
+
+                    <br>
+                    </br>
+
+                    <p:dataTable id="tablaP" var="diagnostico" value="#{diagnosticosListar.listaDiagnostico}" rows="10"
+                                 paginator="true"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="5,10,15" currentPageReportTemplate="Página:({currentPage} de {totalPages})">
+                        
+                        
+                        <p:column filterBy="#{diagnostico.idConsulta.idPaciente.idPersona.dui}"  headerText="Dui Paciente">
+                            <h:outputText value="#{diagnostico.idConsulta.idPaciente.idPersona.dui}"  />
+                        </p:column>
+
+                        <p:column filterBy="#{diagnostico.idConsulta.idPaciente.idPersona.nombrePersona}" 
+                                  headerText="Paciente">
+                            <h:outputText value="#{diagnostico.idConsulta.idPaciente.idPersona.nombrePersona} 
+                                          #{diagnostico.idConsulta.idPaciente.idPersona.apellidoPersona}"  />
+                        </p:column>
+
+                        <p:column filterBy="#{diagnostico.idConsulta.idMedico.idPersona.nombrePersona}" 
+                           headerText="Medico">
+                           <h:outputText value="#{diagnostico.idConsulta.idMedico.idPersona.nombrePersona} 
+                                         #{diagnostico.idConsulta.idMedico.idPersona.apellidoPersona}"  />
+                        </p:column>
+
+                        <p:column headerText="Sala/Consultorio">
+                            <h:outputText value="#{diagnostico.idConsulta.idSala.nombreSala}" />
+                        </p:column>
+                        
+                        <p:column headerText="Diagnostico">
+                            <h:outputText value="#{diagnostico.descripcion}" />
+                        </p:column>
+
+
+                    </p:dataTable>
+                </h:form>
+            </ui:define>
+
+            <ui:define name="scripts">
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

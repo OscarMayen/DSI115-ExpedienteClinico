@@ -30,18 +30,21 @@
                         <p:panelGrid columns="7"  >
 
                             <p:outputLabel for="duiM" value="Dui"/>
-                            <p:inputMask id="duiM" value="#{consultaInsertarBean.txtDuiMedico}"  mask="9999999-9" size="15">
+                            <p:inputMask id="duiM" value="#{consultaInsertarBean.txtDuiMedico}" readonly="true"
+                                         mask="9999999-9" size="15">
                                 <p:ajax/>
                             </p:inputMask>
 
                             <p:outputLabel for="nombreM" value="Nombre" />
-                            <p:inputText id="nombreM" value="#{consultaInsertarBean.txtNombreMedico}" size="30">
+                            <p:inputText id="nombreM" value="#{consultaInsertarBean.txtNombreMedico}" readonly="true"
+                                         size="30">
                                 <p:ajax/>
                             </p:inputText>
 
 
                             <p:outputLabel for="apellidoM" value="Apellido"/>
-                            <p:inputText id="apellidoM" value="#{consultaInsertarBean.txtApellidoMedico}"  size="30">
+                            <p:inputText id="apellidoM" value="#{consultaInsertarBean.txtApellidoMedico}"  readonly="true"
+                                         size="30">
                                 <p:ajax/>
                             </p:inputText>
 
@@ -56,18 +59,19 @@
                         <p:panelGrid columns="7"  >
 
                             <p:outputLabel for="duiPa" value="Dui"/>
-                            <p:inputMask id="duiPa" value="#{consultaInsertarBean.txtDuiPaciente}"  mask="9999999-9" size="15">
+                            <p:inputMask id="duiPa" value="#{consultaInsertarBean.txtDuiPaciente}"  
+                                         mask="9999999-9" size="15" readonly="true">
                                 <p:ajax/>
                             </p:inputMask>
 
                             <p:outputLabel for="nombrePa" value="Nombre" />
-                            <p:inputText id="nombrePa" value="#{consultaInsertarBean.txtNombrePaciente}"  size="30">
+                            <p:inputText id="nombrePa" value="#{consultaInsertarBean.txtNombrePaciente}"  size="30" readonly="true">
                                 <p:ajax/>
                             </p:inputText>
 
 
                             <p:outputLabel for="apellidoPa" value="Apellido"/>
-                            <p:inputText id="apellidoPa" value="#{consultaInsertarBean.txtApellidoPaciente}" size="30">
+                            <p:inputText id="apellidoPa" value="#{consultaInsertarBean.txtApellidoPaciente}" size="30" readonly="true">
                                 <p:ajax/>
                             </p:inputText>
 
@@ -83,11 +87,11 @@
 
                             <p:outputLabel for="peso" value="Peso (kg)"/>
                             <p:spinner id="peso" value="#{consultaInsertarBean.signosVitables.peso}"  
-                                       stepFactor="0.1" min="0.0"  />
+                                       stepFactor="0.01" min="0.0"  />
 
                             <p:outputLabel for="altura" value="Altura (mts)" />
                             <p:spinner id="altura" value="#{consultaInsertarBean.signosVitables.altura}" 
-                                       stepFactor="0.1" min="0.0"   />
+                                       stepFactor="0.01" min="0.0"   />
 
 
                             <p:outputLabel for="presion" value="Presion"/>
@@ -104,15 +108,24 @@
                                                 itemValue="#{sala}" 
                                                 itemLabel="#{sala.nombreSala}"
                                                 />
-
                             </p:selectOneMenu>
 
-                           
 
                         </p:panelGrid>
-                        &nbsp;&nbsp;<p:commandButton value="Guardar" action="#{consultaInsertarBean.insertarConsulta()}" update="@form" /> 
+
                     </p:fieldset><br></br>
 
+                    &nbsp;&nbsp; <p:commandButton value="GUARDAR" action="#{consultaInsertarBean.insertarConsulta()}" update="@form">
+                        <p:confirm header="Confirmation" message="¿Desea revisar los datos antes de registrar la consulta?. Ya que despues no podra modificarlos" 
+                                   icon="pi pi-exclamation-triangle" />
+                    </p:commandButton>
+
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                        <p:commandButton value="SI" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+                    </p:confirmDialog> 
+                    
+                    &nbsp;&nbsp;<p:linkButton outcome="/admin/consulta/consultaListar.xhtml" value="Cancelar" />
 
                     <p:dialog id="dlgMedico" header="Buscar Medico" widgetVar="dlgMedico" modal="true" 
                               width="60%" closeOnEscape="true" style="font-size: 15px; font-weight: bold;" >

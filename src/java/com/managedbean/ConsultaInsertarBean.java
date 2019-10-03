@@ -15,6 +15,7 @@ import com.entities.SalaEntity;
 import com.entities.SignosvitalesEntity;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -345,21 +346,15 @@ public class ConsultaInsertarBean implements Serializable{
     
         FacesContext context = FacesContext.getCurrentInstance();
         
+        
+        this.consulta.setFechaConsulta(new Date());
         this.consulta.setIdMedico(medico);
-        System.out.println("DATOS DEL MEDICO");
-        System.out.println("IdMedico: " + medico.getIdMedico());
-        System.out.println("idPersona: " + medico.getIdPersona().getNombrePersona());
+        
         
         this.consulta.setIdPaciente(paciente);
-        System.out.println("DATOS DEL MEDICO");
-        System.out.println("IdPaciente: " + paciente.getIdPaciente());
-        System.out.println("idPersona: " + paciente.getIdPersona());
         
         
         this.consulta.setIdSignosVitales(signosVitables);
-        System.out.println("Peso: " +signosVitables.getPeso());
-        System.out.println("Altura: " +signosVitables.getPeso());
-        System.out.println("Presion: " +signosVitables.getPeso());
         
         
         int a =this.consultaEJB.insertarConsulta(this.consulta);
@@ -381,6 +376,6 @@ public class ConsultaInsertarBean implements Serializable{
         this.diagnostico=new DiagnosticoEntity();
         
         
-        return "/admin/usuario/usuarioListar?faces-redirect=true";
+        return "/admin/consulta/consultaListar?faces-redirect=true";
     }
 }
