@@ -125,13 +125,13 @@
                         <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
                     </p:confirmDialog> 
                     
-                    &nbsp;&nbsp;<p:commandButton value="CANCELAR" action="#{consultaInsertarBean.btnCancelarConsulta()}"  style="margin-right:20px;"/>
+                    &nbsp;&nbsp;<p:linkButton outcome="/admin/consulta/consultaListar" value="CANCELAR" />
 
                     <p:dialog id="dlgMedico" header="Buscar Medico" widgetVar="dlgMedico" modal="true" 
                               width="60%" closeOnEscape="true" style="font-size: 15px; font-weight: bold;" >
                         <p:menubar>
                             <p:menuitem id="itemBuscarMedico" value="Buscar" icon="ui-icon-search"  update="tblMedicoBusq" actionListener="#{consultaInsertarBean.itemBuscarListenerMedico()}"/>
-                            <p:menuitem id="itemLimpiarMedico" value="Copiar" icon="ui-icon-pencil"/>
+                            
                         </p:menubar>
                         <p:panel id="pnlBusMedico" style="margin-top:5px">
                             <p:panelGrid columns="4" styleClass="ui-panelgrid-blank ui-fluid" 
@@ -176,7 +176,7 @@
                               width="60%" closeOnEscape="true" style="font-size: 15px; font-weight: bold;" >
                         <p:menubar>
                             <p:menuitem id="itemBuscarPaciente" value="Buscar" icon="ui-icon-search"  update="tblPacienteBusq" actionListener="#{consultaInsertarBean.itemBuscarListenerPaciente()}"/>
-                            <p:menuitem id="itemLimpiarPaciente" value="Copiar" icon="ui-icon-pencil"/>
+                            
                         </p:menubar>
                         <p:panel id="pnlBusPaciente" style="margin-top:5px">
                             <p:panelGrid columns="4" styleClass="ui-panelgrid-blank ui-fluid" 

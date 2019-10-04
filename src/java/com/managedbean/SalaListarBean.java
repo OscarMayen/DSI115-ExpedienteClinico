@@ -48,7 +48,7 @@ public class SalaListarBean implements Serializable{
         this.listaSala = listaSala;
     }
     
-    public String editSala()
+    public String editSala(int id)
     {
         //this.sala = new SalaEntity();
         

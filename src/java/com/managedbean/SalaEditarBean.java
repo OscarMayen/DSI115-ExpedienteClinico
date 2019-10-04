@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author DIAZ
  */
-@ManagedBean(name = "salaEditarBean")
+@Named(value = "salaEditarBean")
 @ViewScoped
 public class SalaEditarBean implements Serializable{
 
@@ -43,8 +43,7 @@ public class SalaEditarBean implements Serializable{
     }
  
 
-    
-    @PostConstruct
+     @PostConstruct
     public void init() {
         System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!");
         FacesContext fc = FacesContext.getCurrentInstance();
@@ -67,11 +66,11 @@ public class SalaEditarBean implements Serializable{
         }
     }
     
-    
-
-
     public String updateSala(){
-        
+        System.out.println("//////////////***************");
+        System.out.println("ID A MODIFICAR: " + this.sala.getIdSala());
+        System.out.println("NOMBRE A MODIFICAR: " + this.sala.getNombreSala());
+        System.out.println("//////////////***************");
         salaEjb.modificarSala(this.sala);
    
         return "/admin/sala/salaListar?faces-redirect=true";

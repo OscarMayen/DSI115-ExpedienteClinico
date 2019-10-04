@@ -8,75 +8,49 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="titulo">
-        Listar sala 
+        Listado de sala 
     </ui:define>
 
     <ui:define name="css">
-                <style>
-            .btn{
-                margin:1%;
-            }
-            tr{
-                width: 100%;
-            }
-            td{
-                width: 50%
-            }
-            tbody{
-                width: 100%;
-            }
-            table{
-                width: 100%;
-            }
-            label{
-                width: 100%;
-            }
-            
-            input[id*=filtro]{
-                width: 100%;
-            }
-            
-        </style>
+
     </ui:define>
 
     <ui:define name="contenido">
         <h1><h:outputText value="Listado de Sala"/></h1>
-            <h:link outcome="/admin/sala/salaInsertar.xhtml" value="Nueva Sala" class="btn btn-success"/>
-            <br>
-            </br>
+        <h:link outcome="/admin/sala/salaInsertar.xhtml" value="Nueva Sala" class="btn btn-success"/>
+        <br>
+        </br>
 
-            <h:form>
-         
-                <p:dataTable id="tablaP" var="sala" value="#{salaListarBean.listaSala}" rows="10"
+        <h:form>
+
+            <p:dataTable id="tablaP" var="sala" value="#{salaListarBean.listaSala}" rows="10"
                          paginator="true" 
                          paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                          rowsPerPageTemplate="5,10,15" currentPageReportTemplate="Página:({currentPage} de {totalPages})">
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="IdSala"/>
-                        </f:facet>
-                        <h:outputText value="#{item.idSala}"/>
-                    </h:column>
-                    <p:column headerText="Nombre de sala">
-                        <h:outputText value="#{sala.nombreSala}"/>
-                    </p:column>
-                    
-                    <p:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="IdSala"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idSala}"/>
+                </h:column>
+                <p:column headerText="Nombre de sala">
+                    <h:outputText value="#{sala.nombreSala}"/>
+                </p:column>
+
+                <p:column>
                     <f:facet name="header">
                         <h:outputText value="Operaciones" />
                     </f:facet>
-
-                    
-                        <h:commandButton class="btn btn-primary" action="#{salaListarBean.editSala()}" value="Editar">
+                    <h:commandButton class="btn btn-primary" action="#{salaListarBean.editSala(sala.idSala)}" value="Editar">
                         <f:param name="id"  value="#{sala.idSala}"/>
                     </h:commandButton>
-                    
+
 
                 </p:column>
-                </p:dataTable>
-            </h:form>
-            
-            
+            </p:dataTable>
+        </h:form>
+
+
     </ui:define>
 
     <ui:define name="scripts">

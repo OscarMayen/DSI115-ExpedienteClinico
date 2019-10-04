@@ -12,45 +12,31 @@
     </ui:define>
 
     <ui:define name="css">
-        <style>
-                    .btn{
-
-                        margin-top: 2%;
-                        margin-bottom: 2%;
-
-                    }
-
-                    #btn{
-                        margin-left: 35%;
-                    }
-                </style>
-                <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
-                <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-                <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        
     </ui:define>
 
     <ui:define name="contenido">
         
-        <h:form id="formNuevoPaciente">
+        <h:form id="formNuevaSala">
             <p:growl id="growl" showDetail="true" sticky="true" /> 
-                    <p:fieldset legend="Nuevo Paciente" style="font-size: 15px; font-weight: bold;" >
+                    <p:fieldset legend="Nuevo Sala" style="font-size: 15px; font-weight: bold;" >
                         <p:panelGrid columns="4" >
 
-                            <p:outputLabel for="nombrePa" value="Nombre" />
-                            <p:inputText id="nombrePa" value="#{salaInsertarBean.salaEntity.nombreSala}"   
+                            <p:outputLabel for="nombreSa" value="Nombre" />
+                            <p:inputText id="nombreSa" value="#{salaInsertarBean.salaEntity.nombreSala}"   
                                          size="30" required="true"/>
                             
                             </p:panelGrid>
                     </p:fieldset><br></br>
                             
                   &nbsp;&nbsp;<p:commandButton value="Guardar" actionListener="#{salaInsertarBean.insertarSala()}" update="@form" /> 
-                    <h:link outcome="/admin/sala/salaListar.xhtml" value="Cancelar" />
+                  &nbsp;&nbsp;<p:linkButton outcome="/admin/especialidad/especialidadListar" value="Cancelar" style="margin-right:20px;"/>
         </h:form>
         
     </ui:define>
 
     <ui:define name="scripts">
-        scripts
+       
     </ui:define>
 
 </ui:composition>

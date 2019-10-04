@@ -29,6 +29,29 @@ public class EspecialidadEJB {
         return query.getResultList();
     }
     
+    public int insertEspecialidad(EspecialidadEntity especialidad) {
+        try {
+            em.persist(especialidad);
+            //em.flush();
+            return 1;
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+    
+    public int modificarEspecialidad(EspecialidadEntity especialidad) throws Exception {
+          try {
+            System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>");
+            System.out.println(especialidad);
+            em.merge(especialidad);
+           // em.flush();
+            return 1;
+        } catch (Exception e) {
+            throw new Exception("Error al actualizar " + e.getMessage());
+            
+        }
+    }
+    
      public EspecialidadEntity obtenerEspecialidad(int id)
      {
         return em.find(EspecialidadEntity.class, id);
