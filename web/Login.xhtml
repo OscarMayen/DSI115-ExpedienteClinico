@@ -37,7 +37,7 @@
                                     </h:column>
                                     <div class="left-align">
                                         <h:form id="login-form">
-                                            <p:growl autoUpdate="true"/>
+                                            <p:growl id="growl" showDetail="true" sticky="true" /> 
                                             <div class="row">
                                                 <div class="col s12 input-field">
                                                     <h:outputLabel for="username" value="USUARIO"/>
@@ -48,7 +48,7 @@
                                                     <h:inputSecret id="password" required="true" requiredMessage="El campo contrasenia es obligatorio."/>
                                                 </div>
                                                 <div class="col s12 input-field">
-                                                    <h:commandLink value="Iniciar Sesion" styleClass="btn btn-large"/>
+                                                    <p:commandButton value="Iniciar Sesion" styleClass="btn btn-large" update="@form"/>
                                                 </div>
                                             </div>
                                         </h:form>

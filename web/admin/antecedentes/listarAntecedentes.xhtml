@@ -37,14 +37,7 @@
                         </f:facet>
                         <h:outputText value="#{item.idPaciente.idPersona.nombrePersona}"/>
                     </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Operaciones"/>
-                        </f:facet>
-                        <p:commandButton  value="Editar" action="#{antecedentesListarBean.obtenerAntecedente()}" >
-                            <f:param name="id" value="#{item.idAntecedente}"/>
-                        </p:commandButton>
-                    </p:column>
+                    
                 </p:dataTable>
                 
             </h:form>

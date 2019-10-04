@@ -11,6 +11,7 @@
             
             <ui:define name="contenido">
                 <h:form id="form">
+                 <p:growl id="growl" showDetail="true" sticky="true" /> 
              <p:outputLabel value="Buscar paciente para añadir antecedentes:"/>
             <p:commandButton style="margin-left: 35px; margin-bottom: 15px" id="btnBusqPac" icon="ui-icon-search" type="button"
                                              onclick="PF('dlgPaciente').show();"/>
@@ -31,14 +32,14 @@
                     <h6><strong>Antecedentes</strong></h6>
                      <p:fieldset  style="font-size: 15px; font-weight: bold;width: 100%" >
                         <p:panelGrid style="width:100%" columns="2"  >
-                            <p:outputLabel style="width:100%" value="Alergias"/>
-                            <p:inputTextarea style="width:100%" value="#{antecendentesInsertarBean.aler}"/>
-                            <p:outputLabel style="width:100%" value="Antecedentes Familiares"/>
-                            <p:inputTextarea style="width:100%" value="#{antecendentesInsertarBean.antefam}"/>
-                            <p:outputLabel style="width:100%" value="Antecedentes Personales"/>
-                            <p:inputTextarea style="width:100%" value="#{antecendentesInsertarBean.anteper}"/>                         
+                            <p:outputLabel for="alergias" style="width:100%" value="Alergias"/>
+                            <p:inputTextarea  id="alergias" style="width:100%" value="#{antecendentesInsertarBean.aler}"/>
+                            <p:outputLabel for="ancedentesF" style="width:100%" value="Antecedentes Familiares"/>
+                            <p:inputTextarea  id="ancedentesF" style="width:100%" value="#{antecendentesInsertarBean.antefam}"/>
+                            <p:outputLabel for="ancedentesP" style="width:100%" value="Antecedentes Personales"/>
+                            <p:inputTextarea  id="ancedentesP" style="width:100%" value="#{antecendentesInsertarBean.anteper}"/>                         
                             <p:commandButton style="width: 50%;margin-left: 30%"  update="form" value="Guadar" actionListener="#{antecendentesInsertarBean.insertarDatos()}"/>
-                            <p:commandButton style="width: 50%; margin-left: 30%"  value="Cancelar"  action="/admin/antecedentes/listarAntecedentes?face-redirect=true"/>
+                            <p:linkButton style="width: 50%; margin-left: 30%" outcome="/admin/antecedentes/listarAntecedentes?face-redirect=true" value="CANCELAR" />
                         </p:panelGrid>
 
                     </p:fieldset><br></br>
