@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="./../../plantillas/plantilla.xhtml">
+
+    <ui:define name="titulo">
+        Editar Sala
+    </ui:define>
+
+    <ui:define name="css">
+        css
+    </ui:define>
+
+    <ui:define name="contenido">
+        <h:form>
+                    <p:growl id="growl" showDetail="true" sticky="true" /> 
+                    <p:fieldset legend="Editar Paciente" style="font-size: 15px; font-weight: bold;" >
+                        <p:panelGrid columns="3" >
+                            <p:outputLabel for="nombrePa" value="Nombre" />
+                            <p:inputText id="nombrePa" 
+                                         value="#{salaEditarBean.sala.nombreSala}"   
+                                         size="30" required="true"/>
+                        </p:panelGrid>
+                        
+                        </p:fieldset>
+                    <br></br>
+                    &nbsp;&nbsp; <p:commandButton value="MODIFICAR" action="#{salaEditarBean.updateSala()}" update="@form">
+                        <p:confirm header="Confirmation" message="¿Esta seguro que desea modificar la sala?" 
+                                   icon="pi pi-exclamation-triangle" />
+                    </p:commandButton>
+
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                        <p:commandButton value="SI" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+                    </p:confirmDialog> 
+                    
+                    &nbsp;&nbsp;<p:commandButton value="CANCELAR" action="#{salaEditarBean.btnCancelarSala()}"  style="margin-right:20px;"/>
+        </h:form>
+    </ui:define>
+
+    <ui:define name="scripts">
+        scripts
+    </ui:define>
+
+</ui:composition>
