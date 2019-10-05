@@ -15,7 +15,9 @@ import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 
@@ -25,27 +27,33 @@ import javax.faces.view.ViewScoped;
  */
 @ManagedBean(name = "pacienteInsertarManagedBean")
 @ViewScoped
-public class PacienteInsertarManagedBean implements Serializable{
+public class PacienteInsertarManagedBean implements Serializable {
 
     @EJB
     private PersonaEJB personaEJB;
     @EJB
     private PacienteEJB pacienteEJB;
-    
+
     private PersonaEntity personaEntity = new PersonaEntity();
     private PacienteEntity pacienteEntity = new PacienteEntity();
     private JsfUtils utilidades = new JsfUtils();
-    
+
     public PacienteInsertarManagedBean() {
     }
-    
-    public void insertarPaciente() throws IOException 
-    {
+
+     
+    public void insertarPaciente() throws IOException {
         this.pacienteEntity.setIdPersona(personaEntity);
-        pacienteEJB.insertPaciente(pacienteEntity);
-        this.pacienteEntity = new PacienteEntity();
-        this.personaEntity = new PersonaEntity();
-        JsfUtils.Redireccionar("pacienteListar.xhtml");
+        int a = pacienteEJB.insertPaciente(pacienteEntity);
+        if (a == 0) {
+            FacesContext context = FacesContext.getCurrentInstance();
+             FacesContext.getCurrentInstance().addMessage("Paciente", new FacesMessage("ERROR AL INSERTAR DUI REPETIDO"));
+        } else {
+            this.pacienteEntity = new PacienteEntity();
+            this.personaEntity = new PersonaEntity();
+            JsfUtils.Redireccionar("pacienteListar.xhtml");
+        }
+
     }
 
     public JsfUtils getUtilidades() {
@@ -55,8 +63,6 @@ public class PacienteInsertarManagedBean implements Serializable{
     public void setUtilidades(JsfUtils utilidades) {
         this.utilidades = utilidades;
     }
-    
-    
 
     public PersonaEntity getPersonaEntity() {
         return personaEntity;
@@ -90,4 +96,6 @@ public class PacienteInsertarManagedBean implements Serializable{
         this.pacienteEJB = pacienteEJB;
     }
     
+   
+
 }

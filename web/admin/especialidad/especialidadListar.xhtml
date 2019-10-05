@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../../plantillas/plantilla.xhtml">
+
+            <ui:define name="titulo">
+                Listado de especialidades
+            </ui:define>
+
+            <ui:define name="css">
+
+            </ui:define>
+
+            <ui:define name="contenido">
+
+                <h:form>
+                    <h1><h:outputText value="Listado de Especialidades"/></h1>
+                    <h:link outcome="/admin/especialidad/especialidadInsertar.xhtml" value="Nueva Especialidad" class="btn btn-success"/>
+                    <br>
+                    </br>
+
+                    <p:dataTable id="tablaE" var="especialidad" value="#{especialidadListarBean.listaEspecialidad}" rows="10"
+                                 paginator="true"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="5,10,15" currentPageReportTemplate="Página:({currentPage} de {totalPages})">
+                       
+                        <p:column filterBy="#{especialidad.nombreEspecialidad}" headerText="Nombre de la especialidad">
+                            <h:outputText value="#{especialidad.nombreEspecialidad}" />
+                        </p:column>
+                        
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Operaciones" />
+                            </f:facet>
+
+                            <h:commandButton class="btn btn-primary" action="#{especialidadListarBean.editSala(especialidad.idEspecialidad)}" value="Editar">
+                                <f:param name="id"  value="#{especialidad.idEspecialidad}"/>
+                            </h:commandButton>
+                            
+
+                        </p:column>
+
+                    </p:dataTable>
+
+
+                </h:form>
+
+
+            </ui:define>
+
+            <ui:define name="scripts">
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

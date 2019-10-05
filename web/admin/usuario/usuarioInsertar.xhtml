@@ -15,105 +15,88 @@
             </ui:define>
 
             <ui:define name="css">
-                <style>
-                    .btn{
 
-                        margin-top: 2%;
-                        margin-bottom: 2%;
-
-                    }
-
-                    #btn{
-                        margin-left: 35%;
-                    }
-                </style>
-                <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
-                <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-                <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
             </ui:define>
 
             <ui:define name="contenido">
-                
-                  <div class="col-md-8 offset-md-2 bootstrap-iso"> 
-                
-                    <h2>Nuevo Usuario</h2>
 
-                    <h:form>
-                        <div style="width: 100%; height: 20px; border-bottom: 1px solid black; margin-top: 3%; margin-bottom: 3%; text-align: center">
-                            <span style="font-size: 1.5em; background-color: #F3F5F6; padding: 0 10px;">
-                                Datos personales <!--Padding is optional-->
-                            </span>
-                        </div>
+                <h2>Nuevo Usuario</h2>
 
-                        <div class="form-group">
-                            <label for="nombres">Nombres</label>
-                            <h:inputText value="#{usuarioInsertarBean.persona.nombrePersona}" class="form-control" id="nombres"  required="true"></h:inputText>
-                        </div>
-                        
-                                                <div class="form-group">
-                            <label for="apellidos">Apellidos</label>
-                            <h:inputText value="#{usuarioInsertarBean.persona.apellidoPersona}" class="form-control" id="apellidos" required="true"/>
-                        </div>
-                        <div class="form-group">
-                            <label for="telefono">Telefono</label>
-                            <h:inputText value="#{usuarioInsertarBean.persona.telefono}" alt="Ej: 2245-5462" class="form-control" id="telefono" maxlength="9" required="true" validatorMessage="Ej: ####-####">
-                                <f:validateRegex pattern="[0-9]{4}-[0-9]{4}" />
-                            </h:inputText>
-                        </div>
+                <h:form id="formNuevoUsuario">
 
-                        <div class="form-group">
-                            <label for="sexo">Sexo</label>
-                            <h:selectOneRadio value="#{usuarioInsertarBean.persona.genero}" id="sexo">
-                                <f:selectItem itemValue="Masculino" itemLabel="Masculino"/>
-                                <f:selectItem itemValue="Femenino" itemLabel="Femenino"/>
-                            </h:selectOneRadio>
-                        </div>
+                    <p:growl id="growl" showDetail="true" sticky="true" /> 
+                    <p:fieldset legend="Nuevo usuario" style="font-size: 15px; font-weight: bold;" >
+                        <p:panelGrid columns="4" >
 
-                        <div class="form-group">
-                            <label for="dui">Dui</label>
-                            <h:inputText value="#{usuarioInsertarBean.persona.dui}" class="form-control" id="dui" maxlength="10" required="true" validatorMessage="Ej: ########-#">
-                                <f:validateRegex pattern="[0-9]{8}-[0-9]{1}" />
-                            </h:inputText>
-                        </div>
-                        <div class="form-group">
-                            <label for="fechaNacimiento">Fecha de nacimiento </label><br/>
-                            <p:calendar id="fechaNacimiento" value="#{usuarioInsertarBean.persona.fechaNacimiento}" placeholder="yyyy/MM/dd" 
-                                        locale="es"  pattern="dd/MM/yyyy" required="true"/>
-                        </div>
+                            <p:outputLabel for="nombreUsu" value="Nombre" />
+                            <p:inputText id="nombreUsu" value="#{usuarioInsertarBean.persona.nombrePersona}"   
+                                         size="30" required="true"/>
 
-                        
-                        <div style="width: 100%; height: 20px; border-bottom: 1px solid black; margin-top: 3%; margin-bottom: 3%; text-align: center">
-                            <span style="font-size: 1.5em; background-color: #F3F5F6; padding: 0 10px;">
-                                Datos del usuario <!--Padding is optional-->
-                            </span>
-                        </div>
+                            <p:outputLabel for="apellidoUsu" value="Apellido"/>
+                            <p:inputText id="apellidoUsu" value="#{usuarioInsertarBean.persona.apellidoPersona}"    
+                                         size="30" required="true"/>
 
-                        <div class="form-group">
-                            <label for="username">Usuario</label>
-                            <h:inputText value="#{usuarioInsertarBean.usuario.username}" class="form-control" id="username" required="true"/>
-                        </div>
-                        <div class="form-group">
-                            <label for="password">Contraseña</label>
-                            <h:inputSecret value="#{usuarioInsertarBean.usuario.password}" class="form-control" id="password" required="true"/>
-                        </div>
+                            <p:outputLabel for="telefono1Usu" value="Telefono"/>
+                            <p:inputMask id="telefono1Usu" value="#{usuarioInsertarBean.persona.telefono}"   
+                                         mask="9999-9999" size="30" required="true"/>
 
-                        <div class="form-group">
-                            <h:outputLabel value="Seleccione un rol:" for="codigoRol" />
-                            <h:selectOneMenu id="codigoRol" class="form-control"
-                                             value="#{usuarioInsertarBean.usuario.idRol}" title="Rol">
-                                <f:selectItems value="#{usuarioInsertarBean.listaRoles}" var="rol"
-                                               itemValue="#{rol}"
-                                               itemLabel="#{rol.nombreRol}"/>
-                            </h:selectOneMenu>
-                        </div>
-                        
-                        <h:commandButton value="Guardar" action="#{usuarioInsertarBean.insertarUsuario()}"  class="btn btn-success"/>
-                        <h:link outcome="/admin/usuario/usuarioListar" value="Cancelar" class="btn btn-danger"/>
-                        
-                    </h:form>
-                    
-                </div>
-                
+                            <p:outputLabel for="telefono2Usu"  value="Telefono  (Opcional)"/>
+                            <p:inputMask  id="telefono2Usu" value="#{usuarioInsertarBean.persona.telefonoOpcional}"  
+                                          mask="9999-9999" size="30"/>
+
+                            <p:outputLabel for="duiUsu" value="Dui"/>
+                            <p:inputMask id="duiUsu" value="#{usuarioInsertarBean.persona.dui}"   
+                                         mask="99999999-9" size="30" required="true"/>
+
+                            <p:outputLabel for="fechaNacimientoUsu" value="Fecha de Nacimiento"/>
+                            <p:calendar   value="#{usuarioInsertarBean.persona.fechaNacimiento}" 
+                                          id="fechaNacimientoUsu" placeholder="dd/MM/yyyy" 
+                                          locale="es"  pattern="dd/MM/yyyy" 
+                                          required="true" size="30"/>
+
+                            <p:outputLabel value="Sexo" for="generoUsu"/>
+                            <p:selectOneRadio id="generoUsu" value="#{usuarioInsertarBean.persona.genero}"  
+                                              label="Genero" required="true">
+                                <f:selectItem itemLabel="Masculino" itemValue="Masculino"/>
+                                <f:selectItem itemLabel="Femenino" itemValue="Femenino" />
+                            </p:selectOneRadio>
+
+                            <p:outputLabel value="Estado Usuario en la institucion" />
+                            <p:selectBooleanCheckbox value="#{usuarioInsertarBean.persona.estadoPersonal}"   
+                                                     itemLabel="Activo" />
+                        </p:panelGrid>
+                    </p:fieldset><br></br>
+
+                    <h6><strong>DATOS DE LA CUENTA</strong></h6>
+                    <p:fieldset  style="font-size: 15px; font-weight: bold;" >
+                        <p:panelGrid columns="4"  >
+
+                            <p:outputLabel for="username" value="Usuario" />
+                            <p:inputText id="username" value="#{usuarioInsertarBean.usuario.username}"  size="30" required="true"/>
+
+                            <p:outputLabel for="contrasenia" value="Contraseña"/>
+                            <p:password id="contrasenia" value="#{usuarioInsertarBean.usuario.password}"   
+                                        size="15" required="true"/>
+
+                            <p:outputLabel value="Seleccione el Rol" />
+                            <p:selectOneMenu id="rolUsu" value="#{usuarioInsertarBean.usuario.idRol}">
+                                <f:selectItems  value="#{usuarioInsertarBean.listaRoles}" var="rol" 
+                                                itemValue="#{rol}" 
+                                                itemLabel="#{rol.nombreRol}"
+                                                />
+                            </p:selectOneMenu>
+
+
+                        </p:panelGrid>
+                    </p:fieldset><br></br>
+
+
+                    &nbsp;&nbsp;<p:commandButton value="Guardar" action="#{usuarioInsertarBean.insertarUsuario()}" update="@form" /> 
+                    &nbsp;&nbsp;<p:linkButton outcome="/admin/usuario/usuarioListar.xhtml" value="Cancelar" />
+
+
+                </h:form>
+
             </ui:define>
 
             <ui:define name="scripts">

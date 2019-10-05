@@ -30,11 +30,16 @@ and open the template in the editor.
             <div class="bg-light border-right" id="sidebar-wrapper">
                 <div class="sidebar-heading">Expediente clínico </div>
                 <div class="list-group list-group-flush">
+
                     <h:link rendered="#{request.isUserInRole('admin')}" outcome="/admin/medico/medicoListar" value="Gestion médicos" class="list-group-item list-group-item-action bg-light"/>
                     <h:link rendered="#{request.isUserInRole('admin')}" outcome="/admin/usuario/usuarioListar" value="Gestion usuarios" class="list-group-item list-group-item-action bg-light"/>
                     <h:link rendered="#{request.isUserInRole('admin')}" outcome="/admin/paciente/pacienteListar" value="Gestion pacientes" class="list-group-item list-group-item-action bg-light"/>
                     <h:link rendered="#{request.isUserInRole('admin')}" outcome="/admin/consulta/consultaListar" value="Gestion consultas" class="list-group-item list-group-item-action bg-light"/>
-                    <h:link rendered="#{request.isUserInRole('admin')}" outcome="/admin/reportes/listaReportes" value="Reporte de pacientes" class="list-group-item list-group-item-action bg-light"/>
+                    <h:link rendered="#{request.isUserInRole('admin')}" outcome="/admin/reportes/listaReportes" value="Reporte de pacientes" class="list-group-item list-group-item-action bg-light"/>                  
+                    <h:link outcome="/admin/antecedentes/listarAntecedentes" value=" Gestion Antecedentes" class="list-group-item list-group-item-action bg-light"/>
+                    <h:link outcome="/admin/sala/salaListar" value="Gestion salas" class="list-group-item list-group-item-action bg-light"/>
+                    <h:link outcome="/admin/especialidad/especialidadListar" value="Gestion Especialidades" class="list-group-item list-group-item-action bg-light"/>
+
                     
                 </div>
             </div>

@@ -48,6 +48,13 @@ public class SalaListarBean implements Serializable{
         this.listaSala = listaSala;
     }
     
-    
+    public String editSala(int id)
+    {
+        //this.sala = new SalaEntity();
+        
+        //sala = salaEjb.obtenerSala(id);
+
+        return "/admin/sala/salaEditar.xhtml"; 
+    }
     
 }

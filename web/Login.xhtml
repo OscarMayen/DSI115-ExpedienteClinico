@@ -37,7 +37,8 @@
                                     </h:column>
                                     <div class="left-align">
                                         <h:form id="login-form">
-                                            <p:growl />
+                                            <p:growl id="growl" showDetail="true" sticky="true" /> 
+
                                             <div class="row">
                                                 <div class="col s12 input-field">
                                                     <h:outputLabel for="username" value="USUARIO"/>
@@ -49,6 +50,7 @@
                                                 </div>
                                                 <div class="col s12 input-field">
                                                     <p:commandButton value="Iniciar Sesion" action="#{loginBean.login()}" styleClass="btn btn-large"/>
+
                                                 </div>
                                             </div>
                                         </h:form>

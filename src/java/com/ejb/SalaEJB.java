@@ -22,6 +22,25 @@ public class SalaEJB {
         em.persist(object);
     }
     
+    public int insertSala(SalaEntity sala) {
+        try {
+            em.persist(sala);
+            em.flush();
+            return 1;
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+    
+    public int modificarSala(SalaEntity sala) {
+        try {
+            em.merge(sala);
+            //em.flush();
+            return 1;
+        } catch (Exception e) {
+            return 0;
+        }
+    }
     //Metodo para listar Salas en el EJB
     public List<SalaEntity> listarSalas() {
         Query query = em.createNamedQuery("SalaEntity.findAll");

@@ -85,7 +85,8 @@ public class UsuarioInsertarBean implements Serializable{
         int a =this.personaEJB.insertPersona(this.persona);
         
         if (a == 0) {
-            FacesContext.getCurrentInstance().addMessage("persona", new FacesMessage("ERROR AL INSERTAR"));
+             FacesContext context = FacesContext.getCurrentInstance();
+             FacesContext.getCurrentInstance().addMessage("Usuario", new FacesMessage("ERROR AL INSERTAR DUI REPETIDO"));
             return null;  
         } 
         else{

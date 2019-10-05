@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition
+    template="./../../plantillas/plantilla.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="titulo">
+        Nueva sala
+    </ui:define>
+
+    <ui:define name="css">
+        
+    </ui:define>
+
+    <ui:define name="contenido">
+        
+        <h:form id="formNuevaSala">
+            <p:growl id="growl" showDetail="true" sticky="true" /> 
+                    <p:fieldset legend="Nueva Sala" style="font-size: 15px; font-weight: bold;" >
+                        <p:panelGrid columns="4" >
+
+                            <p:outputLabel for="nombreSa" value="Nombre" />
+                            <p:inputText id="nombreSa" value="#{salaInsertarBean.salaEntity.nombreSala}"   
+                                         size="30" required="true"/>
+                            
+                            </p:panelGrid>
+                    </p:fieldset><br></br>
+                            
+                  &nbsp;&nbsp;<p:commandButton value="Guardar" actionListener="#{salaInsertarBean.insertarSala()}" update="@form" /> 
+                  &nbsp;&nbsp;<p:linkButton outcome="/admin/especialidad/especialidadListar" value="Cancelar" style="margin-right:20px;"/>
+        </h:form>
+        
+    </ui:define>
+
+    <ui:define name="scripts">
+       
+    </ui:define>
+
+</ui:composition>

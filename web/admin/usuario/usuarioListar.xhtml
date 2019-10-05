@@ -31,95 +31,60 @@
             label{
                 width: 100%;
             }
-            
+
             input[id*=filtro]{
                 width: 100%;
             }
-            
+
         </style>
     </ui:define>
 
     <ui:define name="contenido">
-        <div class="row">
-            <div class="col">
-                <f:view>
-                    <br/>
-                    <h:form>
-                        <p:growl id="msgs" showDetail="true" />
 
-                        <p:fieldset legend="Filtros" style="margin-bottom:20px">
-                            <h:panelGrid columns="2" cellpadding="5">
-                                <h:outputLabel>
-                                    Dui:
-                                    <h:inputText value="#{usuarioListarBean.dui}" id="filtroDui"/>
-                                </h:outputLabel>
-                                
-                                <h:outputLabel>
-                                    Usuario:
-                                    <h:inputText value="#{usuarioListarBean.username}" id="filtroUsuario"/>
-                                </h:outputLabel>
-                                <h:outputLabel>
-                                    Rol:
-                                    <h:inputText value="#{usuarioListarBean.rol}" id="filtroRol"/>
-                                </h:outputLabel>
-                                <h:outputLabel>
-                                    Buscar:
-                                    <p:commandButton id="filtrar" value="Filtrar" update="@(:tablaP)" actionListener="#{usuarioListarBean.filtrar()}" />
-                                </h:outputLabel>
-                            </h:panelGrid>
-                        </p:fieldset>
-                    </h:form>
+        <h:form>
+            <h1><h:outputText value="Listado de usuarios"/></h1>
+            <h:link outcome="/admin/usuario/usuarioInsertar" value="Nuevo Usuario" class="btn btn-success"/>
+            <br>
+            </br>
+            <p:dataTable id="tablaP" var="usuario" value="#{usuarioListarBean.listaUsuario}" rows="10"
+                         paginator="true"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15" currentPageReportTemplate="Página:({currentPage} de {totalPages})">
+                <p:column filterBy="#{usuario.idPersona.dui}" headerText="Dui">
+                    <h:outputText value="#{usuario.idPersona.dui}" />
+                </p:column>
 
+                <p:column filterBy="#{usuario.idPersona.nombrePersona}" headerText="Nombres">
+                    <h:outputText value="#{usuario.idPersona.nombrePersona}" />
+                </p:column>
 
+                <p:column filterBy="#{usuario.idPersona.apellidoPersona}" headerText="Apellidos">
+                    <h:outputText value="#{usuario.idPersona.apellidoPersona}" />
+                </p:column>
 
-                    <h:form>
-                        <h1><h:outputText value="Listado de usuarios"/></h1>
-                        <h:link outcome="/admin/usuario/usuarioInsertar" value="Nuevo Usuario" class="btn btn-success"/>
-                        <br>
-                        </br>
-                        <p:dataTable id="tablaP" var="usuario" value="#{usuarioListarBean.listaUsuario}" rows="10"
-                                     paginator="true"
-                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                     rowsPerPageTemplate="5,10,15">
-                            <p:column headerText="Dui">
-                                <h:outputText value="#{usuario.idPersona.dui}" />
-                            </p:column>
+                <p:column filterBy="#{usuario.username}" headerText="Nombre de usuario">
+                    <h:outputText value="#{usuario.username}" />
+                </p:column>
 
-                            <p:column headerText="Nombres">
-                                <h:outputText value="#{usuario.idPersona.nombrePersona}" />
-                            </p:column>
+                <p:column filterBy="#{usuario.idRol.nombreRol}" headerText="Rol">
+                    <h:outputText value="#{usuario.idRol.nombreRol}" />
+                </p:column>
 
-                            <p:column headerText="Apellidos">
-                                <h:outputText value="#{usuario.idPersona.apellidoPersona}" />
-                            </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Operaciones" />
+                    </f:facet>
+                    <h:commandButton class="btn btn-info" action="#{usuarioListarBean.editUsuario(usuario.idUsuario)}" value="Editar">
+                        <f:param name="id"  value="#{usuario.idUsuario}"/>
+                    </h:commandButton>
+                    <h:commandButton class="btn btn-primary" action="#{usuarioListarBean.detalleUsuario(usuario.idUsuario)}" value="Ver">
+                        <f:param name="id"  value="#{usuario.idUsuario}"/>
+                    </h:commandButton>
+                </p:column>
 
-                            <p:column headerText="Nombre de usuario">
-                                <h:outputText value="#{usuario.username}" />
-                            </p:column>
+            </p:dataTable>
 
-                            <p:column headerText="Rol">
-                                <h:outputText value="#{usuario.idRol.nombreRol}" />
-                            </p:column>
-
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Operaciones" />
-                                </f:facet>
-                                <h:commandButton class="btn btn-info" action="#{usuarioListarBean.editUsuario(usuario.idUsuario)}" value="Editar">
-                                    <f:param name="id"  value="#{usuario.idUsuario}"/>
-                                </h:commandButton>
-                                <h:commandButton class="btn btn-primary" action="#{usuarioListarBean.detalleUsuario(usuario.idUsuario)}" value="Ver">
-                                    <f:param name="id"  value="#{usuario.idUsuario}"/>
-                                </h:commandButton>
-                            </p:column>
-
-                        </p:dataTable>
-                        
-                    </h:form>
-                </f:view>
-
-            </div>
-        </div>
+        </h:form>
 
 
     </ui:define>

@@ -378,4 +378,10 @@ public class ConsultaInsertarBean implements Serializable{
         
         return "/admin/consulta/consultaListar?faces-redirect=true";
     }
+    
+    public String btnCancelarConsulta()
+    {
+        String outcome ="/admin/consulta/consultaListar?faces-redirect=true";
+        return outcome;
+    }
 }

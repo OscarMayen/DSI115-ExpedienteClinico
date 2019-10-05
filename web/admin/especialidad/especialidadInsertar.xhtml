@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../../plantillas/plantilla.xhtml">
+
+            <ui:define name="titulo">
+                Nueva Especialidad
+            </ui:define>
+
+            <ui:define name="css">
+
+            </ui:define>
+
+            <ui:define name="contenido">
+
+                <h:form id="formNuevaEspecialidad">
+                    <p:growl id="growl" showDetail="true" sticky="true" /> 
+                    <p:fieldset legend="Nueva Especialidad">
+                        <p:panelGrid columns="2">
+
+                            <p:outputLabel for="nombre" value="Nombre de la Especialidad"/>
+                            <p:inputText id="nombre" value="#{especialidadInsertarBean.especialidad.nombreEspecialidad}" required="true" size="70"/>
+
+                        </p:panelGrid>
+                    </p:fieldset>
+                    <br></br>
+                    &nbsp;&nbsp;<p:commandButton value="Guardar" action="#{especialidadInsertarBean.insertarEspecialidad()}"  update="@form"/>
+                    &nbsp;&nbsp;<p:linkButton outcome="/admin/especialidad/especialidadListar" value="Cancelar"/>
+                </h:form>
+
+
+            </ui:define>
+
+            <ui:define name="scripts">
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

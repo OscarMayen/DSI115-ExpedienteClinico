@@ -40,7 +40,7 @@ public class AntecedentesEntity implements Serializable {
     private Integer idAntecedente;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 1)
+    @Size(min = 1, max = 150)
     private String alergico;
     @Basic(optional = false)
     @NotNull

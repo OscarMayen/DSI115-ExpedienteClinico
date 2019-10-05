@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../../plantillas/plantilla.xhtml">
+
+            <ui:define name="titulo">
+                Editar Especialidad
+            </ui:define>
+
+            <ui:define name="css">
+
+            </ui:define>
+
+            <ui:define name="contenido">
+
+                <h:form>
+                    <p:growl id="growl" showDetail="true" sticky="true" /> 
+                    <p:fieldset legend="Editar Especialidad">
+                        <p:panelGrid columns="2">
+
+                            <p:outputLabel for="nomEspecialidad" value="Nombre de la Especialidad"/>
+                            <p:inputText id="nomEspecialidad" value="#{especialidadEditarBean.especialidad.nombreEspecialidad}" required="true" />
+
+                        </p:panelGrid>
+                    </p:fieldset>
+                    <br></br>
+                  
+                    &nbsp;&nbsp; <p:commandButton value="Modificar" action="#{especialidadEditarBean.actualizarEspecialidad()}" update="@form">
+                        <p:confirm header="Confirmation" message="¿Esta seguro que desea modificar la especialidad?" 
+                                   icon="pi pi-exclamation-triangle" />
+                    </p:commandButton>
+
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                        <p:commandButton value="SI" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+                    </p:confirmDialog> 
+                    &nbsp;&nbsp;<p:linkButton outcome="/admin/especialidad/especialidadListar" value="Cancelar" />
+                </h:form>
+
+
+            </ui:define>
+
+            <ui:define name="scripts">
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

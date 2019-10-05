@@ -44,7 +44,7 @@
 
                             <p:outputLabel for="duiPa" value="Dui"/>
                             <p:inputMask id="duiPa" value="#{pacienteEditarManagedBean.pacienteEntity.idPersona.dui}"  
-                                         mask="9999999-9" size="30" required="true"/>
+                                         mask="99999999-9" size="30" required="true"/>
 
                             <p:outputLabel for="fechaNacimientoPa" value="Fecha de Nacimiento"/>
                             <p:calendar   value="#{pacienteEditarManagedBean.pacienteEntity.idPersona.fechaNacimiento}"
@@ -76,7 +76,7 @@
                             <p:inputMask id="telefonoResponsable" value="#{pacienteEditarManagedBean.pacienteEntity.telefonoEmergencia}"   
                                          mask="9999-9999" size="15" required="true"/>
 
-                            <p:outputLabel for="vinculoResponsable" value="Apellido"/>
+                            <p:outputLabel for="vinculoResponsable" value="Vinculo del Responsable"/>
                             <p:inputText id="vinculoResponsable" value="#{pacienteEditarManagedBean.pacienteEntity.vinculoResponsable}"   
                                          size="30" required="true"/>
 
