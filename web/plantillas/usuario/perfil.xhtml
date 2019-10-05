@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../plantilla.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:define name="titulo">
+        Perfil de #{sessionBean.user.username}
+    </ui:define>
+
+    <ui:define name="css">
+        <style>
+            input{
+                width: 50%;
+            }
+        </style>
+        
+    </ui:define>
+
+    <ui:define name="contenido">
+
+
+        <!--<p:graphicImage name="demo/images/godfather/godfather1.jpg" />-->
+        <h:form>   
+            <h3 style="text-align: center; margin-top: 2%; margin-bottom: 2%">Datos personales</h3>
+            <div class="ui-g ui-fluid">
+
+                <div class="ui-g-12 ui-md-6">
+                    <div class="ui-inputgroup">
+                        <h:outputLabel value="Nombres:"/>
+                        <p:inputText style="margin-left:3%"  value="#{perfilBean.user.idPersona.nombrePersona}" readonly="true" />      
+                    </div>
+                </div>
+
+                <div class="ui-g-12 ui-md-6">
+                    <div class="ui-inputgroup">
+                        <h:outputLabel value="Apellidos:"/>
+                        <p:inputText style="margin-left:3%"  value="#{perfilBean.user.idPersona.apellidoPersona}" readonly="true"/>
+                    </div>
+                </div>
+
+
+                <div class="ui-g-12 ui-md-6">
+                    <div class="ui-inputgroup">
+                        <h:outputLabel value="Fecha de nacimiento:"/>
+                        <p:inputText style="margin-left:3%"  value="#{perfilBean.user.idPersona.fechaNacimiento}" readonly="true"/>
+                    </div>
+                </div>
+
+                <div class="ui-g-12 ui-md-6">
+                    <div class="ui-inputgroup">
+                        <h:outputLabel value="Teléfono:"/>
+                        <p:inputText style="margin-left:3%"  value="#{perfilBean.user.idPersona.telefono}" readonly="true"/>
+                    </div>
+                </div>
+
+
+                <div class="ui-g-12 ui-md-6">
+                    <div class="ui-inputgroup">
+                        <h:outputLabel style="width: 25%" value="Teléfono 2:"/>
+                        <p:inputText style="margin-left:6%"  value="#{perfilBean.user.idPersona.telefonoOpcional}" readonly="true"/>
+                    </div>
+                </div>
+
+
+                <div class="ui-g-12 ui-md-6">
+                    <div class="ui-inputgroup">
+                        <h:outputLabel value="Sexo:"/>
+                        <p:inputText style="margin-left:3%"  value="#{perfilBean.user.idPersona.genero}" readonly="true"/>
+                    </div>
+                </div>
+            </div>
+
+        </h:form>
+
+
+        <!--<p:graphicImage name="demo/images/godfather/godfather1.jpg" />-->
+        <h:form>
+
+            <div class="ui-g ui-fluid">
+                <div class="ui-g-12 ui-md-6">
+                    <div class="ui-inputgroup">
+                        <h:outputLabel value="Usuario:"/>
+                        <p:inputText style="margin-left:3%"  value="#{perfilBean.user.username}" readonly="true" />      
+                    </div>
+                </div>
+
+                <div class="ui-g-12 ui-md-6">
+                    <div class="ui-inputgroup">
+                        <h:outputLabel value="Rol:"/>
+                        <p:inputText  style="margin-left:3%" value="#{perfilBean.user.idRol.nombreRol}" readonly="true"/>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+
+
+
+    </ui:define>
+
+    <ui:define name="scripts">
+    </ui:define>
+
+</ui:composition>

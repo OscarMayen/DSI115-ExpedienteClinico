@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1735bd11-d7b5-4fe3-8214-7e3ffd9da908">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT per.NOMBREPERSONA as "Nombres", per.APELLIDOPERSONA as "Apellidos", pm.NOMBREPERSONA as "Médico", COUNT(c.IDCONSULTA) as "Cantidad consultas" FROM consulta c INNER JOIN medico m on c.idMedico=m.IDMEDICO INNER JOIN paciente pa ON pa.idPaciente=c.idPaciente INNER JOIN persona per on per.IDPERSONA=pa.idPersona INNER JOIN persona pm ON pm.IDPERSONA=m.idPersona GROUP BY per.NOMBREPERSONA, per.APELLIDOPERSONA, pm.NOMBREPERSONA]]>
+	</queryString>
+	<field name="Nombres" class="java.lang.String"/>
+	<field name="Apellidos" class="java.lang.String"/>
+	<field name="Médico" class="java.lang.String"/>
+	<field name="Cantidad consultas" class="java.lang.Long"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="70" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="0" y="13" width="552" height="33" uuid="d4b1af41-2e02-436d-993e-a3b8aaf0068d"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Historial de consultas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="100" y="46" width="196" height="22" uuid="067c009f-a2e3-4bed-8621-ba05a66c0a56"/>
+				<text><![CDATA[atendidas por paciente]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="36" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="35" width="555" height="1" uuid="f0f86dff-a542-42db-9f19-b042c38ba594"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" x="0" y="19" width="138" height="15" uuid="194c91b8-da31-40b4-a2fd-5a40cc617f95"/>
+				<text><![CDATA[Nombres]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="138" y="19" width="138" height="15" uuid="92449cfc-4460-4611-8868-5137f92b8cc8"/>
+				<text><![CDATA[Apellidos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="276" y="19" width="138" height="15" uuid="6709e23f-4d56-4321-a233-3d37fd0354f9"/>
+				<text><![CDATA[Médico]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="414" y="19" width="138" height="15" uuid="749b5c3b-e129-4cdc-b3eb-e959b299adc3"/>
+				<text><![CDATA[Cantidad consultas]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1" uuid="439f9ac3-e7d1-49ca-ad49-16624de6ec30"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement style="Detail" x="0" y="0" width="138" height="15" uuid="fd1ddf1c-b3eb-47ba-bc3f-821b9758eb2e"/>
+				<textFieldExpression><![CDATA[$F{Nombres}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="138" y="0" width="138" height="15" uuid="ed6e49ef-1218-4fe8-9b67-0aff93c5a6fc"/>
+				<textFieldExpression><![CDATA[$F{Apellidos}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="276" y="0" width="138" height="15" uuid="47d6eaa2-aaa2-48bc-b64e-cc553e19346b"/>
+				<textFieldExpression><![CDATA[$F{Médico}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="414" y="0" width="138" height="15" uuid="644d8b22-12c2-46e2-9ec9-93c033dad356"/>
+				<textFieldExpression><![CDATA[$F{Cantidad consultas}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="15968990-fcb5-4fa9-89d8-96d04f772092"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement style="Column header" x="433" y="0" width="80" height="20" uuid="27b3dc4e-048d-44a0-963a-9f4d532edba7"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="Column header" x="513" y="0" width="40" height="20" uuid="6c9109ad-b5b1-4099-b4f1-5a369b6d0c31"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement style="Column header" x="0" y="0" width="197" height="20" uuid="61c4016d-336d-4127-8b5f-6d57aea9f33d"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -31,6 +31,11 @@ public class UsuarioEJB {
         return query.getResultList();
     }
     
+    public UsuarioEntity obtenerUsuarioLogIn(String username){
+        Query query = em.createNamedQuery("UsuarioEntity.findByUsername").setParameter("username", username);
+        return (UsuarioEntity) query.getSingleResult();
+    }
+    
     public int insertUsuario(UsuarioEntity usuario) {
         try {
             em.persist(usuario);

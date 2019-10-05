@@ -5,10 +5,6 @@
         <param-value>Development</param-value>
     </context-param>
     <context-param>
-        <param-name>primefaces.THEME</param-name>
-        <param-value>south-street</param-value>
-    </context-param>
-    <context-param>
         <param-name>com.sun.faces.serializeServerState</param-name>
         <param-value>false</param-value>
     </context-param>
@@ -35,48 +31,54 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>faces/plantillas/usuario/sesion.xhtml</welcome-file>
+        <welcome-file>faces/Login.xhtml</welcome-file>
     </welcome-file-list>
     <security-constraint>
         <display-name>Administrador</display-name>
         <web-resource-collection>
             <web-resource-name>reourseAdministrador</web-resource-name>
             <description/>
-            <url-pattern>/admin/medico/*</url-pattern>
-            <url-pattern>/admin/paciente/*</url-pattern>
-            <url-pattern>/admin/usuario/*</url-pattern>
+            <url-pattern>/faces/admin/medico/*</url-pattern>
+            <url-pattern>/faces/admin/paciente/*</url-pattern>
+            <url-pattern>/faces/admin/usuario/*</url-pattern>
+            <url-pattern>/faces/admin/consulta/*</url-pattern>
+            <url-pattern>/faces/admin/reportes/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <description/>
             <role-name>admin</role-name>
         </auth-constraint>
-        <user-data-constraint>
-            <description/>
-            <transport-guarantee>NONE</transport-guarantee>
-        </user-data-constraint>
     </security-constraint>
     <security-constraint>
         <display-name>Archivista</display-name>
         <web-resource-collection>
-            <web-resource-name>reourseArchivista</web-resource-name>
+            <web-resource-name>reourseAdministrador</web-resource-name>
             <description/>
-            <url-pattern>/admin/paciente/*</url-pattern>
+            <url-pattern>/faces/admin/paciente/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <description/>
             <role-name>archivista</role-name>
         </auth-constraint>
-        <user-data-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>Medico</display-name>
+        <web-resource-collection>
+            <web-resource-name>reourseMedico</web-resource-name>
             <description/>
-            <transport-guarantee>NONE</transport-guarantee>
-        </user-data-constraint>
+            <url-pattern>/faces/admin/consulta/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>Medico</role-name>
+        </auth-constraint>
     </security-constraint>
     <login-config>
         <auth-method>FORM</auth-method>
         <realm-name>expedienteClinicoRealm</realm-name>
         <form-login-config>
-            <form-login-page>/plantillas/usuario/login.xhtml</form-login-page>
-            <form-error-page>/plantillas/usuario/login.xhtml</form-error-page>
+            <form-login-page>/faces/Login.xhtml</form-login-page>
+            <form-error-page>/faces/Login.xhtml</form-error-page>
         </form-login-config>
     </login-config>
     <security-role>
@@ -87,5 +89,12 @@
         <description/>
         <role-name>archivista</role-name>
     </security-role>
-   
+    <security-role>
+        <description/>
+        <role-name>Medico</role-name>
+    </security-role>
+    <error-page>
+        <error-code>403</error-code>
+        <location>/faces/403.xhtml</location>
+    </error-page>
 </web-app>
