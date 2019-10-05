@@ -34,7 +34,7 @@ and open the template in the editor.
                     <h:link rendered="#{request.isUserInRole('admin')}" outcome="/admin/medico/medicoListar" value="Gestion médicos" class="list-group-item list-group-item-action bg-light"/>
                     <h:link rendered="#{request.isUserInRole('admin')}" outcome="/admin/usuario/usuarioListar" value="Gestion usuarios" class="list-group-item list-group-item-action bg-light"/>
                     <h:link rendered="#{request.isUserInRole('admin')}" outcome="/admin/paciente/pacienteListar" value="Gestion pacientes" class="list-group-item list-group-item-action bg-light"/>
-                    <h:link outcome="/admin/consulta/consultaListar" value="Gestion consultas" class="list-group-item list-group-item-action bg-light"/>
+                    <h:link rendered="#{request.isUserInRole('Medico')}" outcome="/admin/consulta/consultaListar" value="Gestion consultas" class="list-group-item list-group-item-action bg-light"/>
                     <h:link rendered="#{request.isUserInRole('admin')}" outcome="/admin/reportes/listaReportes" value="Reporte de pacientes" class="list-group-item list-group-item-action bg-light"/>                  
                     <h:link rendered="#{request.isUserInRole('admin')}" outcome="/admin/antecedentes/listarAntecedentes" value=" Gestion Antecedentes" class="list-group-item list-group-item-action bg-light"/>
                     <h:link rendered="#{request.isUserInRole('admin')}" outcome="/admin/sala/salaListar" value="Gestion salas" class="list-group-item list-group-item-action bg-light"/>
@@ -58,6 +58,9 @@ and open the template in the editor.
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <h:link outcome="/plantillas/usuario/sesion" class="nav-link" >Home <span class="sr-only">(current)</span></h:link> 
                         <h:link outcome="/plantillas/usuario/perfil">Perfil <span class="sr-only">(current)</span></h:link>
+                        <h:form style="margin-left: 1%;">
+                            <h:commandButton styleClass="btn" style="margin-left: 0.5%;" value="Cerrar sesión" action="#{loginBean.logout()}" />
+                        </h:form>
                         
                         
                     </div>
