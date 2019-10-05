@@ -99,4 +99,8 @@
         <error-code>403</error-code>
         <location>/faces/403.xhtml</location>
     </error-page>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/faces/404.xhtml</location>
+    </error-page>
 </web-app>
