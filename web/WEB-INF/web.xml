@@ -103,4 +103,8 @@
         <error-code>404</error-code>
         <location>/faces/404.xhtml</location>
     </error-page>
+    <context-param>
+        <param-name>primefaces.THEME</param-name>
+        <param-value>south-street</param-value>
+    </context-param>
 </web-app>

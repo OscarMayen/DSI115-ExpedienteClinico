@@ -3,7 +3,8 @@
 <ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="./../plantilla.xhtml"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:h="http://xmlns.jcp.org/jsf/html">
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="titulo">
         Perfil de #{sessionBean.user.username}
@@ -14,90 +15,162 @@
             input{
                 width: 50%;
             }
+
+            #tabs{
+                margin-top: 3%;
+            }
         </style>
-        
+
     </ui:define>
 
     <ui:define name="contenido">
+        
+        <p:tabView id="tabs">
+            <p:tab title="Mi cuenta">
+
+                <div class="ui-g ui-fluid">
+
+                    <div class="ui-g-12 ui-md-6">
+                        <div class="ui-inputgroup">
+                            <h:outputLabel value="Nombres:"/>
+                            <p:inputText style="margin-left:12%"  value="#{perfilBean.user.idPersona.nombrePersona}" readonly="true" />      
+                        </div>
+                    </div>
+
+                    <div class="ui-g-12 ui-md-6">
+                        <div class="ui-inputgroup">
+                            <h:outputLabel value="Apellidos:"/>
+                            <p:inputText style="margin-left:3%"  value="#{perfilBean.user.idPersona.apellidoPersona}" readonly="true"/>
+                        </div>
+                    </div>
 
 
-        <!--<p:graphicImage name="demo/images/godfather/godfather1.jpg" />-->
-        <h:form>   
-            <h3 style="text-align: center; margin-top: 2%; margin-bottom: 2%">Datos personales</h3>
-            <div class="ui-g ui-fluid">
+                    <div class="ui-g-12 ui-md-6">
+                        <div class="ui-inputgroup">
+                            <h:outputLabel value="Fecha de nacimiento:"/>
+                            <p:calendar disabled="true" style="margin-left:3%"  value="#{perfilBean.user.idPersona.fechaNacimiento}" readonly="true"
+                                        id="fechaNacimientoPa" placeholder="dd/MM/yyyy" 
+                                        locale="es"  pattern="dd/MM/yyyy" 
+                                        />
+                        </div>
+                    </div>
 
-                <div class="ui-g-12 ui-md-6">
-                    <div class="ui-inputgroup">
-                        <h:outputLabel value="Nombres:"/>
-                        <p:inputText style="margin-left:3%"  value="#{perfilBean.user.idPersona.nombrePersona}" readonly="true" />      
+                    <div class="ui-g-12 ui-md-6">
+                        <div class="ui-inputgroup">
+                            <h:outputLabel value="Teléfono:"/>
+                            <p:inputText style="margin-left:4%"  value="#{perfilBean.user.idPersona.telefono}" readonly="true"/>
+                        </div>
+                    </div>
+
+
+                    <div class="ui-g-12 ui-md-6">
+                        <div class="ui-inputgroup">
+                            <h:outputLabel style="width: 25%" value="Teléfono 2:"/>
+                            <p:inputText style="margin-left:9.5%"  value="#{perfilBean.user.idPersona.telefonoOpcional}" readonly="true"/>
+                        </div>
+                    </div>
+
+
+                    <div class="ui-g-12 ui-md-6">
+                        <div class="ui-inputgroup">
+                            <h:outputLabel value="Sexo:"/>
+                            <p:inputText style="margin-left:9.5%"  value="#{perfilBean.user.idPersona.genero}" readonly="true"/>
+                        </div>
                     </div>
                 </div>
 
-                <div class="ui-g-12 ui-md-6">
-                    <div class="ui-inputgroup">
-                        <h:outputLabel value="Apellidos:"/>
-                        <p:inputText style="margin-left:3%"  value="#{perfilBean.user.idPersona.apellidoPersona}" readonly="true"/>
+                <div class="ui-g ui-fluid">
+                    <div class="ui-g-12 ui-md-6">
+                        <div class="ui-inputgroup">
+                            <h:outputLabel value="Usuario:"/>
+                            <p:inputText style="margin-left:14%"  value="#{perfilBean.user.username}" readonly="true" />      
+                        </div>
+                    </div>
+
+                    <div class="ui-g-12 ui-md-6">
+                        <div class="ui-inputgroup">
+                            <h:outputLabel value="Rol:"/>
+                            <p:inputText  style="margin-left:12.5%" value="#{perfilBean.user.idRol.nombreRol}" readonly="true"/>
+                        </div>
                     </div>
                 </div>
+            </p:tab>
+            <p:tab title="Editar mi cuenta">
+                <h:form>
+                    <div class="ui-g ui-fluid">
+
+                        <div class="ui-g-12 ui-md-6">
+                            <div class="ui-inputgroup">
+                                <h:outputLabel value="Nombres:"/>
+                                <p:inputText required="true" style="margin-left:5%"  value="#{perfilBean.user.idPersona.nombrePersona}"/>      
+                            </div>
+                        </div>
+
+                        <div class="ui-g-12 ui-md-6">
+                            <div class="ui-inputgroup">
+                                <h:outputLabel value="Apellidos:"/>
+                                <p:inputText required="true" style="margin-left:5%"  value="#{perfilBean.user.idPersona.apellidoPersona}"/>
+                            </div>
+                        </div>
+
+                        <div class="ui-g-12 ui-md-6">
+                            <div class="ui-inputgroup">
+                                <h:outputLabel value="Teléfono:"/>
+                                <p:inputMask style="margin-left: 6%" id="telefono1Pa" value="#{perfilBean.user.idPersona.telefono}"  
+                                             mask="9999-9999" size="30" required="true"/>
+                            </div>
+                        </div>
 
 
-                <div class="ui-g-12 ui-md-6">
-                    <div class="ui-inputgroup">
-                        <h:outputLabel value="Fecha de nacimiento:"/>
-                        <p:inputText style="margin-left:3%"  value="#{perfilBean.user.idPersona.fechaNacimiento}" readonly="true"/>
+                        <div class="ui-g-12 ui-md-6">
+                            <div class="ui-inputgroup">
+                                <h:outputLabel style="width: 21%" value="Teléfono 2:"/>
+                                <p:inputMask required="true"  id="telefono2Pa" value="#{perfilBean.user.idPersona.telefonoOpcional}" 
+                                              mask="9999-9999" size="30"/>
+                            </div>
+                        </div>
+
+
+                        <div class="ui-g-12 ui-md-6">
+                            <div class="ui-inputgroup">
+                                <h:outputLabel value="Sexo:"/>
+                                <p:selectOneRadio style="margin-left:9.5%"  id="generoPa" value="#{perfilBean.user.idPersona.genero}" 
+                                                  label="Genero" required="true">
+                                    <f:selectItem itemLabel="Masculino" itemValue="Masculino"/>
+                                    <f:selectItem itemLabel="Femenino" itemValue="Femenino" />
+                                </p:selectOneRadio>
+                            </div>
+                        </div>
                     </div>
-                </div>
 
-                <div class="ui-g-12 ui-md-6">
-                    <div class="ui-inputgroup">
-                        <h:outputLabel value="Teléfono:"/>
-                        <p:inputText style="margin-left:3%"  value="#{perfilBean.user.idPersona.telefono}" readonly="true"/>
+                    <p:commandButton value="Actualizar" update="@(id=tabs)" actionListener="#{perfilBean.actualizarCuenta()}" />
+                </h:form>
+            </p:tab>
+            <p:tab title="Cambio de contraseña">
+                <h:form>
+                    <div class="ui-g-12 ui-md-12">
+                        <div class="ui-inputgroup">
+                            <h:outputLabel value="Ingrese la antigua contreseña:"/>
+                            <p:inputText required="true" style="margin-left: 1%" type="password"  id="pass" value="#{perfilBean.oldPass}"/>
+                        </div>
                     </div>
-                </div>
-
-
-                <div class="ui-g-12 ui-md-6">
-                    <div class="ui-inputgroup">
-                        <h:outputLabel style="width: 25%" value="Teléfono 2:"/>
-                        <p:inputText style="margin-left:6%"  value="#{perfilBean.user.idPersona.telefonoOpcional}" readonly="true"/>
+                    <div class="ui-g-12 ui-md-12">
+                        <div class="ui-inputgroup">
+                            <h:outputLabel value="Ingrese la nueva contraseña:"/>
+                            <p:inputText required="true" style="margin-left: 2%" type="password"  id="newPass" value="#{perfilBean.pass1}" />
+                        </div>
                     </div>
-                </div>
 
-
-                <div class="ui-g-12 ui-md-6">
-                    <div class="ui-inputgroup">
-                        <h:outputLabel value="Sexo:"/>
-                        <p:inputText style="margin-left:3%"  value="#{perfilBean.user.idPersona.genero}" readonly="true"/>
+                    <div class="ui-g-12 ui-md-12">
+                        <div class="ui-inputgroup">
+                            <h:outputLabel value="Repita la nueva contraseña:"/>
+                            <p:inputText required="true" style="margin-left: 2.8%" type="password"  id="newPass2" value="#{perfilBean.pass2}" />
+                        </div>
                     </div>
-                </div>
-            </div>
-
-        </h:form>
-
-
-        <!--<p:graphicImage name="demo/images/godfather/godfather1.jpg" />-->
-        <h:form>
-
-            <div class="ui-g ui-fluid">
-                <div class="ui-g-12 ui-md-6">
-                    <div class="ui-inputgroup">
-                        <h:outputLabel value="Usuario:"/>
-                        <p:inputText style="margin-left:3%"  value="#{perfilBean.user.username}" readonly="true" />      
-                    </div>
-                </div>
-
-                <div class="ui-g-12 ui-md-6">
-                    <div class="ui-inputgroup">
-                        <h:outputLabel value="Rol:"/>
-                        <p:inputText  style="margin-left:3%" value="#{perfilBean.user.idRol.nombreRol}" readonly="true"/>
-                    </div>
-                </div>
-            </div>
-        </h:form>
-
-
-
-
+                    <p:commandButton value="Guardar" update="@(id=tabs)" actionListener="#{perfilBean.cambiarContrasenia()}"/>
+                </h:form>
+            </p:tab>
+        </p:tabView>
     </ui:define>
 
     <ui:define name="scripts">

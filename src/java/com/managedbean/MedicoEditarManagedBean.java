@@ -7,7 +7,6 @@ package com.managedbean;
 
 import com.ejb.EspecialidadEJB;
 import com.ejb.MedicoEJB;
-import com.ejb.PersonaEJB;
 import com.ejb.RolEJB;
 import com.ejb.UsuarioMedicoEJB;
 import com.entities.EspecialidadEntity;
@@ -16,35 +15,25 @@ import com.entities.PersonaEntity;
 import com.entities.RedsocialEntity;
 import com.entities.RolEntity;
 import com.entities.UsuarioEntity;
-import edu.utilidades.JsfUtils;
 import java.io.Serializable;
-import java.util.List;
-import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
-import java.sql.Date;
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.SessionScoped;
-import javax.faces.bean.RequestScoped;
+import javax.ejb.EJB;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import javax.faces.view.ViewScoped;
 import javax.servlet.http.HttpServletRequest;
-import org.jboss.weld.bean.builtin.FacadeInjectionPoint;
 
 /**
  *
  * @author josue
  */
-@ManagedBean(name = "usuarioMedicoBean")
+@Named(value = "medicoEditarManagedBean")
 @ViewScoped
-public class UsuarioMedicoBean implements Serializable {
+public class MedicoEditarManagedBean implements Serializable {
 
+    
     @EJB
     private UsuarioMedicoEJB usuarioMedicoEJB;
 
@@ -75,10 +64,40 @@ public class UsuarioMedicoBean implements Serializable {
     private MedicoEntity medico = new MedicoEntity();
     PersonaEntity persona = new PersonaEntity();
 
-    public UsuarioMedicoBean() {
-
+    public MedicoEditarManagedBean() {
     }
-
+    
+    @PostConstruct
+    public void init(){
+        this.especialidadesMedico = this.especialidadEJB.especialidadListar();
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        FacesContext fc = FacesContext.getCurrentInstance();
+        
+        HttpServletRequest request = (HttpServletRequest) fc
+                .getExternalContext().getRequest();
+        System.out.println(fc.getExternalContext().getRequestParameterMap());
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        
+        String id = fc.getExternalContext().getRequestParameterMap().get("id");
+        if (id == null) {
+            System.out.println("Error!!!!");
+        } else {
+             this.medico = new MedicoEntity();
+       
+        medico = medicoEJB.obtenerMedico(Integer.valueOf(id));
+            for (RedsocialEntity red : medico.getRedsocialEntityList()) {
+                if(red.getNombre().equals("Facebook")){
+                    this.facebook = red;
+                }else if(red.getNombre().equals("Twitter")){
+                    this.twitter = red;
+                }else{
+                    this.gmail = red;
+                }
+                
+            }
+        
+    }
+    }
     public List<EspecialidadEntity> getEspecialidadesGuardar() {
         return especialidadesGuardar;
     }
@@ -191,90 +210,5 @@ public class UsuarioMedicoBean implements Serializable {
         return this.especialidadEJB.especialidadListar();
     }
 
-    @PostConstruct
-    public void init() {
-        this.especialidadesMedico = this.especialidadEJB.especialidadListar();
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        FacesContext fc = FacesContext.getCurrentInstance();
-        
-        HttpServletRequest request = (HttpServletRequest) fc
-                .getExternalContext().getRequest();
-        System.out.println(fc.getExternalContext().getRequestParameterMap());
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        
-        String id = fc.getExternalContext().getRequestParameterMap().get("id");
-        if (id == null) {
-            System.out.println("Error!!!!");
-        } else {
-             this.medico = new MedicoEntity();
-       
-        medico = medicoEJB.obtenerMedico(Integer.valueOf(id));
-            for (RedsocialEntity red : medico.getRedsocialEntityList()) {
-                if(red.getNombre().equals("Facebook")){
-                    this.facebook = red;
-                }else if(red.getNombre().equals("Twitter")){
-                    this.twitter = red;
-                }else{
-                    this.gmail = red;
-                }
-                
-            }
-        }
-         
-    
-    }
-    
-    public String editMedico(int id)
-    {
-        this.medico = new MedicoEntity();
-        this.persona = new PersonaEntity();
-        medico = medicoEJB.obtenerMedico(id);
-
-        return "/admin/medico/medicoEditar.xhtml"; 
-    }
-    
-    public String updateMedico(){
-      
-        try {
-            this.redes.add(this.facebook);
-            this.redes.add(gmail);
-            this.redes.add(twitter);
-            this.medico.setRedsocialEntityList(redes);
-            medicoEJB.modificarMedico(medico);
-           
-        } catch (Exception ex) {
-            Logger.getLogger(UsuarioMedicoBean.class.getName())
-                    .log(Level.SEVERE, null, ex);
-            FacesContext.getCurrentInstance().addMessage("usuario", new FacesMessage("ERROR AL INSERTAR " + ex.getMessage() ));
-        }
-   
-        return "/admin/medico/medicoListar?faces-redirect=true";
-      
-    }
-    
-     public String insertarUsuarioMedico() {
-        for (EspecialidadEntity especialidadesSeleccionada : this.especilidadesSeleccionadas) {
-            this.especialidadesGuardar.add(especialidadesSeleccionada);
-        }
-        System.out.println(this.persona.getNombrePersona());
-        facebook.setNombre("Facebook");
-        twitter.setNombre("Twitter");
-        gmail.setNombre("Gmail");
-        this.redes.add(facebook);
-        this.redes.add(twitter);
-        this.redes.add(gmail);
-        this.medico.setIdPersona(persona);
-        this.medico.setRedsocialEntityList(redes);
-        this.medico.setEspecialidadEntityList(especialidadesGuardar);
-        if (medicoEJB.insertMedico(medico) == 0) {
-            FacesContext.getCurrentInstance().addMessage("usuario", new FacesMessage("ERROR AL INSERTAR"));
-            return null;
-        } 
-        else {
-            usuario.setIdPersona(persona);
-            int b = usuarioMedicoEJB.insertUsuarioMedico(usuario);
-        }
-        return "/admin/medico/medicoListar?faces-redirect=true";
-    }
     
 }

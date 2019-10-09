@@ -49,7 +49,7 @@
                                                     <h:inputSecret id="password" required="true" value="#{loginBean.password}" requiredMessage="El campo contrasenia es obligatorio."/>
                                                 </div>
                                                 <div class="col s12 input-field">
-                                                    <p:commandButton value="Iniciar Sesion" action="#{loginBean.login()}" styleClass="btn btn-large"/>
+                                                    <p:commandButton value="Iniciar Sesion" action="#{loginBean.login()}" styleClass="btn btn-large" update="@form"/>
 
                                                 </div>
                                             </div>
