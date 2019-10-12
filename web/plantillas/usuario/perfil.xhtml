@@ -19,12 +19,19 @@
             #tabs{
                 margin-top: 3%;
             }
+            
+            .red-message{
+                background-color: tomato;
+                margin: 1%;
+                color: white;
+                border-radius: 2px;
+            }
         </style>
 
     </ui:define>
 
     <ui:define name="contenido">
-        
+        <h:outputLabel class="red-message" value="#{perfilBean.errorPass}" rendered="#{perfilBean.errorPass != ''}"></h:outputLabel>
         <p:tabView id="tabs">
             <p:tab title="Mi cuenta">
 
@@ -151,20 +158,20 @@
                     <div class="ui-g-12 ui-md-12">
                         <div class="ui-inputgroup">
                             <h:outputLabel value="Ingrese la antigua contreseña:"/>
-                            <p:inputText required="true" style="margin-left: 1%" type="password"  id="pass" value="#{perfilBean.oldPass}"/>
+                            <p:inputText style="margin-left: 1%" type="password"  id="pass" value="#{perfilBean.oldPass}"/>
                         </div>
                     </div>
                     <div class="ui-g-12 ui-md-12">
                         <div class="ui-inputgroup">
                             <h:outputLabel value="Ingrese la nueva contraseña:"/>
-                            <p:inputText required="true" style="margin-left: 2%" type="password"  id="newPass" value="#{perfilBean.pass1}" />
+                            <p:inputText  style="margin-left: 2%" type="password"  id="newPass" value="#{perfilBean.pass1}" />
                         </div>
                     </div>
 
                     <div class="ui-g-12 ui-md-12">
                         <div class="ui-inputgroup">
                             <h:outputLabel value="Repita la nueva contraseña:"/>
-                            <p:inputText required="true" style="margin-left: 2.8%" type="password"  id="newPass2" value="#{perfilBean.pass2}" />
+                            <p:inputText  style="margin-left: 2.8%" type="password"  id="newPass2" value="#{perfilBean.pass2}" />
                         </div>
                     </div>
                     <p:commandButton value="Guardar" update="@(id=tabs)" actionListener="#{perfilBean.cambiarContrasenia()}"/>
