@@ -10,7 +10,6 @@ import java.io.Serializable;
 import java.sql.SQLException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
-import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.servlet.ServletContext;
 
@@ -22,11 +21,21 @@ import javax.servlet.ServletContext;
 @ViewScoped
 public class reporteManagedBean implements Serializable{
 
-    /**
-     * Creates a new instance of reporteManagedBean
-     */
+    private Integer idPaciente;
+    
+    
     public reporteManagedBean() {
     }
+
+    public Integer getIdPaciente() {
+        return idPaciente;
+    }
+
+    public void setIdPaciente(Integer idPaciente) {
+        this.idPaciente = idPaciente;
+    }
+    
+    
     
      public void verReporte() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         

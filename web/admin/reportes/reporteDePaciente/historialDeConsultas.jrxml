@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="HistorialPaciente" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d1291b87-4a3c-4e29-a96e-72fd50cd6ae3">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<parameter name="id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select per.NOMBREPERSONA,per.APELLIDOPERSONA, per.FECHANACIMIENTO,per.GENERO,per.TELEFONO from paciente p inner join persona per on p.idPersona=per.IDPERSONA where p.IDPACIENTE = $P{id}]]>
+	</queryString>
+	<field name="NOMBREPERSONA" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="APELLIDOPERSONA" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FECHANACIMIENTO" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="GENERO" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TELEFONO" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="70" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="0" y="13" width="322" height="33" uuid="48abee6d-e2e6-4d77-ada3-1f3fb000f58e"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Historial del paciente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="80" y="46" width="242" height="22" uuid="f028ec52-0739-45fb-8654-e612afb540ae"/>
+				<text><![CDATA[Detalle de consultas]]></text>
+			</staticText>
+			<image>
+				<reportElement x="322" y="13" width="231" height="55" uuid="e9ad4ea4-0371-4e8a-9bec-0f4d588c9b66"/>
+				<imageExpression><![CDATA["/home/josue/Escritorio/Ciclo VIII/DSI215/segundo sprint/Sprint2_Proyecto/pruebaLogin/DSI115-ExpedienteClinico/web/admin/reportes/reporteDePaciente/leaf_banner_green.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="36" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="35" width="555" height="1" uuid="b390239c-2874-41ce-bbf8-cad17743e973"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" x="0" y="19" width="111" height="15" uuid="e83f34f3-1c17-4f69-baa9-0f77f47491d0"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Nombres]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="111" y="19" width="111" height="15" uuid="0623e5f6-f1e3-4d38-bbfd-09ff7019130f"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Apellidos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="222" y="19" width="132" height="15" uuid="3fc8319a-1331-4d18-8102-af49b3c15423"/>
+				<text><![CDATA[Fecha de nacimiento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="354" y="19" width="111" height="15" uuid="cd2c0bf4-3571-43a3-aa28-5ce520c6e45a"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Sexo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="465" y="19" width="90" height="15" uuid="979da120-6a3c-4a6a-be30-d9aeb4b2c8bd"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Teléfono]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="185" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1" uuid="a4c353d6-6d44-4278-bc0b-0d00fd1d3578"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement style="Detail" x="0" y="0" width="111" height="15" uuid="7355a2a9-1f99-4ea8-8db1-079969de8fe4"/>
+				<textFieldExpression><![CDATA[$F{NOMBREPERSONA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="111" y="0" width="111" height="15" uuid="ef3f6254-4755-4c71-820e-41fcc241711c"/>
+				<textFieldExpression><![CDATA[$F{APELLIDOPERSONA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="222" y="0" width="132" height="15" uuid="a85c4a1c-a525-4d13-b5e7-b46f66db69ce"/>
+				<textFieldExpression><![CDATA[$F{FECHANACIMIENTO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="354" y="0" width="90" height="15" uuid="6daf03c7-ffef-466e-b45b-38530ec347fe"/>
+				<textFieldExpression><![CDATA[$F{GENERO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="465" y="0" width="90" height="15" uuid="9717836e-fc9a-4add-9b2a-106bddf575f3"/>
+				<textFieldExpression><![CDATA[$F{TELEFONO}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="0" y="54" width="555" height="119" uuid="59d0571e-c555-421a-9ae0-e25ac5b5fb4b"/>
+				<subreportParameter name="id">
+					<subreportParameterExpression><![CDATA[$P{id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["/home/josue/Escritorio/Ciclo VIII/DSI215/segundo sprint/Sprint2_Proyecto/pruebaLogin/DSI115-ExpedienteClinico/web/admin/reportes/reporteDePaciente/historialDePaciente_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement style="Column header" x="433" y="0" width="80" height="20" uuid="c2b13bb3-ca4f-45e4-9a57-e2c21bae1f96"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="Column header" x="513" y="0" width="40" height="20" uuid="910d7e5a-bec3-4875-8d93-7a2567e70fb2"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement style="Column header" x="0" y="0" width="197" height="20" uuid="25233094-3aeb-4afc-b178-2cab199f7111"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

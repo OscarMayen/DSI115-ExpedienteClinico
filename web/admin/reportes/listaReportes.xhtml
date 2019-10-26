@@ -15,9 +15,33 @@
 
     <ui:define name="contenido">
         <h2>Indice de reportes</h2>
-            <h:form>
-                <h:commandLink id="reporte" target="_blank" value="Ver reporte" actionListener="#{reporteManagedBean.verReporte()}" />
-            </h:form>
+        <h:form>
+            <table border="2px solid black" cellpadding="10" cellspacing="10">
+                <tr>
+                    <th>Nombre reporte</th>
+                    <th>Descripción</th>
+                    <th>Ver reporte</th>
+                </tr>
+                
+                <tr>
+                    <td>Reporte de consultas</td>
+                    <td>Reporte que muestra la cantidad de consultas que ha atendido un paciente.</td>
+                    <td>
+                        <h:commandLink id="reporte" target="_blank" value="Ver reporte" actionListener="#{reporteManagedBean.verReporte()}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Reporte de paciente</td>
+                    <td>
+                        Reporte que muestra el detalle de consultas de un paciente, para lograrlo debe
+                        elegir un paciente en la siguiente ventana.
+                    </td>
+                    <td>
+                        <h:link id="listaPacienteReporte" value="Lista de pacientes" outcome="/admin/reportes/reporteDePaciente/listaPacienteReporte.xhtml" />
+                    </td>
+                </tr>
+            </table>                    
+        </h:form>
     </ui:define>
 
     <ui:define name="scripts">

@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../../../plantillas/plantilla.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="titulo">
+        Listado de pacientes
+    </ui:define>
+
+    <ui:define name="css">
+    </ui:define>
+
+    <ui:define name="contenido">
+        <h:form>
+            <h1><h:outputText value="Listado de Pacientes"/></h1>
+            <br/>
+
+            <p:dataTable id="tablaPaciente" var="paciente" value="#{reportePacienteListaBean.paciente}" rows="10"
+                         paginator="true"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15" currentPageReportTemplate="Página:({currentPage} de {totalPages})">
+                <p:column filterBy="#{paciente.idPersona.dui}" headerText="Dui">
+                    <h:outputText value="#{paciente.idPersona.dui}" />
+                </p:column>
+
+                <p:column filterBy="#{paciente.idPersona.nombrePersona}" headerText="Nombres">
+                    <h:outputText value="#{paciente.idPersona.nombrePersona}" />
+                </p:column>
+
+                <p:column filterBy="#{paciente.idPersona.apellidoPersona}" headerText="Apellidos">
+                    <h:outputText value="#{paciente.idPersona.apellidoPersona}" />
+                </p:column>
+
+                <p:column headerText="Telefono de emergencia">
+                    <h:outputText value="#{paciente.telefonoEmergencia}" />
+                </p:column>
+
+                <p:column headerText="Nombre responsable">
+                    <h:outputText value="#{paciente.nombreResponsable}" />
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Operaciones" />
+                    </f:facet>
+
+                    <h:commandLink target="_blank" class="btn btn-primary" actionListener="#{reportePacienteListaBean.verReportePaciente()}" value="Ver reporte">
+                        <f:param name="idPaciente" value="#{paciente.idPaciente}"></f:param>
+                    </h:commandLink>
+                </p:column>
+
+            </p:dataTable>
+
+
+        </h:form>
+    </ui:define>
+
+    <ui:define name="scripts">
+    </ui:define>
+
+</ui:composition>

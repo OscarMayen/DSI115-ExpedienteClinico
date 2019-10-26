@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="historialDePaciente_subreport1" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isIgnorePagination="true" uuid="5aef2352-0a0d-4862-895a-4a12f62b024a">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="historialDePaciente_subreport1" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isIgnorePagination="true" uuid="5aef2352-0a0d-4862-895a-4a12f62b024a">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -34,18 +34,13 @@
 	<title>
 		<band height="70" splitType="Stretch">
 			<image>
-				<reportElement x="-20" y="0" width="595" height="64" uuid="03a3abad-b7f1-43ac-b7c6-c05025dcf27d"/>
-				<imageExpression><![CDATA["wood.jpg"]]></imageExpression>
+				<reportElement x="0" y="0" width="549" height="70" uuid="50993abb-f749-4b39-ac22-8d49cf0e678c"/>
+				<imageExpression><![CDATA["/home/josue/Escritorio/Ciclo VIII/DSI215/segundo sprint/Sprint2_Proyecto/pruebaLogin/DSI115-ExpedienteClinico/web/admin/reportes/reporteDePaciente/wood.jpg"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement style="Title" x="0" y="5" width="263" height="33" uuid="ae9d5e26-80e1-49f2-91e7-86e69a975031"/>
+				<reportElement style="Title" mode="Transparent" x="0" y="0" width="263" height="33" backcolor="#000000" uuid="ae9d5e26-80e1-49f2-91e7-86e69a975031"/>
 				<textElement verticalAlignment="Middle"/>
-				<text><![CDATA[Wood Title]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="SubTitle" x="63" y="39" width="200" height="22" forecolor="#FFFFFF" uuid="5d312fb3-d98f-413f-a97f-b460a42d2cf4"/>
-				<textElement textAlignment="Right"/>
-				<text><![CDATA[Wood SubTitle]]></text>
+				<text><![CDATA[Detalle de consultas]]></text>
 			</staticText>
 		</band>
 	</title>
@@ -94,7 +89,7 @@
 	<detail>
 		<band height="108" splitType="Stretch">
 			<textField>
-				<reportElement x="130" y="11" width="192" height="56" uuid="dfeba1ad-fcaf-47ad-824c-0eb5250a172c"/>
+				<reportElement x="138" y="11" width="184" height="66" uuid="dfeba1ad-fcaf-47ad-824c-0eb5250a172c"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Arial" isItalic="true"/>
 				</textElement>
@@ -131,29 +126,7 @@
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="33" splitType="Stretch">
-			<textField>
-				<reportElement style="Column header" x="433" y="0" width="80" height="20" uuid="454d9b88-fd44-4b1d-b8e5-47666add8c27"/>
-				<textElement textAlignment="Right">
-					<font size="10" isBold="false"/>
-				</textElement>
-				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
-			</textField>
-			<textField evaluationTime="Report">
-				<reportElement style="Column header" x="513" y="0" width="40" height="20" uuid="447227f6-58f0-4501-a2c7-77c3c0330c7e"/>
-				<textElement>
-					<font size="10" isBold="false"/>
-				</textElement>
-				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
-			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement style="Column header" x="0" y="0" width="197" height="20" uuid="90e9ef16-8977-4f5d-821c-18547cae3da0"/>
-				<textElement>
-					<font size="10" isBold="false"/>
-				</textElement>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
-			</textField>
-		</band>
+		<band height="33" splitType="Stretch"/>
 	</pageFooter>
 	<summary>
 		<band splitType="Stretch"/>
