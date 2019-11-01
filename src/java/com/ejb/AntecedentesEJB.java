@@ -14,7 +14,7 @@ import javax.persistence.Query;
 
 /**
  *
- * @author DTO
+ * @author Oscar
  */
 @Stateless
 public class AntecedentesEJB {
@@ -57,5 +57,10 @@ public class AntecedentesEJB {
         } catch (Exception e) {
             return 0;
         }
+    }
+    
+    public AntecedentesEntity obtenerAntecedentesPorPaciente(int idPaciente){
+        Query query = em.createQuery("select a from AntecedentesEntity a JOIN a.idPaciente p  where (p.idPaciente = '"+idPaciente+"')");
+        return (AntecedentesEntity) query.getSingleResult();
     }
 }

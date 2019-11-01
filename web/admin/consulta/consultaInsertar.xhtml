@@ -30,26 +30,20 @@
                         <p:panelGrid columns="7"  >
 
                             <p:outputLabel for="duiM" value="Dui"/>
-                            <p:inputMask id="duiM" value="#{consultaInsertarBean.txtDuiMedico}" readonly="true"
-                                         mask="99999999-9" size="15">
-                                <p:ajax/>
-                            </p:inputMask>
+                            <p:inputMask id="duiM" value="#{consultaInsertarBean.medico.idPersona.dui}" readonly="true"
+                                         mask="99999999-9" size="15"/>
+
 
                             <p:outputLabel for="nombreM" value="Nombre" />
-                            <p:inputText id="nombreM" value="#{consultaInsertarBean.txtNombreMedico}" readonly="true"
-                                         size="30">
-                                <p:ajax/>
-                            </p:inputText>
+                            <p:inputText id="nombreM" value="#{consultaInsertarBean.medico.idPersona.nombrePersona}" readonly="true"
+                                         size="30"/>
+
 
 
                             <p:outputLabel for="apellidoM" value="Apellido"/>
-                            <p:inputText id="apellidoM" value="#{consultaInsertarBean.txtApellidoMedico}"  readonly="true"
-                                         size="30">
-                                <p:ajax/>
-                            </p:inputText>
+                            <p:inputText id="apellidoM" value="#{consultaInsertarBean.medico.idPersona.apellidoPersona}"  readonly="true"
+                                         size="30"/>
 
-                            <p:commandButton id="btnBusqMed" icon="ui-icon-search" type="button"
-                                             onclick="PF('dlgMedico').show();"/>
 
                         </p:panelGrid>
                     </p:fieldset><br></br>
@@ -69,7 +63,6 @@
                                 <p:ajax/>
                             </p:inputText>
 
-
                             <p:outputLabel for="apellidoPa" value="Apellido"/>
                             <p:inputText id="apellidoPa" value="#{consultaInsertarBean.txtApellidoPaciente}" size="30" readonly="true">
                                 <p:ajax/>
@@ -78,7 +71,14 @@
                             <p:commandButton id="btnBusqPac" icon="ui-icon-search" type="button"
                                              onclick="PF('dlgPaciente').show();"/>
 
+                            <p:outputLabel for="edadPa" value="Edad"/>
+                            <p:inputText id="edadPa" value="#{consultaInsertarBean.txtEdadPaciente}" size="15" readonly="true">
+                                <p:ajax/>
+                            </p:inputText>
                         </p:panelGrid>
+                         <br></br>
+                         <p:commandButton value=" Ver Antecedentes" icon="ui-icon-document"  actionListener="#{consultaInsertarBean.verAntecententes()}"
+                                             update="@form" /> 
                     </p:fieldset><br></br>
 
                     <h6><strong>DATOS DE LA CONSULTA</strong></h6>
@@ -99,7 +99,7 @@
                                          size="30"/>
 
                             <p:outputLabel for="diagnostico" value="Diagnostico"/>
-                            <p:inputTextarea id="diagnostico" value="#{consultaInsertarBean.diagnostico.descripcion}"
+                            <p:inputTextarea id="diagnostico" value="#{consultaInsertarBean.txtDiagnostico}"
                                              rows="6" cols="70" />
 
                             <p:outputLabel value="Sala" />
@@ -116,7 +116,8 @@
                     </p:fieldset><br></br>
 
                     &nbsp;&nbsp; <p:commandButton value="GUARDAR" action="#{consultaInsertarBean.insertarConsulta()}" update="@form">
-                        <p:confirm header="Confirmation" message="¿Desea revisar los datos antes de registrar la consulta?. Ya que despues no podra modificarlos" 
+                        <p:confirm header="Confirmation" 
+                                   message="¿Desea guardar guardar los datos de la consulta? NOTA:DESPUES DE GUARDAR NO SE PODRA MODIFICAR. SI DESEA REVISAR PRESIONE NO Y REVISE" 
                                    icon="pi pi-exclamation-triangle" />
                     </p:commandButton>
 
@@ -124,65 +125,23 @@
                         <p:commandButton value="SI" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
                         <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
                     </p:confirmDialog> 
-                    
+
                     &nbsp;&nbsp;<p:linkButton outcome="/admin/consulta/consultaListar" value="CANCELAR" />
 
-                    <p:dialog id="dlgMedico" header="Buscar Medico" widgetVar="dlgMedico" modal="true" 
-                              width="60%" closeOnEscape="true" style="font-size: 15px; font-weight: bold;" >
-                        <p:menubar>
-                            <p:menuitem id="itemBuscarMedico" value="Buscar" icon="ui-icon-search"  update="tblMedicoBusq" actionListener="#{consultaInsertarBean.itemBuscarListenerMedico()}"/>
-                            
-                        </p:menubar>
-                        <p:panel id="pnlBusMedico" style="margin-top:5px">
-                            <p:panelGrid columns="4" styleClass="ui-panelgrid-blank ui-fluid" 
-                                         columnClasses="ui-grid-col-4,ui-grid-col-8">
-                                <p:outputLabel for="duiMeBusq" value="Dui" style="font-weight: bold;"/>
-                                <p:inputMask id="duiMeBusq" value="#{consultaInsertarBean.duiMedBuscq}" mask="9999999-9"/> 
-                                <p:outputLabel for="nombreMeBusc" value="Nombre de Medico" style="font-weight: bold;"/>
-                                <p:inputText id="nombreMeBusc" value="#{consultaInsertarBean.nomMedBuscq}" /> 
-                            </p:panelGrid>
-                        </p:panel>
-                        <p:panel id="pnlTableMedico" style="margin-top:5px" >
-                            <p:dataTable id="tblMedicoBusq" var="med" value="#{consultaInsertarBean.lstMed}"
-                                         rowIndexVar="index" widgetVar="tblMedicoBusq"
-                                         rows="10" paginator="true"
-                                         selectionMode="single" selection="#{consultaInsertarBean.medSelect}" rowKey="#{med.idMedico}"
-                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                         rowsPerPageTemplate="5,10,15" currentPageReportTemplate="Página:({currentPage} de {totalPages})">
-                                <p:ajax event="rowSelect" listener="#{consultaInsertarBean.onSelecttblMedico}" update="@form"/>
 
-                                <p:column headerText="CORRELATIVO">
-                                    <h:outputText value="#{med.idMedico}" />
-                                </p:column> 
-
-                                <p:column headerText="DUI">
-                                    <h:outputText value="#{med.idPersona.dui}" />
-                                </p:column>
-
-                                <p:column headerText="Nombre">
-                                    <h:outputText value="#{med.idPersona.nombrePersona}" />
-                                </p:column>
-
-                                <p:column headerText="Apellido">
-                                    <h:outputText value="#{med.idPersona.apellidoPersona}" />
-                                </p:column>
-
-                            </p:dataTable>
-                        </p:panel>
-                    </p:dialog>
 
 
                     <p:dialog id="dlgPaciente" header="Buscar Paciente" widgetVar="dlgPaciente" modal="true" 
                               width="60%" closeOnEscape="true" style="font-size: 15px; font-weight: bold;" >
                         <p:menubar>
                             <p:menuitem id="itemBuscarPaciente" value="Buscar" icon="ui-icon-search"  update="tblPacienteBusq" actionListener="#{consultaInsertarBean.itemBuscarListenerPaciente()}"/>
-                            
+
                         </p:menubar>
                         <p:panel id="pnlBusPaciente" style="margin-top:5px">
                             <p:panelGrid columns="4" styleClass="ui-panelgrid-blank ui-fluid" 
                                          columnClasses="ui-grid-col-4,ui-grid-col-8">
                                 <p:outputLabel for="duiPaBusq" value="Dui" style="font-weight: bold;"/>
-                                <p:inputMask id="duiPaBusq" value="#{consultaInsertarBean.duiPacBuscq}" mask="9999999-9"/> 
+                                <p:inputMask id="duiPaBusq" value="#{consultaInsertarBean.duiPacBuscq}" mask="99999999-9"/> 
                                 <p:outputLabel for="nombrePaBusc" value="Nombre del Paciente" style="font-weight: bold;"/>
                                 <p:inputText id="nombrePaBusc" value="#{consultaInsertarBean.nomPacBuscq}"/> 
                             </p:panelGrid>
@@ -214,6 +173,34 @@
 
                             </p:dataTable>
                         </p:panel>
+                    </p:dialog>
+
+
+                    <p:dialog id="dlgVerAntecedentes" header="ANTECEDENTES DEL PACIENTE" widgetVar="dlgVerAntecedentes" 
+                              modal="true"  width="60%" closeOnEscape="true" style="font-size: 15px; font-weight: bold;" >
+
+                        <p:panelGrid columns="2" style="margin: 0 auto">
+
+                            <p:outputLabel value="ALERGICO"/>
+                            <p:inputTextarea value="#{consultaInsertarBean.antecedentes.alergico}" readonly="true" 
+                                             rows="3" cols="40" />
+
+
+
+                            <p:outputLabel value="ANTEDECENTES PERSONALES"/>
+                            <p:inputTextarea value="#{consultaInsertarBean.antecedentes.antePersonales}" readonly="true" 
+                                             rows="3" cols="40" />
+
+
+                            <p:outputLabel value="ANTECEDENTES FAMILIARES"/>
+                            <p:inputTextarea value="#{consultaInsertarBean.antecedentes.anteFamiliar}" readonly="true" 
+                                             rows="3" cols="40" />
+
+                        </p:panelGrid>
+                        <br></br>
+                         <p:commandButton value="CERRAR"
+                                             oncomplete="PF('dlgVerAntecedentes').hide();"
+                                             />
                     </p:dialog>
 
 

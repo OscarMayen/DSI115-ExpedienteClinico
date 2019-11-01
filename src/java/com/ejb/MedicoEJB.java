@@ -18,7 +18,7 @@ import javax.persistence.Query;
 
 /**
  *
- * @author josue
+ * @author Oscar
  */
 @Stateless
 public class MedicoEJB {
@@ -73,6 +73,11 @@ public class MedicoEJB {
         return query.getResultList();
     } 
 
+     public MedicoEntity obtenerMedicoPorUsuario(String usuario){
+        Query query = em.createQuery("select m from MedicoEntity m JOIN m.idPersona p JOIN UsuarioEntity u where (u.idPersona = m.idPersona) AND (u.username = '"+usuario+"')");
+        return (MedicoEntity) query.getSingleResult();
+    }
+     
     public EntityManager getEm() {
         return em;
     }
