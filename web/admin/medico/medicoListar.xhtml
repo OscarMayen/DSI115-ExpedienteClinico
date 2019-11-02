@@ -77,47 +77,37 @@
                         <h:link outcome="/admin/medico/medicoInsertar" value="Nuevo Medico" class="btn btn-success"/>
                         <br>
                         </br>
-                        <h:dataTable value="#{medicoListar.listaMedico}" var="item"
-                                     class="table table-bordered display" id="tabla">
-                            <h:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Nombres"/>
-                                </f:facet>
+                        <p:dataTable value="#{medicoListar.listaMedico}" var="item"
+                                id="tabla" rows="10" paginator="true"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+                         {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15"
+                         currentPageReportTemplate="Página:({currentPage} de {totalPages})">
+                            <p:column headerText="Nombres">
                                 <h:outputText value="#{item.idPersona.nombrePersona}"/>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Apellidos"/>
-                                </f:facet>
+                            </p:column>
+                            <p:column headerText="Apellidos">
                                 <h:outputText value="#{item.idPersona.apellidoPersona}"/>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Dui"/>
-                                </f:facet>
+                            </p:column>
+                            <p:column headerText="Dui">
                                 <h:outputText value="#{item.idPersona.dui}"/>
-                            </h:column>
+                            </p:column>
                             
-                            <h:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Teléfono"/>
-                                </f:facet>
+                            <p:column headerText="Teléfono">
                                 <h:outputText value="#{item.idPersona.telefono}"/>
-                            </h:column>
+                            </p:column>
 
-                            <h:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Operaciones" />
-                                </f:facet>
+                            <p:column headerText="Operaciones">
                                 <h:commandButton class="btn btn-info" action="#{medicoListar.editMedico(item.idMedico)}" value="Editar">
                                     <f:param name="id"  value="#{item.idMedico}"/>
+                                    <f:param name="isEditar" value="1" />
                                 </h:commandButton>
                                 <h:commandButton class="btn btn-primary" action="#{medicoListar.detalleMedico(item.idMedico)}" value="Ver">
                                     <f:param name="id"  value="#{item.idMedico}"/>
                                 </h:commandButton>
-                            </h:column>
+                            </p:column>
 
-                        </h:dataTable>
+                        </p:dataTable>
                     </h:form>
                 </f:view>
 

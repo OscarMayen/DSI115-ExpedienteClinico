@@ -57,6 +57,11 @@ public class MedicoEJB {
     public MedicoEntity obtenerMedico(int codigo) {
         return em.find(MedicoEntity.class, codigo);
     }
+    
+    public List<EspecialidadEntity> obtenerEspecialidades(String esp){
+        Query query = em.createQuery("SELECT esp from EspecialidadEntity esp where esp.idEspecialidad not in("+esp+")");
+        return query.getResultList();
+    }
 
     public List<MedicoEntity> listarMedico() {
         Query query = em.createNamedQuery("MedicoEntity.findAll");

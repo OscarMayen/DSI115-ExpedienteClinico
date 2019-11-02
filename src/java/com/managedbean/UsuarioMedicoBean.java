@@ -193,7 +193,7 @@ public class UsuarioMedicoBean implements Serializable {
 
     @PostConstruct
     public void init() {
-        this.especialidadesMedico = this.especialidadEJB.especialidadListar();
+        
         System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!");
         FacesContext fc = FacesContext.getCurrentInstance();
         
@@ -209,6 +209,23 @@ public class UsuarioMedicoBean implements Serializable {
              this.medico = new MedicoEntity();
        
         medico = medicoEJB.obtenerMedico(Integer.valueOf(id));
+        
+        String isEditar = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("isEditar");
+        if(isEditar != null && !isEditar.equals("")){
+            String valores = "";
+        
+            for (int i =0; i < medico.getEspecialidadEntityList().size(); i++) {
+                valores = valores + medico.getEspecialidadEntityList().get(i).getIdEspecialidad();
+                if(medico.getEspecialidadEntityList().size()-1 !=i){
+                    valores = valores + ",";
+                }
+                
+            }
+            this.especialidadesMedico = medicoEJB.obtenerEspecialidades(valores);
+        }else{
+            this.especialidadesMedico = this.especialidadEJB.especialidadListar();
+        }
+        
             for (RedsocialEntity red : medico.getRedsocialEntityList()) {
                 if(red.getNombre().equals("Facebook")){
                     this.facebook = red;
@@ -234,12 +251,18 @@ public class UsuarioMedicoBean implements Serializable {
     }
     
     public String updateMedico(){
-      
+        for(EspecialidadEntity especialidadesSeleccionada : this.especilidadesSeleccionadas) {
+            this.especialidadesGuardar.add(especialidadesSeleccionada);
+        }
+        for(EspecialidadEntity esp : medico.getEspecialidadEntityList()) {
+            this.especialidadesGuardar.add(esp);
+        }
         try {
             this.redes.add(this.facebook);
             this.redes.add(gmail);
             this.redes.add(twitter);
             this.medico.setRedsocialEntityList(redes);
+            this.medico.setEspecialidadEntityList(especialidadesGuardar);
             medicoEJB.modificarMedico(medico);
            
         } catch (Exception ex) {

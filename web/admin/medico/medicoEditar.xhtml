@@ -114,7 +114,7 @@
                             #{esp.nombreEspecialidad}
                         </p:dataList>
 
-                        <p:selectManyCheckbox id="grid" value="#{usuarioMedicoBean.medico.especialidadEntityList}" layout="responsive" columns="3">
+                        <p:selectManyCheckbox id="grid" value="#{usuarioMedicoBean.especilidadesSeleccionadas}" layout="responsive" columns="3">
                             <f:selectItems value="#{usuarioMedicoBean.especialidadesMedico}" var="esp" itemLabel="#{esp.nombreEspecialidad}" itemValue="#{esp}" />
                         </p:selectManyCheckbox>
 
