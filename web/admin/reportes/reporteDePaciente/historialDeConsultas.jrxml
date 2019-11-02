@@ -43,8 +43,8 @@
 				<text><![CDATA[Detalle de consultas]]></text>
 			</staticText>
 			<image>
-				<reportElement x="322" y="13" width="231" height="55" uuid="e9ad4ea4-0371-4e8a-9bec-0f4d588c9b66"/>
-				<imageExpression><![CDATA["/home/josue/Escritorio/Ciclo VIII/DSI215/segundo sprint/Sprint2_Proyecto/pruebaLogin/DSI115-ExpedienteClinico/web/admin/reportes/reporteDePaciente/leaf_banner_green.png"]]></imageExpression>
+				<reportElement x="322" y="0" width="231" height="68" uuid="03673fc3-0532-45ac-b1e6-5054185bfe24"/>
+				<imageExpression><![CDATA["./resources/img/bbraun.jpg"]]></imageExpression>
 			</image>
 		</band>
 	</title>
