@@ -33,12 +33,8 @@
 	</background>
 	<title>
 		<band height="70" splitType="Stretch">
-			<image>
-				<reportElement x="0" y="0" width="549" height="70" uuid="50993abb-f749-4b39-ac22-8d49cf0e678c"/>
-				<imageExpression><![CDATA["./admin/reportes/reporteDePaciente/wood.jpg"]]></imageExpression>
-			</image>
 			<staticText>
-				<reportElement style="Title" mode="Transparent" x="0" y="0" width="263" height="33" backcolor="#000000" uuid="ae9d5e26-80e1-49f2-91e7-86e69a975031"/>
+				<reportElement style="Title" mode="Transparent" x="0" y="0" width="263" height="33" forecolor="#000000" backcolor="#000000" uuid="ae9d5e26-80e1-49f2-91e7-86e69a975031"/>
 				<textElement verticalAlignment="Middle"/>
 				<text><![CDATA[Detalle de consultas]]></text>
 			</staticText>

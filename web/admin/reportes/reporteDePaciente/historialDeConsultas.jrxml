@@ -10,6 +10,9 @@
 	<parameter name="id" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["./admin/reportes/reporteDePaciente/"]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[select per.NOMBREPERSONA,per.APELLIDOPERSONA, per.FECHANACIMIENTO,per.GENERO,per.TELEFONO from paciente p inner join persona per on p.idPersona=per.IDPERSONA where p.IDPACIENTE = $P{id}]]>
 	</queryString>
@@ -42,10 +45,6 @@
 				<reportElement style="SubTitle" x="80" y="46" width="242" height="22" uuid="f028ec52-0739-45fb-8654-e612afb540ae"/>
 				<text><![CDATA[Detalle de consultas]]></text>
 			</staticText>
-			<image>
-				<reportElement x="322" y="0" width="233" height="68" uuid="b27cf378-7b4b-429e-93ba-4e5a5c00c95e"/>
-				<imageExpression><![CDATA["/home/josue/Escritorio/Ciclo VIII/DSI215/segundo sprint/Sprint2_Proyecto/pruebaLogin/DSI115-ExpedienteClinico/web/resources/img/bbraun.jpg"]]></imageExpression>
-			</image>
 		</band>
 	</title>
 	<pageHeader>
@@ -114,12 +113,12 @@
 				<textFieldExpression><![CDATA[$F{TELEFONO}]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement x="0" y="54" width="555" height="119" uuid="59d0571e-c555-421a-9ae0-e25ac5b5fb4b"/>
+				<reportElement x="0" y="52" width="555" height="133" uuid="c577210d-6fe9-447d-97ba-a112fb6e0b05"/>
 				<subreportParameter name="id">
 					<subreportParameterExpression><![CDATA[$P{id}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA["/home/josue/Escritorio/Ciclo VIII/DSI215/segundo sprint/Sprint2_Proyecto/pruebaLogin/DSI115-ExpedienteClinico/web/admin/reportes/reporteDePaciente/historialDePaciente_subreport1.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "historialDePaciente_subreport1.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>
