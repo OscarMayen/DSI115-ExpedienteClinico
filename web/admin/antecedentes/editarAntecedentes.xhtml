@@ -10,37 +10,41 @@
         <ui:composition template="./../../plantillas/plantilla.xhtml">
 
             <ui:define name="contenido">
-                   <h:form id="form">
-             
+                 <h:form id="form">
+                 <p:growl id="growl" showDetail="true" sticky="true" />                        
             
               <h6><strong>DATOS DEL PACIENTE</strong></h6>
                     <p:fieldset  style="font-size: 15px; font-weight: bold;" >
                         <p:panelGrid columns="7"  >
-
                             <p:outputLabel for="duiPa" value="Dui:"/>
-                            <p:outputLabel value="#{antecedentesEditarBean.antecedente.idPaciente.idPersona.dui}"  id="duiPa" /> 
+                            <p:outputLabel   id="duiPa" value="#{antecedentesEditarBean.antecedente.idPaciente.idPersona.dui}"/> 
                             <p:outputLabel for="nombrePa" value="Nombre:" />
-                            <p:outputLabel value="#{antecedentesEditarBean.antecedente.idPaciente.idPersona.nombrePersona}" id="nombrePa"  />
+                            <p:outputLabel  id="nombrePa" value="#{antecedentesEditarBean.antecedente.idPaciente.idPersona.nombrePersona}"  />
                             <p:outputLabel for="apellidoPa" value="Apellido:"/>
-                            <p:outputLabel value="#{antecedentesEditarBean.antecedente.idPaciente.idPersona.apellidoPersona}" id="apellidoPa"  />                               
+                            <p:outputLabel  id="apellidoPa" value="#{antecedentesEditarBean.antecedente.idPaciente.idPersona.apellidoPersona}" />                               
                         </p:panelGrid>
                     </p:fieldset><br></br>
                     
                     <h6><strong>Antecedentes</strong></h6>
                      <p:fieldset  style="font-size: 15px; font-weight: bold;width: 100%" >
                         <p:panelGrid style="width:100%" columns="2"  >
-                            <p:outputLabel style="width:100%" value="Alergias"/>
-                            <p:inputTextarea value="#{antecedentesEditarBean.antecedente.alergico}" style="width:100%"/>
-                            <p:outputLabel style="width:100%" value="Antecedentes Familiares"/>
-                            <p:inputTextarea value="#{antecedentesEditarBean.antecedente.anteFamiliar}" style="width:100%"/>
-                            <p:outputLabel style="width:100%" value="Antecedentes Personales"/>
-                            <p:inputTextarea value="#{antecedentesEditarBean.antecedente.antePersonales}" style="width:100%" />                         
-                            <p:commandButton style="width: 50%;margin-left: 30%" immediate="true" actionListener="#{antecedentesEditarBean.actualizarAntecedente()}" value="Modificar" />
-                            <p:commandButton style="width: 50%; margin-left: 30%"  value="Cancelar"  action="/admin/antecedentes/listarAntecedentes?face-redirect=true"/>
+                            <p:outputLabel for="alergias" style="width:100%" value="Alergias"/>
+                            <p:inputTextarea  id="alergias" style="width:100%" value="#{antecedentesEditarBean.antecedente.alergico}"/>
+                            <p:outputLabel for="ancedentesF" style="width:100%" value="Antecedentes Familiares"/>
+                            <p:inputTextarea  id="ancedentesF" style="width:100%" value="#{antecedentesEditarBean.antecedente.anteFamiliar}"/>
+                            <p:outputLabel for="ancedentesP" style="width:100%" value="Antecedentes Personales"/>
+                            <p:inputTextarea  id="ancedentesP" style="width:100%" value="#{antecedentesEditarBean.antecedente.antePersonales}"/>                         
+                            <p:commandButton style="width: 50%;margin-left: 30%"  value="Guadar" action="#{antecedentesEditarBean.actualizarAntecedente()}"/>
+                            <p:linkButton style="width: 50%; margin-left: 30%" outcome="/admin/antecedentes/listarAntecedentes?face-redirect=true" value="Cancelar" />
                         </p:panelGrid>
 
                     </p:fieldset><br></br>
-                   </h:form>
+            
+            
+                
+                
+                
+            </h:form>
             </ui:define>
 
         </ui:composition>

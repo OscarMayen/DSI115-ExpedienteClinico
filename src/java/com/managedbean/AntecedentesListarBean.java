@@ -47,6 +47,10 @@ public class AntecedentesListarBean implements Serializable{
      public String obtenerAntecedente()  {         
          return "/admin/antecedentes/editarAntecedentes.xhtml";
      }  
+     
+     public String verAntecedente(){
+         return "/admin/antecedentes/detalleAntecedente.xhtml";
+     }
 
     public List<AntecedentesEntity> getAntecedentes() {
         return antecedentes;
