@@ -27,17 +27,29 @@
                     </p:column>
                     <p:column>
                         <f:facet name="header">
-                            <h:outputText value="Antecedentes personales"/>
-                        </f:facet>
-                        <h:outputText value="#{item.antePersonales}"/>
-                    </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Paciente"/>
+                            <h:outputText value="Nombre"/>
                         </f:facet>
                         <h:outputText value="#{item.idPaciente.idPersona.nombrePersona}"/>
                     </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Dui"/>
+                        </f:facet>
+                        <h:outputText value="#{item.idPaciente.idPersona.dui}"/>
+                    </p:column>
                     
+                    
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Operaciones"/>
+                        </f:facet>
+                        <h:commandButton class="btn btn-primary" action="#{antecedentesListarBean.verAntecedente()}" value="Ver">
+                            <f:param name="idant" value="#{item.idAntecedente}" />
+                        </h:commandButton>
+                        <h:commandButton class="btn btn-primary ml-1" action="#{antecedentesListarBean.obtenerAntecedente()}" value="Editar">
+                            <f:param name="id"  value="#{item.idAntecedente}"/>
+                        </h:commandButton>
+                    </p:column>
                 </p:dataTable>
                 
             </h:form>
