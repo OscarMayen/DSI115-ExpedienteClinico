@@ -36,7 +36,7 @@ and open the template in the editor.
                     <h:link rendered="#{request.isUserInRole('admin')}" outcome="/admin/paciente/pacienteListar" value="Gestion pacientes" class="list-group-item list-group-item-action bg-light"/>
                     <h:link rendered="#{request.isUserInRole('Medico')}" outcome="/admin/consulta/consultaListar" value="Gestion consultas" class="list-group-item list-group-item-action bg-light"/>
                     <h:link rendered="#{request.isUserInRole('admin')}" outcome="/admin/reportes/listaReportes" value="Reporte de pacientes" class="list-group-item list-group-item-action bg-light"/>                  
-                    <h:link rendered="#{request.isUserInRole('admin')}" outcome="/admin/antecedentes/listarAntecedentes" value=" Gestion Antecedentes" class="list-group-item list-group-item-action bg-light"/>
+                    <h:link rendered="#{request.isUserInRole('Medico')}" outcome="/admin/antecedentes/listarAntecedentes" value=" Gestion Antecedentes" class="list-group-item list-group-item-action bg-light"/>
                     <h:link rendered="#{request.isUserInRole('admin')}" outcome="/admin/sala/salaListar" value="Gestion salas" class="list-group-item list-group-item-action bg-light"/>
                     <h:link rendered="#{request.isUserInRole('admin')}" outcome="/admin/especialidad/especialidadListar" value="Gestion Especialidades" class="list-group-item list-group-item-action bg-light"/>
                     <h:link rendered="#{request.isUserInRole('Medico')}" outcome="/admin/citas/citasListar" value="Calendario de citas" class="list-group-item list-group-item-action bg-light" /> 

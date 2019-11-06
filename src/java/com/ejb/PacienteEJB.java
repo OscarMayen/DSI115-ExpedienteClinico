@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -50,6 +51,16 @@ public class PacienteEJB implements Serializable {
 
     public PacienteEntity obtenerPaciente(int codigo) {
         return em.find(PacienteEntity.class, codigo);
+
+    }
+    
+    public PacienteEntity busquedaPacientePorDui(String dui){
+        try{
+            Query query = em.createQuery("SELECT p FROM PacienteEntity p INNER JOIN p.idPersona per WHERE per.dui = '"+dui+"' ");
+            return (PacienteEntity) query.getSingleResult();
+        }catch(NoResultException e){
+            return null;
+        }
 
     }
 
