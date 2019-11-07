@@ -14,6 +14,7 @@ import com.entities.PacienteEntity;
 import com.entities.UsuarioEntity;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -64,6 +65,7 @@ public class CitasListarBean implements Serializable{
        eventModel = new DefaultScheduleModel();
        usuarioEntity = (UsuarioEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
        medicoEntity = this.medicoEJB.obtenerMedicoPorUsuario(usuarioEntity.getUsername());
+       listarCitasMedico();
     }
 
     public PacienteEntity getPacienteEntity() {
@@ -133,7 +135,18 @@ public class CitasListarBean implements Serializable{
         
     }
     
-     
+    public void listarCitasMedico(){
+        List<CitasEntity> citas = this.citasEJB.listarCitas(this.medicoEntity.getIdMedico());
+        
+        for (CitasEntity cita : citas) {
+            DefaultScheduleEvent scheduleEvent = new DefaultScheduleEvent("titulo provisional",
+            cita.getFechaCita(), cita.getFechaCita());
+            
+            scheduleEvent.setDynamicProperty("paciente", cita.getIdPaciente().getIdPersona().getDui());
+            eventModel.addEvent(scheduleEvent);
+        }
+    } 
+    
     private void addMessage(FacesMessage message) {
         FacesContext.getCurrentInstance().addMessage(null, message);
     }

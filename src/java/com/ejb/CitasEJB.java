@@ -6,9 +6,11 @@
 package com.ejb;
 
 import com.entities.CitasEntity;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -32,5 +34,10 @@ public class CitasEJB {
         } catch (Exception e) {
             return 0;
         }
+    }
+    
+    public List<CitasEntity> listarCitas(Integer idMedico){
+        Query query = em.createQuery("SELECT c FROM CitasEntity c INNER JOIN c.idMedico m WHERE m.idMedico ="+idMedico);
+        return query.getResultList();
     }
 }
