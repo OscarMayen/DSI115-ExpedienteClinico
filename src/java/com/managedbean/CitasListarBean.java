@@ -127,6 +127,7 @@ public class CitasListarBean implements Serializable{
         }else{
             nuevaCita.setIdPaciente(pacienteEntity);
             this.citasEJB.insertCita(nuevaCita);
+            this.event.setDynamicProperty("idEvent", nuevaCita.getIdCita());
             this.addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
                     "¡Información!", "Cita creada con éxito"
             ));
@@ -139,13 +140,25 @@ public class CitasListarBean implements Serializable{
         List<CitasEntity> citas = this.citasEJB.listarCitas(this.medicoEntity.getIdMedico());
         
         for (CitasEntity cita : citas) {
-            DefaultScheduleEvent scheduleEvent = new DefaultScheduleEvent("titulo provisional",
-            cita.getFechaCita(), cita.getFechaCita());
-            
+            DefaultScheduleEvent scheduleEvent = new DefaultScheduleEvent();
+            scheduleEvent.setDynamicProperty("idEvent",cita.getIdCita());
+            System.out.println(scheduleEvent.getDynamicProperties().get("idEvent"));
+            scheduleEvent.setTitle("Titulo provisional");
+            scheduleEvent.setStartDate(cita.getFechaCita());
+            scheduleEvent.setEndDate(cita.getFechaCita());
             scheduleEvent.setDynamicProperty("paciente", cita.getIdPaciente().getIdPersona().getDui());
             eventModel.addEvent(scheduleEvent);
         }
-    } 
+    }
+    
+    public void delEvent(){
+        eventModel.deleteEvent(event);
+        CitasEntity citaEntity = this.citasEJB.obtenerCita((Integer) event.getDynamicProperties().get("idEvent"));
+        this.citasEJB.eliminarCita(citaEntity);
+        this.addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
+                "Información:", "Evento eliminado con éxito"
+        ));
+    }
     
     private void addMessage(FacesMessage message) {
         FacesContext.getCurrentInstance().addMessage(null, message);

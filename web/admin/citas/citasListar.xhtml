@@ -26,7 +26,7 @@
 
             
                 <h3 style="margin-top: 0">Calendario de citas</h3>
-                <p:schedule id="schedule" draggable="false" value="#{citasListarBean.eventModel}" widgetVar="myschedule" timeZone="America/El_Salvador" locale="es">
+                <p:schedule id="schedule" draggable="false" resizable="false" value="#{citasListarBean.eventModel}" widgetVar="myschedule" timeZone="America/El_Salvador" locale="es">
 
                     <p:ajax event="dateSelect" listener="#{citasListarBean.onDateSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
                     <p:ajax event="eventSelect" listener="#{citasListarBean.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
@@ -46,6 +46,7 @@
 
                     <p:commandButton type="reset" value="Limpiar" />
                     <p:commandButton id="addButton" value="Guardar" update="messages" action="#{citasListarBean.addEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
+                    <p:commandButton id="deleteButton" value="Borrar" update="messages" action="#{citasListarBean.delEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
                 </h:panelGrid>
             </p:dialog>    
         </h:form>

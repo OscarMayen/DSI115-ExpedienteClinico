@@ -36,8 +36,25 @@ public class CitasEJB {
         }
     }
     
+    public CitasEntity obtenerCita(Integer id){
+        Query query = em.createQuery("SELECT c FROM CitasEntity c WHERE c.idCita ="+id);
+        return (CitasEntity) query.getSingleResult();
+    }
+    
     public List<CitasEntity> listarCitas(Integer idMedico){
         Query query = em.createQuery("SELECT c FROM CitasEntity c INNER JOIN c.idMedico m WHERE m.idMedico ="+idMedico);
         return query.getResultList();
+    }
+    
+    public void eliminarCita(CitasEntity citaEntity){
+        try
+        {
+            em.remove(em.merge(citaEntity));
+            em.flush();
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+        }
     }
 }
