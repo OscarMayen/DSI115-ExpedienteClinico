@@ -26,10 +26,11 @@
 
             
                 <h3 style="margin-top: 0">Calendario de citas</h3>
-                <p:schedule id="schedule" draggable="false" resizable="false" value="#{citasListarBean.eventModel}" widgetVar="myschedule" timeZone="America/El_Salvador" locale="es">
+                <p:schedule id="schedule" draggable="true" resizable="false" value="#{citasListarBean.eventModel}" widgetVar="myschedule" timeZone="America/El_Salvador" locale="es">
 
                     <p:ajax event="dateSelect" listener="#{citasListarBean.onDateSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
                     <p:ajax event="eventSelect" listener="#{citasListarBean.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
+                    <p:ajax event="eventMove" listener="#{citasListarBean.onEventMove}"  update="messages" oncomplete="PF('myschedule').update();"/>
 
                 </p:schedule>
 

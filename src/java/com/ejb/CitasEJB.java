@@ -6,6 +6,7 @@
 package com.ejb;
 
 import com.entities.CitasEntity;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -44,6 +45,17 @@ public class CitasEJB {
     public List<CitasEntity> listarCitas(Integer idMedico){
         Query query = em.createQuery("SELECT c FROM CitasEntity c INNER JOIN c.idMedico m WHERE m.idMedico ="+idMedico);
         return query.getResultList();
+    }
+    
+    public int actualizarFechaEvento(CitasEntity citaEntity) throws Exception {
+        System.out.println(citaEntity.getFechaCita());
+        try{
+            em.merge(citaEntity);
+            em.flush();
+            return 1;
+        } catch(Exception e){
+            throw new Exception("Error al actualizar " + e.getMessage());
+        }
     }
     
     public void eliminarCita(CitasEntity citaEntity){

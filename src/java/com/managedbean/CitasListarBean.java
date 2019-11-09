@@ -21,6 +21,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import org.primefaces.event.ScheduleEntryMoveEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultScheduleEvent;
 import org.primefaces.model.DefaultScheduleModel;
@@ -49,7 +50,7 @@ public class CitasListarBean implements Serializable{
 
     private ScheduleModel eventModel;
     
-    private DefaultScheduleEvent event = new DefaultScheduleEvent();
+    private DefaultScheduleEvent event;
     
     private MedicoEntity medicoEntity;
     private PacienteEntity pacienteEntity;
@@ -65,6 +66,7 @@ public class CitasListarBean implements Serializable{
        eventModel = new DefaultScheduleModel();
        usuarioEntity = (UsuarioEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
        medicoEntity = this.medicoEJB.obtenerMedicoPorUsuario(usuarioEntity.getUsername());
+       event = new DefaultScheduleEvent();
        listarCitasMedico();
     }
 
@@ -88,7 +90,7 @@ public class CitasListarBean implements Serializable{
         return eventModel;
     }
      
-    public ScheduleEvent getEvent() {
+    public DefaultScheduleEvent getEvent() {
         return event;
     }
  
@@ -133,7 +135,7 @@ public class CitasListarBean implements Serializable{
             ));
             eventModel.addEvent(event);
         }
-        
+        this.event = new DefaultScheduleEvent();
     }
     
     public void listarCitasMedico(){
@@ -149,6 +151,25 @@ public class CitasListarBean implements Serializable{
             scheduleEvent.setDynamicProperty("paciente", cita.getIdPaciente().getIdPersona().getDui());
             eventModel.addEvent(scheduleEvent);
         }
+    }
+    
+     public void onEventMove(ScheduleEntryMoveEvent eventDrag) throws Exception {
+        this.event = (DefaultScheduleEvent) eventDrag.getScheduleEvent();
+        CitasEntity citaEntity = this.citasEJB.obtenerCita((Integer) event.getDynamicProperties().get("idEvent"));
+        java.sql.Date sDate = new java.sql.Date(this.event.getStartDate().getTime());
+        citaEntity.setFechaCita(sDate);
+
+        if(this.citasEJB.actualizarFechaEvento(citaEntity) == 1){
+
+            this.addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    "Información","Fecha del evento actualizada"
+            ));
+        }else{
+            this.addMessage(new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "Información", "Algo salió mal"
+            ));
+        }
+        this.event = new DefaultScheduleEvent();
     }
     
     public void delEvent(){
