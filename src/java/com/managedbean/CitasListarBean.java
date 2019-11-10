@@ -13,6 +13,8 @@ import com.entities.MedicoEntity;
 import com.entities.PacienteEntity;
 import com.entities.UsuarioEntity;
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -46,7 +48,7 @@ public class CitasListarBean implements Serializable{
     @EJB
     private MedicoEJB medicoEJB;
     
-    
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
 
     private ScheduleModel eventModel;
     
@@ -98,7 +100,7 @@ public class CitasListarBean implements Serializable{
         this.event = event;
     }
      
-    public void addEvent() {
+    public void addEvent() throws ParseException {
         if(event.getId() == null){
             
             this.event.setDynamicProperty("paciente", this.duiPaciente);
@@ -117,9 +119,11 @@ public class CitasListarBean implements Serializable{
         
     }
      
-    public void crearCita(){
+    public void crearCita() throws ParseException{
         CitasEntity nuevaCita = new CitasEntity();
-        nuevaCita.setFechaCita(event.getStartDate());
+        String fechaNueva = simpleDateFormat.format(this.event.getStartDate());
+        Date nuevaDate = simpleDateFormat.parse(fechaNueva);
+        nuevaCita.setFechaCita(nuevaDate);
         nuevaCita.setIdMedico(medicoEntity);
         pacienteEntity = pacienteEJB.busquedaPacientePorDui(this.duiPaciente);
         if(pacienteEntity == null){
@@ -151,25 +155,6 @@ public class CitasListarBean implements Serializable{
             scheduleEvent.setDynamicProperty("paciente", cita.getIdPaciente().getIdPersona().getDui());
             eventModel.addEvent(scheduleEvent);
         }
-    }
-    
-     public void onEventMove(ScheduleEntryMoveEvent eventDrag) throws Exception {
-        this.event = (DefaultScheduleEvent) eventDrag.getScheduleEvent();
-        CitasEntity citaEntity = this.citasEJB.obtenerCita((Integer) event.getDynamicProperties().get("idEvent"));
-        java.sql.Date sDate = new java.sql.Date(this.event.getStartDate().getTime());
-        citaEntity.setFechaCita(sDate);
-
-        if(this.citasEJB.actualizarFechaEvento(citaEntity) == 1){
-
-            this.addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
-                    "Información","Fecha del evento actualizada"
-            ));
-        }else{
-            this.addMessage(new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                    "Información", "Algo salió mal"
-            ));
-        }
-        this.event = new DefaultScheduleEvent();
     }
     
     public void delEvent(){

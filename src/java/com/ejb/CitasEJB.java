@@ -48,7 +48,7 @@ public class CitasEJB {
     }
     
     public int actualizarFechaEvento(CitasEntity citaEntity) throws Exception {
-        System.out.println(citaEntity.getFechaCita());
+        
         try{
             em.merge(citaEntity);
             em.flush();

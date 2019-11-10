@@ -30,7 +30,7 @@
 
                     <p:ajax event="dateSelect" listener="#{citasListarBean.onDateSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
                     <p:ajax event="eventSelect" listener="#{citasListarBean.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
-                    <p:ajax event="eventMove" listener="#{citasListarBean.onEventMove}"  update="messages" oncomplete="PF('myschedule').update();"/>
+                    <p:ajax event="eventMove" listener="#{citasActualizarBean.onEventMove}"  update="messages" oncomplete="PF('myschedule').update();"/>
 
                 </p:schedule>
 
@@ -40,7 +40,7 @@
                     <p:inputText id="title" value="#{citasListarBean.event.title}" required="true" />
 
                     <p:outputLabel for="from" value="Fecha:" />
-                    <p:calendar id="from" value="#{citasListarBean.event.startDate}" pattern="dd/MM/yyyy HH:mm"/>
+                    <p:calendar id="from" value="#{citasListarBean.event.startDate}" locale="es" timeZone="America/El_Salvador" pattern="dd/MM/yyyy HH:mm"/>
                     
                     <p:outputLabel for="paciente" value="Dui paciente:" />
                     <p:inputMask id="paciente" mask="99999999-9" value="#{citasListarBean.duiPaciente}"  />                                   
@@ -66,7 +66,7 @@
                     'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
                 dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
                 dayNamesShort: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-                dayNamesMin: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Jue', 'Vi', 'Sá'],
                 weekHeader: 'Hf',
                 firstDay: 1,
                 isRTL: false,
