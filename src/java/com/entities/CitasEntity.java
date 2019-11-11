@@ -20,6 +20,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -38,10 +39,16 @@ public class CitasEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     private Integer idCita;
+    @NotNull
+    @Size(min = 1, max = 50)
+    private String titulo;
     @Basic(optional = false)
     @NotNull
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCita;
+    @NotNull
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaCitaFinal;
     @JoinColumn(name = "idMedico", referencedColumnName = "idMedico")
     @ManyToOne
     private MedicoEntity idMedico;
@@ -56,9 +63,11 @@ public class CitasEntity implements Serializable {
         this.idCita = idCita;
     }
 
-    public CitasEntity(Integer idCita, Date fechaCita) {
+    public CitasEntity(Integer idCita, String titulo, Date fechaCita, Date fechaCitaFinal) {
         this.idCita = idCita;
+        this.titulo = titulo;
         this.fechaCita = fechaCita;
+        this.fechaCitaFinal = fechaCitaFinal;
     }
 
     public Integer getIdCita() {
@@ -69,6 +78,14 @@ public class CitasEntity implements Serializable {
         this.idCita = idCita;
     }
 
+    public String getTituto() {
+        return titulo;
+    }
+
+    public void setTituto(String tituto) {
+        this.titulo = tituto;
+    }
+
     public Date getFechaCita() {
         return fechaCita;
     }
@@ -76,6 +93,16 @@ public class CitasEntity implements Serializable {
     public void setFechaCita(Date fechaCita) {
         this.fechaCita = fechaCita;
     }
+
+    public Date getFechaCitaFinal() {
+        return fechaCitaFinal;
+    }
+
+    public void setFechaCitaFinal(Date fechaCitaFinal) {
+        this.fechaCitaFinal = fechaCitaFinal;
+    }
+    
+    
 
     public MedicoEntity getIdMedico() {
         return idMedico;

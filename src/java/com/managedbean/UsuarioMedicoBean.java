@@ -205,6 +205,7 @@ public class UsuarioMedicoBean implements Serializable {
         String id = fc.getExternalContext().getRequestParameterMap().get("id");
         if (id == null) {
             System.out.println("Error!!!!");
+            this.especialidadesMedico = this.especialidadEJB.especialidadListar();
         } else {
              this.medico = new MedicoEntity();
        

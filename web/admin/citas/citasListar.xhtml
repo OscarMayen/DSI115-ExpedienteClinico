@@ -16,6 +16,7 @@
             .value {
                 width: 1000px;
             }
+            
         </style>
     </ui:define>
 
@@ -24,15 +25,17 @@
         <h:form>
             <p:growl id="messages" showDetail="true" />
 
-            
-                <h3 style="margin-top: 0">Calendario de citas</h3>
-                <p:schedule id="schedule" draggable="true" resizable="false" value="#{citasListarBean.eventModel}" widgetVar="myschedule" timeZone="America/El_Salvador" locale="es">
+
+            <h3 style="margin-top: 0">Calendario de citas</h3>
+            <h:panelGrid columnClasses="value">
+                <p:schedule id="schedule" draggable="true" displayEventEnd="true" resizable="false" value="#{citasListarBean.eventModel}" widgetVar="myschedule" timeZone="America/El_Salvador" locale="es">
 
                     <p:ajax event="dateSelect" listener="#{citasListarBean.onDateSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
                     <p:ajax event="eventSelect" listener="#{citasListarBean.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
                     <p:ajax event="eventMove" listener="#{citasActualizarBean.onEventMove}"  update="messages" oncomplete="PF('myschedule').update();"/>
 
                 </p:schedule>
+            </h:panelGrid>
 
             <p:dialog widgetVar="eventDialog" header="Detalles del evento" showEffect="clip" hideEffect="clip">
                 <h:panelGrid id="eventDetails" columns="2">
@@ -40,14 +43,17 @@
                     <p:inputText id="title" value="#{citasListarBean.event.title}" required="true" />
 
                     <p:outputLabel for="from" value="Fecha:" />
-                    <p:calendar id="from" value="#{citasListarBean.event.startDate}" locale="es" timeZone="America/El_Salvador" pattern="dd/MM/yyyy HH:mm"/>
-                    
+                    <p:calendar id="from" value="#{citasListarBean.event.startDate}" locale="es" timeZone="America/El_Salvador" pattern="dd/MM/yyyy HH:mm:ss"/>
+
+                    <p:outputLabel for="to" value="Fecha final:" />
+                    <p:calendar id="to" value="#{citasListarBean.event.endDate}" locale="es" timeZone="America/El_Salvador" pattern="dd/MM/yyyy HH:mm:ss"/>
+
                     <p:outputLabel for="paciente" value="Dui paciente:" />
                     <p:inputMask id="paciente" mask="99999999-9" value="#{citasListarBean.duiPaciente}"  />                                   
 
                     <p:commandButton type="reset" value="Limpiar" />
                     <p:commandButton id="addButton" value="Guardar" update="messages" action="#{citasListarBean.addEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
-                    <p:commandButton id="deleteButton" value="Borrar" update="messages" action="#{citasListarBean.delEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
+                    <p:commandButton rendered="#{!citasListarBean.esGuardar}" id="deleteButton" value="Borrar" update="messages" action="#{citasListarBean.delEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
                 </h:panelGrid>
             </p:dialog>    
         </h:form>

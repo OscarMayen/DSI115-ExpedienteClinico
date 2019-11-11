@@ -8,6 +8,7 @@ package com.managedbean;
 import com.ejb.CitasEJB;
 import com.entities.CitasEntity;
 import java.io.Serializable;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -33,16 +34,14 @@ public class CitasActualizarBean implements Serializable{
     private SimpleDateFormat simpleDateFormat;
     
     public CitasActualizarBean() {
-        this.simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
+        this.simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     }
     
     public void onEventMove(ScheduleEntryMoveEvent eventDrag) throws Exception {
         this.event = (DefaultScheduleEvent) eventDrag.getScheduleEvent();
         CitasEntity citaEntity = this.citasEJB.obtenerCita((Integer) event.getDynamicProperties().get("idEvent"));
-        String fechaNueva = simpleDateFormat.format(this.event.getStartDate());
-        Date nuevaDate = simpleDateFormat.parse(fechaNueva);
-        citaEntity.setFechaCita(nuevaDate);
-
+        citaEntity.setFechaCita(this.formatearFecha(this.event.getStartDate()));
+        citaEntity.setFechaCitaFinal(this.formatearFecha(this.event.getEndDate()));
         if(this.citasEJB.actualizarFechaEvento(citaEntity) == 1){
 
             this.addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -58,6 +57,13 @@ public class CitasActualizarBean implements Serializable{
     
     private void addMessage(FacesMessage message) {
         FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+    
+    private Date formatearFecha(Date fecha) throws ParseException{
+        String fechaFormeteada = simpleDateFormat.format(fecha);
+        Date fechaRetornar = simpleDateFormat.parse(fechaFormeteada);
+        
+        return fechaRetornar;
     }
     
 }

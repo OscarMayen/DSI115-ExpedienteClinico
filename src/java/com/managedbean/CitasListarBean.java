@@ -15,8 +15,11 @@ import com.entities.UsuarioEntity;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -37,7 +40,7 @@ import org.primefaces.model.ScheduleModel;
  */
 @ManagedBean(name = "citasListarBean")
 @ViewScoped
-public class CitasListarBean implements Serializable{
+public class CitasListarBean implements Serializable {
 
     @EJB
     private CitasEJB citasEJB;
@@ -47,29 +50,31 @@ public class CitasListarBean implements Serializable{
 
     @EJB
     private MedicoEJB medicoEJB;
-    
-    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
+
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     private ScheduleModel eventModel;
-    
+
     private DefaultScheduleEvent event;
-    
+
     private MedicoEntity medicoEntity;
     private PacienteEntity pacienteEntity;
     private UsuarioEntity usuarioEntity;
-    
+
     private String duiPaciente;
- 
+
+    private boolean esGuardar;
+
     public CitasListarBean() {
     }
-    
+
     @PostConstruct
     public void init() {
-       eventModel = new DefaultScheduleModel();
-       usuarioEntity = (UsuarioEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
-       medicoEntity = this.medicoEJB.obtenerMedicoPorUsuario(usuarioEntity.getUsername());
-       event = new DefaultScheduleEvent();
-       listarCitasMedico();
+        eventModel = new DefaultScheduleModel();
+        usuarioEntity = (UsuarioEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+        medicoEntity = this.medicoEJB.obtenerMedicoPorUsuario(usuarioEntity.getUsername());
+        event = new DefaultScheduleEvent();
+        listarCitasMedico();
     }
 
     public PacienteEntity getPacienteEntity() {
@@ -87,77 +92,99 @@ public class CitasListarBean implements Serializable{
     public void setDuiPaciente(String duiPaciente) {
         this.duiPaciente = duiPaciente;
     }
-     
+
     public ScheduleModel getEventModel() {
         return eventModel;
     }
-     
+
     public DefaultScheduleEvent getEvent() {
         return event;
     }
- 
+
     public void setEvent(DefaultScheduleEvent event) {
         this.event = event;
     }
-     
+
+    public boolean isEsGuardar() {
+        return esGuardar;
+    }
+
+    public void setEsGuardar(boolean esGuardar) {
+        this.esGuardar = esGuardar;
+    }
+
     public void addEvent() throws ParseException {
-        if(event.getId() == null){
-            
+        if (event.getId() == null) {
+
             this.event.setDynamicProperty("paciente", this.duiPaciente);
             this.crearCita();
         }
         event = new DefaultScheduleEvent();
-        
+
     }
-     
+
     public void onEventSelect(SelectEvent selectEvent) {
         event = (DefaultScheduleEvent) selectEvent.getObject();
+        this.esGuardar = false;
     }
-     
+
     public void onDateSelect(SelectEvent selectEvent) {
         event = new DefaultScheduleEvent("", (Date) selectEvent.getObject(), (Date) selectEvent.getObject());
-        
+        this.esGuardar = true;
     }
-     
-    public void crearCita() throws ParseException{
+
+    public void crearCita() throws ParseException {
+
         CitasEntity nuevaCita = new CitasEntity();
-        String fechaNueva = simpleDateFormat.format(this.event.getStartDate());
-        Date nuevaDate = simpleDateFormat.parse(fechaNueva);
-        nuevaCita.setFechaCita(nuevaDate);
-        nuevaCita.setIdMedico(medicoEntity);
-        pacienteEntity = pacienteEJB.busquedaPacientePorDui(this.duiPaciente);
-        if(pacienteEntity == null){
-            this.addMessage(new FacesMessage( FacesMessage.SEVERITY_WARN ,
-                    "¡Advertencia!","No existe ningún paciente con ese dui"
+        nuevaCita.setTituto(this.event.getTitle());
+
+        nuevaCita.setFechaCita(this.formatearFecha(this.event.getStartDate()));
+        nuevaCita.setFechaCitaFinal(this.formatearFecha(this.event.getEndDate()));
+
+        if (this.validarFechaHoraCita(nuevaCita.getFechaCita(), nuevaCita.getFechaCitaFinal())) {
+            nuevaCita.setIdMedico(medicoEntity);
+            pacienteEntity = pacienteEJB.busquedaPacientePorDui(this.duiPaciente);
+            if (pacienteEntity == null) {
+                this.addMessage(new FacesMessage(FacesMessage.SEVERITY_WARN,
+                        "¡Advertencia!", "No existe ningún paciente con ese dui"
+                ));
+            } else {
+                nuevaCita.setIdPaciente(pacienteEntity);
+                this.citasEJB.insertCita(nuevaCita);
+                this.event.setDynamicProperty("idEvent", nuevaCita.getIdCita());
+                this.addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        "¡Información!", "Cita creada con éxito"
+                ));
+                eventModel.addEvent(event);
+            }
+        } else {
+            this.addMessage(new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "Error, verifique la fecha que ingreso", "Recuerde, deje dos horas de diferencia entre la hora"
+                    + " de inicio y la hora de final"
             ));
-        }else{
-            nuevaCita.setIdPaciente(pacienteEntity);
-            this.citasEJB.insertCita(nuevaCita);
-            this.event.setDynamicProperty("idEvent", nuevaCita.getIdCita());
-            this.addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
-                    "¡Información!", "Cita creada con éxito"
-            ));
-            eventModel.addEvent(event);
         }
         this.event = new DefaultScheduleEvent();
     }
-    
-    public void listarCitasMedico(){
+
+    public void listarCitasMedico() {
         List<CitasEntity> citas = this.citasEJB.listarCitas(this.medicoEntity.getIdMedico());
-        
         for (CitasEntity cita : citas) {
             DefaultScheduleEvent scheduleEvent = new DefaultScheduleEvent();
-            scheduleEvent.setDynamicProperty("idEvent",cita.getIdCita());
-            System.out.println(scheduleEvent.getDynamicProperties().get("idEvent"));
-            scheduleEvent.setTitle("Titulo provisional");
-            scheduleEvent.setStartDate(cita.getFechaCita());
-            scheduleEvent.setEndDate(cita.getFechaCita());
+            scheduleEvent.setDynamicProperty("idEvent", cita.getIdCita());
+            scheduleEvent.setTitle(cita.getTituto());
+            try {
+                scheduleEvent.setStartDate(this.formatearFecha(cita.getFechaCita()));
+                scheduleEvent.setEndDate(this.formatearFecha(cita.getFechaCitaFinal()));
+            } catch (ParseException ex) {
+                Logger.getLogger(CitasListarBean.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
             scheduleEvent.setDynamicProperty("paciente", cita.getIdPaciente().getIdPersona().getDui());
             eventModel.addEvent(scheduleEvent);
         }
     }
-    
-    public void delEvent(){
+
+    public void delEvent() {
         eventModel.deleteEvent(event);
         CitasEntity citaEntity = this.citasEJB.obtenerCita((Integer) event.getDynamicProperties().get("idEvent"));
         this.citasEJB.eliminarCita(citaEntity);
@@ -165,9 +192,42 @@ public class CitasListarBean implements Serializable{
                 "Información:", "Evento eliminado con éxito"
         ));
     }
-    
+
     private void addMessage(FacesMessage message) {
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
-    
+
+    private Date formatearFecha(Date fecha) throws ParseException {
+        String fechaFormeteada = simpleDateFormat.format(fecha);
+        Date fechaRetornar = simpleDateFormat.parse(fechaFormeteada);
+
+        return fechaRetornar;
+    }
+
+    private boolean validarFechaHoraCita(Date startDateTime, Date endDateTime) {
+        long fechaInicio = startDateTime.getTime();
+        long fechaFinal = endDateTime.getTime();
+        long diferencia = fechaFinal - fechaInicio;
+        long diffHours = diferencia / (60 * 60 * 1000);
+        Date fechaActual = new Date();
+
+        if (endDateTime.getDate() == startDateTime.getDate()) {
+            if (endDateTime.getDate() == fechaActual.getDate()
+                    && startDateTime.getDate() == fechaActual.getDate()
+                    || endDateTime.after(fechaActual)
+                    && startDateTime.after(fechaActual)) {
+                if (diffHours >= 2) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }else{
+                return false;
+            }
+
+        } else {
+            return false;
+        }
+    }
+
 }
