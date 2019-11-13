@@ -26,6 +26,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import org.primefaces.PrimeFaces;
 import org.primefaces.event.ScheduleEntryMoveEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultScheduleEvent;
@@ -60,6 +61,7 @@ public class CitasListarBean implements Serializable {
     private MedicoEntity medicoEntity;
     private PacienteEntity pacienteEntity;
     private UsuarioEntity usuarioEntity;
+    private CitasEntity citaEntity;
 
     private String duiPaciente;
 
@@ -123,8 +125,60 @@ public class CitasListarBean implements Serializable {
 
     }
 
+    public void editEvent() throws Exception {
+
+        if (this.event.getTitle() == null || this.event.getTitle().equals("")             ||
+            this.event.getStartDate() == null || this.event.getEndDate() == null ||
+            this.duiPaciente == null || this.duiPaciente.equals("")) {
+            this.addMessage(new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "¡Error!", "Ingrese valores a los campos de la cita"
+            ));
+        } else {
+            citaEntity = this.citasEJB.obtenerCita((Integer) event.getDynamicProperties().get("idEvent"));
+            if (citaEntity == null) {
+                this.addMessage(new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                        "¡Algo salió mal!", "la cita no ha sido ingresada al sistema"
+                ));
+            } else {
+                citaEntity.setFechaCita(this.formatearFecha(this.event.getStartDate()));
+                citaEntity.setFechaCitaFinal(this.formatearFecha(this.event.getEndDate()));
+                if (this.validarFechaHoraCita(citaEntity.getFechaCita(), citaEntity.getFechaCitaFinal())) {
+                    citaEntity.setIdMedico(medicoEntity);
+                    pacienteEntity = pacienteEJB.busquedaPacientePorDui(this.duiPaciente);
+                    if (pacienteEntity == null) {
+                        this.addMessage(new FacesMessage(FacesMessage.SEVERITY_WARN,
+                                "¡Advertencia!", "No existe ningún paciente con ese dui"
+                        ));
+                    } else {
+                        citaEntity.setIdPaciente(pacienteEntity);
+                        citaEntity.setTituto(this.event.getTitle());
+                        this.citasEJB.actualizarDatosEvento(citaEntity);
+                        this.event.setTitle(citaEntity.getTituto());
+                        this.event.setStartDate(citaEntity.getFechaCita());
+                        this.event.setEndDate(citaEntity.getFechaCitaFinal());
+                        this.event.setDynamicProperty("idEvent", citaEntity.getIdCita());
+                        this.event.setDynamicProperty("paciente", this.pacienteEntity.getIdPersona().getDui());
+                        this.addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
+                                "¡Información!", "Cita actualizada con éxito"
+                        ));
+                        this.eventModel.updateEvent(event);
+                        this.event = new DefaultScheduleEvent();
+                        PrimeFaces.current().executeScript("PF('myschedule').update();PF('eventDialog').hide();");
+                    }
+                } else {
+                    this.addMessage(new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                            "Error, verifique la fecha que ingreso", "Hay inconsistencias con las fechas"
+                    ));
+                }
+            }
+
+        }
+        
+    }
+
     public void onEventSelect(SelectEvent selectEvent) {
         event = (DefaultScheduleEvent) selectEvent.getObject();
+        this.duiPaciente = (String) event.getDynamicProperties().get("paciente");
         this.esGuardar = false;
     }
 
@@ -152,6 +206,7 @@ public class CitasListarBean implements Serializable {
                 nuevaCita.setIdPaciente(pacienteEntity);
                 this.citasEJB.insertCita(nuevaCita);
                 this.event.setDynamicProperty("idEvent", nuevaCita.getIdCita());
+                this.event.setDynamicProperty("paciente", this.pacienteEntity.getIdPersona().getDui());
                 this.addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
                         "¡Información!", "Cita creada con éxito"
                 ));
@@ -159,8 +214,7 @@ public class CitasListarBean implements Serializable {
             }
         } else {
             this.addMessage(new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                    "Error, verifique la fecha que ingreso", "Recuerde, deje dos horas de diferencia entre la hora"
-                    + " de inicio y la hora de final"
+                    "Error, verifique la fecha que ingreso", "Hay inconsistencias con las fechas"
             ));
         }
         this.event = new DefaultScheduleEvent();
@@ -221,11 +275,17 @@ public class CitasListarBean implements Serializable {
                 } else {
                     return false;
                 }
-            }else{
+            } else {
+                this.addMessage(new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                        "Error, la fecha esta caducada", "solo puede ingresar fechas en la fecha actual o superior"
+                ));
                 return false;
             }
 
         } else {
+            this.addMessage(new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "Error en las fechas", "Las fechas no son iguales"
+            ));
             return false;
         }
     }

@@ -183,8 +183,8 @@ public class UsuarioMedicoBean implements Serializable {
         this.gmail = gmail;
     }
 
-    public List<RolEntity> getListaRoles() {
-        return rolEJB.listarRoles();
+    public RolEntity getRolMedico() {
+        return rolEJB.obtenerRol(2);
     }
 
     public List<EspecialidadEntity> getListarEspecialidades() {

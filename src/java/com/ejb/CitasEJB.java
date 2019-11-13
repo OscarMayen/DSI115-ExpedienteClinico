@@ -58,6 +58,15 @@ public class CitasEJB {
         }
     }
     
+    public int actualizarDatosEvento(CitasEntity citaEntity) throws Exception{
+        try{
+            em.merge(citaEntity);
+            return 1;
+        }catch(Exception e){
+            throw new Exception("Error al actualizar" + e.getMessage());
+        }
+    }
+    
     public void eliminarCita(CitasEntity citaEntity){
         try
         {

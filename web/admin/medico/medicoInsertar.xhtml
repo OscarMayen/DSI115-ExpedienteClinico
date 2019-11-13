@@ -155,9 +155,9 @@
                             <h:outputLabel value="Seleccione un rol:" for="codigoRol" />
                             <h:selectOneMenu id="codigoRol" class="form-control"
                                              value="#{usuarioMedicoBean.usuario.idRol}" title="Rol">
-                                <f:selectItems value="#{usuarioMedicoBean.listaRoles}" var="rol"
-                                               itemValue="#{rol}"
-                                               itemLabel="#{rol.nombreRol}"/>
+                                <f:selectItem
+                                    itemValue="#{usuarioMedicoBean.getRolMedico()}"
+                                    itemLabel="#{usuarioMedicoBean.getRolMedico().nombreRol}"/>
                             </h:selectOneMenu>
                         </div>
 

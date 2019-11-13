@@ -52,7 +52,8 @@
                     <p:inputMask id="paciente" mask="99999999-9" value="#{citasListarBean.duiPaciente}"  />                                   
 
                     <p:commandButton type="reset" value="Limpiar" />
-                    <p:commandButton id="addButton" value="Guardar" update="messages" action="#{citasListarBean.addEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
+                    <p:commandButton rendered="#{citasListarBean.esGuardar}" id="addButton" value="Guardar" update="messages" action="#{citasListarBean.addEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
+                    <p:commandButton rendered="#{!citasListarBean.esGuardar}" id="editButton" value="Editar" update="messages" action="#{citasListarBean.editEvent}" />
                     <p:commandButton rendered="#{!citasListarBean.esGuardar}" id="deleteButton" value="Borrar" update="messages" action="#{citasListarBean.delEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
                 </h:panelGrid>
             </p:dialog>    
