@@ -151,9 +151,9 @@ public class CitasListarBean implements Serializable {
                         ));
                     } else {
                         citaEntity.setIdPaciente(pacienteEntity);
-                        citaEntity.setTituto(this.event.getTitle());
+                        citaEntity.setTitulo(this.event.getTitle());
                         this.citasEJB.actualizarDatosEvento(citaEntity);
-                        this.event.setTitle(citaEntity.getTituto());
+                        this.event.setTitle(citaEntity.getTitulo());
                         this.event.setStartDate(citaEntity.getFechaCita());
                         this.event.setEndDate(citaEntity.getFechaCitaFinal());
                         this.event.setDynamicProperty("idEvent", citaEntity.getIdCita());
@@ -190,7 +190,7 @@ public class CitasListarBean implements Serializable {
     public void crearCita() throws ParseException {
 
         CitasEntity nuevaCita = new CitasEntity();
-        nuevaCita.setTituto(this.event.getTitle());
+        nuevaCita.setTitulo(this.event.getTitle());
 
         nuevaCita.setFechaCita(this.formatearFecha(this.event.getStartDate()));
         nuevaCita.setFechaCitaFinal(this.formatearFecha(this.event.getEndDate()));
@@ -225,7 +225,7 @@ public class CitasListarBean implements Serializable {
         for (CitasEntity cita : citas) {
             DefaultScheduleEvent scheduleEvent = new DefaultScheduleEvent();
             scheduleEvent.setDynamicProperty("idEvent", cita.getIdCita());
-            scheduleEvent.setTitle(cita.getTituto());
+            scheduleEvent.setTitle(cita.getTitulo());
             try {
                 scheduleEvent.setStartDate(this.formatearFecha(cita.getFechaCita()));
                 scheduleEvent.setEndDate(this.formatearFecha(cita.getFechaCitaFinal()));

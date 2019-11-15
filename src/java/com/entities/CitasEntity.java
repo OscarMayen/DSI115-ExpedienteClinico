@@ -31,7 +31,9 @@ import javax.validation.constraints.Size;
 @NamedQueries({
     @NamedQuery(name = "CitasEntity.findAll", query = "SELECT c FROM CitasEntity c")
     , @NamedQuery(name = "CitasEntity.findByIdCita", query = "SELECT c FROM CitasEntity c WHERE c.idCita = :idCita")
-    , @NamedQuery(name = "CitasEntity.findByFechaCita", query = "SELECT c FROM CitasEntity c WHERE c.fechaCita = :fechaCita")})
+    , @NamedQuery(name = "CitasEntity.findByFechaCita", query = "SELECT c FROM CitasEntity c WHERE c.fechaCita = :fechaCita")
+    , @NamedQuery(name = "CitasEntity.findByFechaCitaFinal", query = "SELECT c FROM CitasEntity c WHERE c.fechaCitaFinal = :fechaCitaFinal")
+    , @NamedQuery(name = "CitasEntity.findByTitulo", query = "SELECT c FROM CitasEntity c WHERE c.titulo = :titulo")})
 public class CitasEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -39,16 +41,18 @@ public class CitasEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     private Integer idCita;
+    @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
-    private String titulo;
+    @Temporal(TemporalType.DATE)
+    private Date fechaCita;
     @Basic(optional = false)
     @NotNull
     @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaCita;
-    @NotNull
-    @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCitaFinal;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
+    private String titulo;
     @JoinColumn(name = "idMedico", referencedColumnName = "idMedico")
     @ManyToOne
     private MedicoEntity idMedico;
@@ -63,11 +67,11 @@ public class CitasEntity implements Serializable {
         this.idCita = idCita;
     }
 
-    public CitasEntity(Integer idCita, String titulo, Date fechaCita, Date fechaCitaFinal) {
+    public CitasEntity(Integer idCita, Date fechaCita, Date fechaCitaFinal, String titulo) {
         this.idCita = idCita;
-        this.titulo = titulo;
         this.fechaCita = fechaCita;
         this.fechaCitaFinal = fechaCitaFinal;
+        this.titulo = titulo;
     }
 
     public Integer getIdCita() {
@@ -76,14 +80,6 @@ public class CitasEntity implements Serializable {
 
     public void setIdCita(Integer idCita) {
         this.idCita = idCita;
-    }
-
-    public String getTituto() {
-        return titulo;
-    }
-
-    public void setTituto(String tituto) {
-        this.titulo = tituto;
     }
 
     public Date getFechaCita() {
@@ -101,8 +97,14 @@ public class CitasEntity implements Serializable {
     public void setFechaCitaFinal(Date fechaCitaFinal) {
         this.fechaCitaFinal = fechaCitaFinal;
     }
-    
-    
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
 
     public MedicoEntity getIdMedico() {
         return idMedico;

@@ -40,6 +40,9 @@ public class SalaEntity implements Serializable {
     @NotNull
     @Size(min = 1, max = 50)
     private String nombreSala;
+    @Basic(optional = false)
+    @NotNull
+    private boolean estadoSala;
     @OneToMany(mappedBy = "idSala")
     private List<ConsultaEntity> consultaEntityList;
 
@@ -50,9 +53,10 @@ public class SalaEntity implements Serializable {
         this.idSala = idSala;
     }
 
-    public SalaEntity(Integer idSala, String nombreSala) {
+    public SalaEntity(Integer idSala, String nombreSala,boolean estadoSala) {
         this.idSala = idSala;
         this.nombreSala = nombreSala;
+        this.estadoSala=estadoSala;
     }
 
     public Integer getIdSala() {
@@ -78,6 +82,15 @@ public class SalaEntity implements Serializable {
     public void setConsultaEntityList(List<ConsultaEntity> consultaEntityList) {
         this.consultaEntityList = consultaEntityList;
     }
+
+    public boolean isEstadoSala() {
+        return estadoSala;
+    }
+
+    public void setEstadoSala(boolean estadoSala) {
+        this.estadoSala = estadoSala;
+    }
+    
 
     @Override
     public int hashCode() {

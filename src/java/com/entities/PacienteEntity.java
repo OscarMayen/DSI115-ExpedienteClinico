@@ -35,7 +35,6 @@ import javax.validation.constraints.Size;
     , @NamedQuery(name = "PacienteEntity.findByNombreResponsable", query = "SELECT p FROM PacienteEntity p WHERE p.nombreResponsable = :nombreResponsable")
     , @NamedQuery(name = "PacienteEntity.findByTelefonoEmergencia", query = "SELECT p FROM PacienteEntity p WHERE p.telefonoEmergencia = :telefonoEmergencia")
     , @NamedQuery(name = "PacienteEntity.findByVinculoResponsable", query = "SELECT p FROM PacienteEntity p WHERE p.vinculoResponsable = :vinculoResponsable")})
-
 public class PacienteEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;

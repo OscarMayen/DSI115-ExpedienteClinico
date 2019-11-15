@@ -42,7 +42,6 @@
             <url-pattern>/faces/admin/paciente/*</url-pattern>
             <url-pattern>/faces/admin/usuario/*</url-pattern>
             <url-pattern>/faces/admin/reportes/*</url-pattern>
-            <url-pattern>/faces/admin/antecedentes/*</url-pattern>
             <url-pattern>/faces/admin/especialidad/*</url-pattern>
             <url-pattern>/faces/admin/sala/*</url-pattern>
         </web-resource-collection>
@@ -69,6 +68,7 @@
             <web-resource-name>reourseMedico</web-resource-name>
             <description/>
             <url-pattern>/faces/admin/consulta/*</url-pattern>
+            <url-pattern>/faces/admin/antecedentes/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <description/>
