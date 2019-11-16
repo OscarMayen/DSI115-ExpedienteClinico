@@ -6,6 +6,8 @@
 package com.ejb;
 
 import com.entities.CitasEntity;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -22,6 +24,8 @@ public class CitasEJB {
 
     @PersistenceContext(unitName = "ExpedienteClinicoBBraunPU")
     private EntityManager em;
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
 
     public void persist(Object object) {
         em.persist(object);
@@ -44,6 +48,11 @@ public class CitasEJB {
     
     public List<CitasEntity> listarCitas(Integer idMedico){
         Query query = em.createQuery("SELECT c FROM CitasEntity c INNER JOIN c.idMedico m WHERE m.idMedico ="+idMedico);
+        return query.getResultList();
+    }
+    
+    public List<CitasEntity> listarCitasPorFecha(Date fecha, Integer idMedico){
+        Query query = em.createQuery("SELECT c FROM  CitasEntity c INNER JOIN c.idMedico m WHERE m.idMedico ="+idMedico+" and c.fechaCita like '%"+this.simpleDateFormat.format(fecha)+"%'");
         return query.getResultList();
     }
     

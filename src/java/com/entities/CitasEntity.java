@@ -43,7 +43,7 @@ public class CitasEntity implements Serializable {
     private Integer idCita;
     @Basic(optional = false)
     @NotNull
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCita;
     @Basic(optional = false)
     @NotNull

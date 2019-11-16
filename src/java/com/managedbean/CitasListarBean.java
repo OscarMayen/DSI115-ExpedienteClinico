@@ -13,9 +13,9 @@ import com.entities.MedicoEntity;
 import com.entities.PacienteEntity;
 import com.entities.UsuarioEntity;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -27,11 +27,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import org.primefaces.PrimeFaces;
-import org.primefaces.event.ScheduleEntryMoveEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultScheduleEvent;
 import org.primefaces.model.DefaultScheduleModel;
-import org.primefaces.model.LazyScheduleModel;
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
 
@@ -53,6 +51,8 @@ public class CitasListarBean implements Serializable {
     private MedicoEJB medicoEJB;
 
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+    private SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm:ss");
 
     private ScheduleModel eventModel;
 
@@ -127,9 +127,9 @@ public class CitasListarBean implements Serializable {
 
     public void editEvent() throws Exception {
 
-        if (this.event.getTitle() == null || this.event.getTitle().equals("")             ||
-            this.event.getStartDate() == null || this.event.getEndDate() == null ||
-            this.duiPaciente == null || this.duiPaciente.equals("")) {
+        if (this.event.getTitle() == null || this.event.getTitle().equals("")
+                || this.event.getStartDate() == null || this.event.getEndDate() == null
+                || this.duiPaciente == null || this.duiPaciente.equals("")) {
             this.addMessage(new FacesMessage(FacesMessage.SEVERITY_ERROR,
                     "¡Error!", "Ingrese valores a los campos de la cita"
             ));
@@ -173,7 +173,7 @@ public class CitasListarBean implements Serializable {
             }
 
         }
-        
+
     }
 
     public void onEventSelect(SelectEvent selectEvent) {
@@ -196,22 +196,28 @@ public class CitasListarBean implements Serializable {
         nuevaCita.setFechaCitaFinal(this.formatearFecha(this.event.getEndDate()));
 
         if (this.validarFechaHoraCita(nuevaCita.getFechaCita(), nuevaCita.getFechaCitaFinal())) {
-            nuevaCita.setIdMedico(medicoEntity);
-            pacienteEntity = pacienteEJB.busquedaPacientePorDui(this.duiPaciente);
-            if (pacienteEntity == null) {
-                this.addMessage(new FacesMessage(FacesMessage.SEVERITY_WARN,
-                        "¡Advertencia!", "No existe ningún paciente con ese dui"
-                ));
+            if (this.validarColisiones(nuevaCita.getFechaCita(),nuevaCita.getFechaCitaFinal())) {
+                this.addMessage(new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                        "¡Error!","Hay colision con alguna cita"));
             } else {
-                nuevaCita.setIdPaciente(pacienteEntity);
-                this.citasEJB.insertCita(nuevaCita);
-                this.event.setDynamicProperty("idEvent", nuevaCita.getIdCita());
-                this.event.setDynamicProperty("paciente", this.pacienteEntity.getIdPersona().getDui());
-                this.addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
-                        "¡Información!", "Cita creada con éxito"
-                ));
-                eventModel.addEvent(event);
+                nuevaCita.setIdMedico(medicoEntity);
+                pacienteEntity = pacienteEJB.busquedaPacientePorDui(this.duiPaciente);
+                if (pacienteEntity == null) {
+                    this.addMessage(new FacesMessage(FacesMessage.SEVERITY_WARN,
+                            "¡Advertencia!", "No existe ningún paciente con ese dui"
+                    ));
+                } else {
+                    nuevaCita.setIdPaciente(pacienteEntity);
+                    this.citasEJB.insertCita(nuevaCita);
+                    this.event.setDynamicProperty("idEvent", nuevaCita.getIdCita());
+                    this.event.setDynamicProperty("paciente", this.pacienteEntity.getIdPersona().getDui());
+                    this.addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
+                            "¡Información!", "Cita creada con éxito"
+                    ));
+                    eventModel.addEvent(event);
+                }
             }
+
         } else {
             this.addMessage(new FacesMessage(FacesMessage.SEVERITY_ERROR,
                     "Error, verifique la fecha que ingreso", "Hay inconsistencias con las fechas"
@@ -270,7 +276,7 @@ public class CitasListarBean implements Serializable {
                     && startDateTime.getDate() == fechaActual.getDate()
                     || endDateTime.after(fechaActual)
                     && startDateTime.after(fechaActual)) {
-                if (diffHours >= 2) {
+                if (diffHours >= 1) {
                     return true;
                 } else {
                     return false;
@@ -288,6 +294,47 @@ public class CitasListarBean implements Serializable {
             ));
             return false;
         }
+    }
+
+    private boolean validarColisiones(Date fechaI,Date fechaF) throws ParseException {
+        List<CitasEntity> lista = citasEJB.listarCitasPorFecha(fechaI, this.medicoEntity.getIdMedico());
+        boolean ban = false;
+        String fi = formatoHora.format(fechaI);
+        String ff = formatoHora.format(fechaF);
+        for (CitasEntity citasEntity : lista) {
+            String li = formatoHora.format(citasEntity.getFechaCita());
+            String lf = formatoHora.format(citasEntity.getFechaCitaFinal());
+            Date fechaInicio = this.formatoHora.parse(fi);
+            Date fechaFinal = this.formatoHora.parse(ff);
+            Date fechaListaI = this.formatoHora.parse(li);
+            Date fechaListaF = this.formatoHora.parse(lf);
+            if (fechaInicio.compareTo(fechaListaI) == 0
+                    || (fechaInicio.compareTo(fechaListaI) >= 1
+                    && fechaInicio.compareTo(fechaListaF) <= -1)) {
+                System.out.println(fechaInicio);
+                System.out.println(fechaListaI);
+                System.out.println(fechaListaF);
+                ban = true;
+                break;
+            } else if(fechaFinal.compareTo(fechaListaI) == 0
+                    || (fechaFinal.compareTo(fechaListaI)>=1
+                    && fechaFinal.compareTo(fechaListaF)<= -1)){
+                ban = true;
+                System.out.println(fechaFinal);
+                System.out.println(fechaListaI);
+                System.out.println(fechaListaF);
+                break;
+            }else{
+                System.out.println(fechaFinal.compareTo(fechaListaI));
+                System.out.println(fechaFinal);
+                System.out.println(fechaListaI);
+                System.out.println(fechaListaF);
+                ban = false;
+                break;
+            }
+            
+        }
+        return ban;
     }
 
 }
