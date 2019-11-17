@@ -10,29 +10,24 @@
     <ui:define name="titulo">
         Calendario de citas
     </ui:define>
-
-    <ui:define name="css">
-        <style type="text/css">
-            
-        </style>
-    </ui:define>
-
     <ui:define name="contenido">
 
         <h:form>
             <p:growl id="messages" showDetail="true" />
 
 
-            <h3 style="margin-top: 0">Calendario de citas</h3>
-            
-                <p:schedule id="schedule" draggable="true" displayEventEnd="true" resizable="false" value="#{citasListarBean.eventModel}" widgetVar="myschedule" timeZone="America/El_Salvador" locale="es">
+            <h3 style="margin-top: 0; margin-left: 180px">Calendario de citas</h3>
+            <h:panelGrid columnClasses="value">
+                <p:schedule id="schedule" draggable="true" style="margin-left:180px; width: 650px !important;"
+                            displayEventEnd="true" resizable="false" value="#{citasListarBean.eventModel}"
+                            widgetVar="myschedule" timeZone="America/El_Salvador" locale="es">
 
                     <p:ajax event="dateSelect" listener="#{citasListarBean.onDateSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
                     <p:ajax event="eventSelect" listener="#{citasListarBean.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
                     <p:ajax event="eventMove" listener="#{citasActualizarBean.onEventMove}"  update="messages" oncomplete="PF('myschedule').update();"/>
 
                 </p:schedule>
-            
+           </h:panelGrid>
 
             <p:dialog widgetVar="eventDialog" header="Detalles del evento" showEffect="clip" hideEffect="clip">
                 <h:panelGrid id="eventDetails" columns="2">

@@ -143,28 +143,35 @@ public class CitasListarBean implements Serializable {
                 citaEntity.setFechaCita(this.formatearFecha(this.event.getStartDate()));
                 citaEntity.setFechaCitaFinal(this.formatearFecha(this.event.getEndDate()));
                 if (this.validarFechaHoraCita(citaEntity.getFechaCita(), citaEntity.getFechaCitaFinal())) {
-                    citaEntity.setIdMedico(medicoEntity);
-                    pacienteEntity = pacienteEJB.busquedaPacientePorDui(this.duiPaciente);
-                    if (pacienteEntity == null) {
-                        this.addMessage(new FacesMessage(FacesMessage.SEVERITY_WARN,
-                                "¡Advertencia!", "No existe ningún paciente con ese dui"
-                        ));
+                    if (this.validarColisionesEditar(citaEntity.getFechaCita(), citaEntity.getFechaCitaFinal(),citaEntity.getIdCita())) {
+                        this.addMessage(new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                                "¡Error!","Hay citas que colisionan"));
+                        
                     } else {
-                        citaEntity.setIdPaciente(pacienteEntity);
-                        citaEntity.setTitulo(this.event.getTitle());
-                        this.citasEJB.actualizarDatosEvento(citaEntity);
-                        this.event.setTitle(citaEntity.getTitulo());
-                        this.event.setStartDate(citaEntity.getFechaCita());
-                        this.event.setEndDate(citaEntity.getFechaCitaFinal());
-                        this.event.setDynamicProperty("idEvent", citaEntity.getIdCita());
-                        this.event.setDynamicProperty("paciente", this.pacienteEntity.getIdPersona().getDui());
-                        this.addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
-                                "¡Información!", "Cita actualizada con éxito"
-                        ));
-                        this.eventModel.updateEvent(event);
-                        this.event = new DefaultScheduleEvent();
-                        PrimeFaces.current().executeScript("PF('myschedule').update();PF('eventDialog').hide();");
+                        citaEntity.setIdMedico(medicoEntity);
+                        pacienteEntity = pacienteEJB.busquedaPacientePorDui(this.duiPaciente);
+                        if (pacienteEntity == null) {
+                            this.addMessage(new FacesMessage(FacesMessage.SEVERITY_WARN,
+                                    "¡Advertencia!", "No existe ningún paciente con ese dui"
+                            ));
+                        } else {
+                            citaEntity.setIdPaciente(pacienteEntity);
+                            citaEntity.setTitulo(this.event.getTitle());
+                            this.citasEJB.actualizarDatosEvento(citaEntity);
+                            this.event.setTitle(citaEntity.getTitulo());
+                            this.event.setStartDate(citaEntity.getFechaCita());
+                            this.event.setEndDate(citaEntity.getFechaCitaFinal());
+                            this.event.setDynamicProperty("idEvent", citaEntity.getIdCita());
+                            this.event.setDynamicProperty("paciente", this.pacienteEntity.getIdPersona().getDui());
+                            this.addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
+                                    "¡Información!", "Cita actualizada con éxito"
+                            ));
+                            this.eventModel.updateEvent(event);
+                            this.event = new DefaultScheduleEvent();
+                            PrimeFaces.current().executeScript("PF('myschedule').update();PF('eventDialog').hide();");
+                        }
                     }
+
                 } else {
                     this.addMessage(new FacesMessage(FacesMessage.SEVERITY_ERROR,
                             "Error, verifique la fecha que ingreso", "Hay inconsistencias con las fechas"
@@ -196,9 +203,9 @@ public class CitasListarBean implements Serializable {
         nuevaCita.setFechaCitaFinal(this.formatearFecha(this.event.getEndDate()));
 
         if (this.validarFechaHoraCita(nuevaCita.getFechaCita(), nuevaCita.getFechaCitaFinal())) {
-            if (this.validarColisiones(nuevaCita.getFechaCita(),nuevaCita.getFechaCitaFinal())) {
+            if (this.validarColisiones(nuevaCita.getFechaCita(), nuevaCita.getFechaCitaFinal())) {
                 this.addMessage(new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                        "¡Error!","Hay colision con alguna cita"));
+                        "¡Error!", "Hay colision con alguna cita"));
             } else {
                 nuevaCita.setIdMedico(medicoEntity);
                 pacienteEntity = pacienteEJB.busquedaPacientePorDui(this.duiPaciente);
@@ -296,7 +303,7 @@ public class CitasListarBean implements Serializable {
         }
     }
 
-    private boolean validarColisiones(Date fechaI,Date fechaF) throws ParseException {
+    private boolean validarColisiones(Date fechaI, Date fechaF) throws ParseException {
         List<CitasEntity> lista = citasEJB.listarCitasPorFecha(fechaI, this.medicoEntity.getIdMedico());
         boolean ban = false;
         String fi = formatoHora.format(fechaI);
@@ -311,28 +318,47 @@ public class CitasListarBean implements Serializable {
             if (fechaInicio.compareTo(fechaListaI) == 0
                     || (fechaInicio.compareTo(fechaListaI) >= 1
                     && fechaInicio.compareTo(fechaListaF) <= -1)) {
-                System.out.println(fechaInicio);
-                System.out.println(fechaListaI);
-                System.out.println(fechaListaF);
                 ban = true;
                 break;
-            } else if(fechaFinal.compareTo(fechaListaI) == 0
-                    || (fechaFinal.compareTo(fechaListaI)>=1
-                    && fechaFinal.compareTo(fechaListaF)<= -1)){
+            } else if (fechaFinal.compareTo(fechaListaI) == 0
+                    || (fechaFinal.compareTo(fechaListaI) >= 1
+                    && fechaFinal.compareTo(fechaListaF) <= -1)) {
                 ban = true;
-                System.out.println(fechaFinal);
-                System.out.println(fechaListaI);
-                System.out.println(fechaListaF);
                 break;
-            }else{
-                System.out.println(fechaFinal.compareTo(fechaListaI));
-                System.out.println(fechaFinal);
-                System.out.println(fechaListaI);
-                System.out.println(fechaListaF);
+            } else {
                 ban = false;
-                break;
             }
-            
+
+        }
+        return ban;
+    }
+    
+    private boolean validarColisionesEditar(Date fechaI, Date fechaF,Integer id) throws ParseException {
+        List<CitasEntity> lista = citasEJB.listarCitasPorFechaEditar(fechaI, this.medicoEntity.getIdMedico(),id);
+        boolean ban = false;
+        String fi = formatoHora.format(fechaI);
+        String ff = formatoHora.format(fechaF);
+        for (CitasEntity citasEntity : lista) {
+            String li = formatoHora.format(citasEntity.getFechaCita());
+            String lf = formatoHora.format(citasEntity.getFechaCitaFinal());
+            Date fechaInicio = this.formatoHora.parse(fi);
+            Date fechaFinal = this.formatoHora.parse(ff);
+            Date fechaListaI = this.formatoHora.parse(li);
+            Date fechaListaF = this.formatoHora.parse(lf);
+            if (fechaInicio.compareTo(fechaListaI) == 0
+                    || (fechaInicio.compareTo(fechaListaI) >= 1
+                    && fechaInicio.compareTo(fechaListaF) <= -1)) {
+                ban = true;
+                break;
+            } else if (fechaFinal.compareTo(fechaListaI) == 0
+                    || (fechaFinal.compareTo(fechaListaI) >= 1
+                    && fechaFinal.compareTo(fechaListaF) <= -1)) {
+                ban = true;
+                break;
+            } else {
+                ban = false;
+            }
+
         }
         return ban;
     }

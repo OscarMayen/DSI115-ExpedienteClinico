@@ -56,6 +56,11 @@ public class CitasEJB {
         return query.getResultList();
     }
     
+    public List<CitasEntity> listarCitasPorFechaEditar(Date fecha, Integer idMedico,Integer idCita){
+        Query query = em.createQuery("SELECT c FROM  CitasEntity c INNER JOIN c.idMedico m WHERE m.idMedico ="+idMedico+" and c.fechaCita like '%"+this.simpleDateFormat.format(fecha)+"%' and c.idCita !="+idCita);
+        return query.getResultList();
+    }
+    
     public int actualizarFechaEvento(CitasEntity citaEntity) throws Exception {
         
         try{
