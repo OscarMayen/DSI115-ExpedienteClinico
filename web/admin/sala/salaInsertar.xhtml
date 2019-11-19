@@ -5,38 +5,132 @@
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:p="http://primefaces.org/ui">
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="titulo">
         Nueva sala
     </ui:define>
 
     <ui:define name="css">
-        
+
     </ui:define>
 
     <ui:define name="contenido">
-        
+
         <h:form id="formNuevaSala">
             <p:growl id="growl" showDetail="true" sticky="true" /> 
-                    <p:fieldset legend="Nueva Sala" style="font-size: 15px; font-weight: bold;" >
-                        <p:panelGrid columns="4" >
+            <p:fieldset legend="Nueva Sala" style="font-size: 15px; font-weight: bold;" >
+                <p:panelGrid columns="2" >
 
-                            <p:outputLabel for="nombreSa" value="Nombre" />
-                            <p:inputText id="nombreSa" value="#{salaInsertarBean.salaEntity.nombreSala}"   
-                                         size="30" required="true"/>
-                            
-                            </p:panelGrid>
-                    </p:fieldset><br></br>
-                            
-                  &nbsp;&nbsp;<p:commandButton value="Guardar" actionListener="#{salaInsertarBean.insertarSala()}" update="@form" /> 
-                  &nbsp;&nbsp;<p:linkButton outcome="/admin/especialidad/especialidadListar" value="Cancelar" style="margin-right:20px;"/>
+                    <p:outputLabel for="nombreSala" value="Nombre" />
+                    <p:inputText id="nombreSala" value="#{salaInsertarBean.salaEntity.nombreSala}"   
+                                 size="30" required="true" />
+
+                    <p:outputLabel value="Estado de Sala/Consultorio" />
+                    <p:selectBooleanCheckbox   value="#{salaInsertarBean.salaEntity.estadoSala}" 
+                                             itemLabel="Habilitado" />
+
+                    <p:outputLabel value="Mobiliario" />
+                    <p:commandButton value="SELECIONE EL MOBILIARIO" oncomplete="PF('dlgMobiliario').show();"
+                                     update="formNuevaSala:dlgMobiliario" />
+
+                </p:panelGrid>
+            </p:fieldset><br></br>
+
+            <p:dataTable id="tablaMobiliarioSeleccionado" var="item" value="#{salaInsertarBean.listaSalaMobiliario}" 
+                         editable="true" rowIndexVar="rowIndex" emptyMessage="No hay mobiliario seleccionado">
+
+                <p:ajax event="rowEdit" listener="#{salaInsertarBean.onRowEdit}" update="formNuevaSala:tablaMobiliarioSeleccionado formNuevaSala:growl" />
+                <p:ajax event="rowEditCancel" listener="#{salaInsertarBean.onRowCancel}" update="formNuevaSala:tablaMobiliarioSeleccionado" />
+
+                <p:column headerText="ID">
+                    <h:outputText value="#{item.idMobiliario.idMobiliario}"/>
+                </p:column> 
+
+                <p:column headerText="MOBILIARIO">
+                    <h:outputText value="#{item.idMobiliario.nombreMobiliario}"/>
+                </p:column> 
+
+                <p:column headerText="Cantidad">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{item.cantidad}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{item.cantidad}" label="Cantidad Producto"
+                                         required="true" requiredMessage="Es necesario una cantidad"
+                                         converter="#{Integer}" converterMessage="Esta no es una cantidad correcta"
+                                         validatorMessage="La cantidad debe ser mayor o igual a 1">
+                                <f:validateLongRange minimum="1"/>
+
+                            </p:inputText>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column headerText="Editar cantidad">
+                    <p:rowEditor />
+                </p:column>
+                
+                <p:column headerText="Quitar Mobiliario">
+                    <p:commandLink value="X" actionListener="#{salaInsertarBean.quitarMobiliario(item.idMobiliario.idMobiliario,rowIndex)}" 
+                                   title="Quitar Producto" style="text-decoration: none; color: #D20005; font-weight: bold;"
+                                   update="formNuevaSala:tablaMobiliarioSeleccionado formNuevaSala:growl"/>
+                </p:column>
+
+            </p:dataTable>
+            <br></br>
+            <!-- Dialog para mostrar  el listado de mobiliarios-->
+            <p:dialog id="dlgMobiliario" widgetVar="dlgMobiliario"  modal="true" resizable="false" 
+                      showEffect="explode" hideEffect="explode">
+
+                <p:dataTable id="tablaMobiliario"  var="mob" value="#{salaInsertarBean.listaMobiliario}" rows="5"
+                             paginator="true" 
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15" currentPageReportTemplate="Página:({currentPage} de {totalPages})"
+                             style="width: 700px;" 
+                             emptyMessage="No hay datos de mobiliario">
+
+                    <p:column headerText="ID">
+                        <h:outputText value="#{mob.idMobiliario}"/>
+                    </p:column>
+
+                    <p:column headerText="Nombre">
+                        <h:outputText value="#{mob.nombreMobiliario}"/>
+                    </p:column>
+
+                    <p:column headerText="">
+                        <p:commandButton value="Seleccionar" actionListener="#{salaInsertarBean.pedirCantidadMobiliario(mob.idMobiliario)}" 
+                                         oncomplete="PF('dlgCantidadMobiliario').show();" 
+                                         update="formNuevaSala:dlgCantidadMobiliario"/>
+                    </p:column>
+
+                </p:dataTable>
+                <br></br>
+                <p:commandButton value="Cerrar" onclick="PF('dlgMobiliario').hide();" />
+
+            </p:dialog>
+
+            <p:dialog id="dlgCantidadMobiliario" widgetVar="dlgCantidadMobiliario" header="Cantidad" 
+                      modal="true">
+                Cantidad: 
+                <p:inputText id="txtCantidadMobiliario" value="#{salaInsertarBean.cantidad}"/>
+                <p:commandButton value="Aceptar" actionListener="#{salaInsertarBean.agregarMobiliario()}"
+                                 update="formNuevaSala:tablaMobiliarioSeleccionado formNuevaSala:txtCantidadMobiliario formNuevaSala:growl"
+                                 oncomplete="PF('dlgCantidadMobiliario').hide(); PF('dlgMobiliario').hide();"/>
+            </p:dialog>
+
+            &nbsp;&nbsp;<p:commandButton value="Guardar" actionListener="#{salaInsertarBean.insertarSalaMobiliario()}" update="@form" /> 
+            &nbsp;&nbsp;<p:linkButton outcome="/admin/sala/salaListar" value="Cancelar" style="margin-right:20px;"/>
+
+
         </h:form>
-        
+
     </ui:define>
 
     <ui:define name="scripts">
-       
+
     </ui:define>
 
 </ui:composition>

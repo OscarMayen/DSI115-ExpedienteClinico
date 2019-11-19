@@ -39,8 +39,6 @@ public class UsuarioEditarBean implements Serializable{
     @EJB
     private UsuarioEJB usuarioEJB;
     
-    
-
      UsuarioEntity usuario = new UsuarioEntity();
      RolEntity rol = new RolEntity();
      PersonaEntity persona = new PersonaEntity();
@@ -120,7 +118,7 @@ public class UsuarioEditarBean implements Serializable{
     
     public String updateUsuario(){
         try {
-            
+            personaEJB.modificarPersona(usuario.getIdPersona());
             usuarioEJB.modificarUsuario(usuario);
            
         } catch (Exception ex) {
