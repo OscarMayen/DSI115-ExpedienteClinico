@@ -65,7 +65,7 @@ public class PacienteEJB implements Serializable {
     }
 
     public List<PacienteEntity> listarPaciente() {
-        Query query = em.createQuery("select p from PacienteEntity p where not exists (SELECT a FROM AntecedentesEntity a where a.idPaciente.idPaciente=p.idPaciente)");
+        Query query = em.createNamedQuery("PacienteEntity.findAll");
         return query.getResultList();
     }
     
@@ -79,4 +79,8 @@ public class PacienteEJB implements Serializable {
         return query.getResultList();
     }
     
+    public List<PacienteEntity> listarPacienteAntecedentes() {
+        Query query = em.createQuery("select p from PacienteEntity p where not exists (SELECT a FROM AntecedentesEntity a where a.idPaciente.idPaciente=p.idPaciente)");
+        return query.getResultList();
+    }
 }

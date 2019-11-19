@@ -46,7 +46,7 @@ public class AntecendentesInsertarBean implements Serializable{
     public void init(){
         patient =new PacienteEntity();
         paciente= new ArrayList<PacienteEntity>();
-        paciente=pacienteEJB.listarPaciente();       
+        paciente=pacienteEJB.listarPacienteAntecedentes();       
     }
     
     public void insertarDatos(){    

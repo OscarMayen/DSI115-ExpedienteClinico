@@ -44,6 +44,7 @@
             <url-pattern>/faces/admin/reportes/*</url-pattern>
             <url-pattern>/faces/admin/especialidad/*</url-pattern>
             <url-pattern>/faces/admin/sala/*</url-pattern>
+            <url-pattern>/faces/admin/mobiliario/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <description/>
