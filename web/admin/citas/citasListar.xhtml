@@ -24,7 +24,7 @@
 
                     <p:ajax event="dateSelect" listener="#{citasListarBean.onDateSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
                     <p:ajax event="eventSelect" listener="#{citasListarBean.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
-                    <p:ajax event="eventMove" listener="#{citasActualizarBean.onEventMove}"  update="messages" oncomplete="PF('myschedule').update();"/>
+                    <p:ajax event="eventMove" listener="#{citasListarBean.onEventMove}"  update="messages"/>
 
                 </p:schedule>
            </h:panelGrid>

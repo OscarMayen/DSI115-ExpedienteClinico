@@ -27,6 +27,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import org.primefaces.PrimeFaces;
+import org.primefaces.event.ScheduleEntryMoveEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultScheduleEvent;
 import org.primefaces.model.DefaultScheduleModel;
@@ -62,7 +63,8 @@ public class CitasListarBean implements Serializable {
     private PacienteEntity pacienteEntity;
     private UsuarioEntity usuarioEntity;
     private CitasEntity citaEntity;
-
+    private Date auxI;
+    private Date auxF;
     private String duiPaciente;
 
     private boolean esGuardar;
@@ -335,6 +337,93 @@ public class CitasListarBean implements Serializable {
     
     private boolean validarColisionesEditar(Date fechaI, Date fechaF,Integer id) throws ParseException {
         List<CitasEntity> lista = citasEJB.listarCitasPorFechaEditar(fechaI, this.medicoEntity.getIdMedico(),id);
+        boolean ban = false;
+        String fi = formatoHora.format(fechaI);
+        String ff = formatoHora.format(fechaF);
+        for (CitasEntity citasEntity : lista) {
+            String li = formatoHora.format(citasEntity.getFechaCita());
+            String lf = formatoHora.format(citasEntity.getFechaCitaFinal());
+            Date fechaInicio = this.formatoHora.parse(fi);
+            Date fechaFinal = this.formatoHora.parse(ff);
+            Date fechaListaI = this.formatoHora.parse(li);
+            Date fechaListaF = this.formatoHora.parse(lf);
+            if (fechaInicio.compareTo(fechaListaI) == 0
+                    || (fechaInicio.compareTo(fechaListaI) >= 1
+                    && fechaInicio.compareTo(fechaListaF) <= -1)) {
+                ban = true;
+                break;
+            } else if (fechaFinal.compareTo(fechaListaI) == 0
+                    || (fechaFinal.compareTo(fechaListaI) >= 1
+                    && fechaFinal.compareTo(fechaListaF) <= -1)) {
+                ban = true;
+                break;
+            } else {
+                ban = false;
+            }
+
+        }
+        return ban;
+    }
+    
+    public void onEventMove(ScheduleEntryMoveEvent eventDrag) throws Exception {
+        this.event = (DefaultScheduleEvent) eventDrag.getScheduleEvent();
+        citaEntity = this.citasEJB.obtenerCita((Integer) event.getDynamicProperties().get("idEvent"));
+        System.out.println(citaEntity.getIdCita());
+        System.out.println(citaEntity.getFechaCita());
+        System.out.println(citaEntity.getFechaCitaFinal());
+        auxI = citaEntity.getFechaCita();
+        auxF = citaEntity.getFechaCitaFinal();
+        
+        if (event.getStartDate().compareTo(new Date()) >= 1
+                || event.getStartDate().compareTo(new Date()) == 0) {
+            
+            citaEntity.setFechaCita(this.formatearFecha(this.event.getStartDate()));
+            citaEntity.setFechaCitaFinal(this.formatearFecha(this.event.getEndDate()));
+            
+            if (this.validarColisionesEditarM(citaEntity.getFechaCita(),
+                    citaEntity.getFechaCitaFinal(),
+                    citaEntity.getIdCita())) {
+                this.addMessage(new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                        "¡Error!", "El evento colisiona"));
+                
+                this.event.setStartDate(auxI);
+                this.event.setEndDate(auxF);
+                System.out.println(citaEntity.getIdCita());
+                System.out.println(this.event.getStartDate());
+                System.out.println(this.event.getEndDate());
+                PrimeFaces.current().executeScript("PF('myschedule').update();");
+            } else {
+                System.out.println("entro no se como");
+                if (this.citasEJB.actualizarFechaEvento(citaEntity) == 1) {
+
+                    this.addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
+                            "Información", "Fecha del evento actualizada"
+                    ));
+                    PrimeFaces.current().executeScript("PF('myschedule').update();");
+                } else {
+                    this.addMessage(new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                            "Información", "Algo salió mal"
+                    ));
+                    PrimeFaces.current().executeScript("PF('myschedule').update();");
+                }
+                this.event = new DefaultScheduleEvent();
+            }
+        }else{
+            this.event.setStartDate(auxI);
+            this.event.setEndDate(auxF);
+            System.out.println(this.event.getStartDate());
+            System.out.println(this.event.getEndDate());
+            PrimeFaces.current().executeScript("PF('myschedule').update();");
+            this.addMessage(new FacesMessage(FacesMessage.SEVERITY_ERROR,
+            "¡Error!","la fecha no será actualizada, no puede editar un cita a una fecha caducada"));
+        }
+        this.event = new DefaultScheduleEvent();
+        
+    }
+    
+
+    private boolean validarColisionesEditarM(Date fechaI, Date fechaF, Integer id) throws ParseException {
+        List<CitasEntity> lista = citasEJB.listarCitasPorFechaEditar(fechaI, this.medicoEntity.getIdMedico(), id);
         boolean ban = false;
         String fi = formatoHora.format(fechaI);
         String ff = formatoHora.format(fechaF);

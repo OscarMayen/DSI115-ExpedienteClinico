@@ -42,7 +42,9 @@ public class CitasEJB {
     }
     
     public CitasEntity obtenerCita(Integer id){
-        Query query = em.createQuery("SELECT c FROM CitasEntity c WHERE c.idCita ="+id);
+        
+        Query query = em.createNamedQuery("CitasEntity.findByIdCita",CitasEntity.class).setParameter("idCita", id);
+        em.flush();
         return (CitasEntity) query.getSingleResult();
     }
     
@@ -62,7 +64,7 @@ public class CitasEJB {
     }
     
     public int actualizarFechaEvento(CitasEntity citaEntity) throws Exception {
-        
+         System.out.println("entro no se como");
         try{
             em.merge(citaEntity);
             em.flush();
@@ -73,6 +75,7 @@ public class CitasEJB {
     }
     
     public int actualizarDatosEvento(CitasEntity citaEntity) throws Exception{
+         System.out.println("entro no se como");
         try{
             em.merge(citaEntity);
             return 1;
