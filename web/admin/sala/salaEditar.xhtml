@@ -12,38 +12,76 @@
     </ui:define>
 
     <ui:define name="css">
-        
+
     </ui:define>
 
     <ui:define name="contenido">
-        <h:form>
-                    <p:growl id="growl" showDetail="true" sticky="true" /> 
-                    <p:fieldset legend="Editar Sala" style="font-size: 15px; font-weight: bold;" >
-                        <p:panelGrid columns="3" >
-                            <p:outputLabel for="nombreSa" value="Nombre" />
-                            <p:inputText id="nombreSa" 
-                                         value="#{salaEditarBean.sala.nombreSala}"   
-                                         size="30" required="true"/>
-                        </p:panelGrid>
-                        
-                        </p:fieldset>
-                    <br></br>
-                    &nbsp;&nbsp; <p:commandButton value="MODIFICAR" action="#{salaEditarBean.updateSala()}" update="@form">
-                        <p:confirm header="Confirmation" message="¿Esta seguro que desea modificar la sala?" 
-                                   icon="pi pi-exclamation-triangle" />
+        <h:form id="formEditarSala">
+            <p:growl id="growl" showDetail="true" sticky="true" /> 
+            <p:fieldset legend="Editar Sala" style="font-size: 15px; font-weight: bold;" >
+                <p:panelGrid columns="2" >
+                    <p:outputLabel for="nombreSa" value="Nombre" />
+                    <p:inputText id="nombreSa" 
+                                 value="#{salaEditarBean.sala.nombreSala}"   
+                                 size="30" required="true"/>
+
+                    <p:outputLabel value="Estado de Sala/Consultorio" />
+                    <p:selectBooleanCheckbox   value="#{salaEditarBean.sala.estadoSala}" 
+                                               itemLabel="Habilitado" />
+                </p:panelGrid>
+
+            </p:fieldset>
+            <br></br>
+
+            <p:dataTable id="tablaSalaMobiliario" var="sm" value="#{salaEditarBean.listaSalaMobiliario}" rows="10"
+                         paginator="true" 
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15" currentPageReportTemplate="Página:({currentPage} de {totalPages})">
+
+
+                <p:column headerText="Mobiliario">
+                    <h:outputText value="#{sm.idMobiliario.nombreMobiliario}"/>
+                </p:column>
+
+                <p:column headerText="Cantidad">
+                    <h:outputText value="#{sm.cantidad}"/>
+                </p:column>
+
+          
+                <p:column headerText="Quitar Mobiliario">
+
+                    <p:commandButton value="Eliminar" actionListener="#{salaEditarBean.eliminarSalaMobiliario(sm)}"  update="formEditarSala:tablaSalaMobiliario formEditarSala:growl">
+                        <p:confirm header="Confirmation" message="¿Desea eliminar el mobiliario?" icon="ui-icon-alert" />
                     </p:commandButton>
 
                     <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                        <p:commandButton value="SI" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
-                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
-                    </p:confirmDialog> 
-                    
-                    &nbsp;&nbsp;<p:linkButton outcome="/admin/sala/salaListar" value="CANCELAR" />
+                        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                    </p:confirmDialog>
+
+                </p:column>
+
+
+            </p:dataTable>
+            <br></br>
+
+
+            &nbsp;&nbsp; <p:commandButton value="MODIFICAR" action="#{salaEditarBean.updateSala()}" update="@form">
+                <p:confirm header="Confirmation" message="¿Esta seguro que desea modificar la sala?" 
+                           icon="pi pi-exclamation-triangle" />
+            </p:commandButton>
+
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                <p:commandButton value="SI" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+            </p:confirmDialog> 
+
+            &nbsp;&nbsp;<p:linkButton outcome="/admin/sala/salaListar" value="CANCELAR" />
         </h:form>
     </ui:define>
 
     <ui:define name="scripts">
-        
+
     </ui:define>
 
 </ui:composition>

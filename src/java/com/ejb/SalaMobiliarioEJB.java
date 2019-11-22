@@ -53,6 +53,31 @@ public class SalaMobiliarioEJB {
     
     public SalamobiliarioEntity obtenerSalaMobiliario(int id) {
         return em.find(SalamobiliarioEntity.class, id);
-    }    
+    } 
+    
+    public int eliminarSalaMobiliario(int id)
+    {
+         try 
+         {
+              SalamobiliarioEntity salaM = em.find(SalamobiliarioEntity.class, id);
+             if (salaM != null) 
+             {
+                 em.remove(salaM);
+                 em.flush();
+                 return 1;
+             }
+            return 0;
+         } 
+         catch (Exception e) 
+         {
+             return 0;
+         }
+     }
+    
+    
+    public List<SalamobiliarioEntity> obtenerlistadoSalaMobiliarioPorSala(int idSala) {
+        Query query = em.createQuery("SELECT sm FROM SalamobiliarioEntity sm JOIN sm.idSala s where s.idSala='"+idSala+"'");
+        return query.getResultList();
+    }
     
 }

@@ -115,7 +115,9 @@
             <p:dialog id="dlgCantidadMobiliario" widgetVar="dlgCantidadMobiliario" header="Cantidad" 
                       modal="true">
                 Cantidad: 
-                <p:inputText id="txtCantidadMobiliario" value="#{salaInsertarBean.cantidad}"/>
+                <p:inputText id="txtCantidadMobiliario" value="#{salaInsertarBean.cantidad}"
+                             validatorMessage="La cantidad debe ser mayor o igual a 1"/>
+                
                 <p:commandButton value="Aceptar" actionListener="#{salaInsertarBean.agregarMobiliario()}"
                                  update="formNuevaSala:tablaMobiliarioSeleccionado formNuevaSala:txtCantidadMobiliario formNuevaSala:growl"
                                  oncomplete="PF('dlgCantidadMobiliario').hide(); PF('dlgMobiliario').hide();"/>
