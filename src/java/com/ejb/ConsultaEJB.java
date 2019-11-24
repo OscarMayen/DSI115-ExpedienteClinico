@@ -32,4 +32,9 @@ public class ConsultaEJB {
             return 0;
         }
     }
+    
+     public ConsultaEntity obtenerConsulta(int codigo) {
+        return em.find(ConsultaEntity.class, codigo);
+
+    }
 }

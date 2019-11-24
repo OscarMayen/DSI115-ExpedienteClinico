@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../../plantillas/plantilla.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="contenido">
+        <h:form >
+                <p:commandButton  value="Nueva receta" action="/admin/recetas/recetasInsertar.xhtml?faces-redirect=true"/>             
+                <h2><h:outputText value="Lista de recetas"/></h2>
+                
+                <p:dataTable value="#{recetasListarBean.recetas}" var="item">                 
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Nombre del paciente"/>
+                        </f:facet>
+                        <h:outputText value="#{item.nombrePaciente}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Apellido del paciente"/>
+                        </f:facet>
+                        <h:outputText value="#{item.apellidoPaciente}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Nombre del medico"/>
+                        </f:facet>
+                        <h:outputText value="#{item.nombreMedico}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Decripcion de la receta"/>
+                        </f:facet>
+                        <h:outputText value="#{item.descripcionReceta}"/>
+                    </p:column>
+                    
+                    
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Operaciones"/>
+                        </f:facet>
+                        <h:commandButton class="btn btn-primary" action="#{recetasListarBean.verReceta()}" value="Ver">
+                            <f:param name="idrec" value="#{item.idReceta}" />
+                        </h:commandButton>                        
+                    </p:column>
+                </p:dataTable>
+                
+            </h:form>
+    </ui:define>
+
+</ui:composition>
