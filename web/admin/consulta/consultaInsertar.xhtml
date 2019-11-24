@@ -30,18 +30,18 @@
                         <p:panelGrid columns="7"  >
 
                             <p:outputLabel for="duiM" value="Dui"/>
-                            <p:inputMask id="duiM" value="#{consultaInsertarBean.medico.idPersona.dui}" readonly="true"
+                            <p:inputMask style="width: 100%" id="duiM" value="#{consultaInsertarBean.medico.idPersona.dui}" readonly="true"
                                          mask="99999999-9" size="15"/>
 
 
                             <p:outputLabel for="nombreM" value="Nombre" />
-                            <p:inputText id="nombreM" value="#{consultaInsertarBean.medico.idPersona.nombrePersona}" readonly="true"
+                            <p:inputText id="nombreM" style="width: 100%" value="#{consultaInsertarBean.medico.idPersona.nombrePersona}" readonly="true"
                                          size="30"/>
 
 
 
                             <p:outputLabel for="apellidoM" value="Apellido"/>
-                            <p:inputText id="apellidoM" value="#{consultaInsertarBean.medico.idPersona.apellidoPersona}"  readonly="true"
+                            <p:inputText style="width: 100%" id="apellidoM" value="#{consultaInsertarBean.medico.idPersona.apellidoPersona}"  readonly="true"
                                          size="30"/>
 
 
@@ -50,21 +50,21 @@
 
                     <h6><strong>DATOS DEL PACIENTE</strong></h6>
                     <p:fieldset  style="font-size: 15px; font-weight: bold;" >
-                        <p:panelGrid columns="7"  >
+                        <p:panelGrid columns="7" style="width: 100%"  >
 
                             <p:outputLabel for="duiPa" value="Dui"/>
-                            <p:inputMask id="duiPa" value="#{consultaInsertarBean.txtDuiPaciente}"  
+                            <p:inputMask style="width: 100%" id="duiPa" value="#{consultaInsertarBean.txtDuiPaciente}"  
                                          mask="99999999-9" size="15" readonly="true">
                                 <p:ajax/>
                             </p:inputMask>
 
                             <p:outputLabel for="nombrePa" value="Nombre" />
-                            <p:inputText id="nombrePa" value="#{consultaInsertarBean.txtNombrePaciente}"  size="30" readonly="true">
+                            <p:inputText style="width: 100%" id="nombrePa" value="#{consultaInsertarBean.txtNombrePaciente}"  size="15" readonly="true">
                                 <p:ajax/>
                             </p:inputText>
 
                             <p:outputLabel for="apellidoPa" value="Apellido"/>
-                            <p:inputText id="apellidoPa" value="#{consultaInsertarBean.txtApellidoPaciente}" size="30" readonly="true">
+                            <p:inputText style="width: 100%" id="apellidoPa" value="#{consultaInsertarBean.txtApellidoPaciente}" size="15" readonly="true">
                                 <p:ajax/>
                             </p:inputText>
 
@@ -83,27 +83,27 @@
 
                     <h6><strong>DATOS DE LA CONSULTA</strong></h6>
                     <p:fieldset  style="font-size: 15px; font-weight: bold;" >
-                        <p:panelGrid columns="4"  >
+                        <p:panelGrid columns="4" style="width: 100%" >
 
                             <p:outputLabel for="peso" value="Peso (kg)"/>
-                            <p:spinner id="peso" value="#{consultaInsertarBean.signosVitables.peso}"  
+                            <p:spinner style="width: 100%" id="peso" value="#{consultaInsertarBean.signosVitables.peso}"  
                                        stepFactor="0.01" min="0.0"  />
 
                             <p:outputLabel for="altura" value="Altura (mts)" />
-                            <p:spinner id="altura" value="#{consultaInsertarBean.signosVitables.altura}" 
+                            <p:spinner style="width: 100%" id="altura" value="#{consultaInsertarBean.signosVitables.altura}" 
                                        stepFactor="0.01" min="0.0"   />
 
 
                             <p:outputLabel for="presion" value="Presion"/>
-                            <p:inputText id="presion" value="#{consultaInsertarBean.signosVitables.presion}"   
+                            <p:inputText style="width: 100%" id="presion" value="#{consultaInsertarBean.signosVitables.presion}"   
                                          size="30"/>
 
                             <p:outputLabel for="diagnostico" value="Diagnostico"/>
-                            <p:inputTextarea id="diagnostico" value="#{consultaInsertarBean.txtDiagnostico}"
+                            <p:inputTextarea style="width: 100%" id="diagnostico" value="#{consultaInsertarBean.txtDiagnostico}"
                                              rows="6" cols="70" />
 
                             <p:outputLabel value="Sala" />
-                            <p:selectOneMenu id="sala" value="#{consultaInsertarBean.consulta.idSala}">
+                            <p:selectOneMenu style="width: 100%" id="sala" value="#{consultaInsertarBean.consulta.idSala}">
                                 <f:selectItems  value="#{consultaInsertarBean.listaSala}" var="sala" 
                                                 itemValue="#{sala}" 
                                                 itemLabel="#{sala.nombreSala}"

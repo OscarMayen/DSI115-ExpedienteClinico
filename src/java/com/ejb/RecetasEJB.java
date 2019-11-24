@@ -13,6 +13,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -44,13 +45,19 @@ public class RecetasEJB implements Serializable {
 
     }
 
-    public List<RecetaEntity> listarRecetass() {
-        Query query = em.createNamedQuery("RecetaEntity.findAll");
+    public List<RecetaEntity> listarRecetas(int id) {        
+        TypedQuery<RecetaEntity> query = em.createQuery(
+        "select r from RecetaEntity r where r.idConsulta.idMedico.idMedico=:id" , RecetaEntity.class);        
+        query.setParameter("id", id);
         return query.getResultList();
     }
 
-   public List<ConsultaEntity> listarConsultas() {
-        Query query = em.createNamedQuery("ConsultaEntity.findAll");
+   public List<ConsultaEntity> listarConsultas(int id) {
+        TypedQuery<ConsultaEntity> query = em.createQuery(
+        "select c from ConsultaEntity c where c.idMedico.idMedico=:id and"
+        + "  not exists (SELECT r FROM RecetaEntity r where r.idConsulta.idConsulta=c.idConsulta)"
+        + " order by c.fechaConsulta DESC" , ConsultaEntity.class);        
+        query.setParameter("id", id);
         return query.getResultList();
     }
 

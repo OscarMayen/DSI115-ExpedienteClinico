@@ -285,7 +285,7 @@ public class ConsultaInsertarBean implements Serializable{
        System.out.println("!!!!!!!!!!!!!");
        listaSala = buscarSalas();
        user = (UsuarioEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
-       medico = medicoEJB.obtenerMedicoPorUsuario(user.getUsername());
+       medico = medicoEJB.obtenerMedicoPorUsuario(user.getUsername());         
     }
     
     

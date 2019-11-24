@@ -6,15 +6,19 @@
 package com.managedbean;
 
 import com.ejb.ConsultaEJB;
+import com.ejb.MedicoEJB;
 import com.ejb.RecetasEJB;
 import com.entities.ConsultaEntity;
+import com.entities.MedicoEntity;
 import com.entities.RecetaEntity;
+import com.entities.UsuarioEntity;
 import edu.utilidades.JsfUtils;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 
@@ -30,20 +34,24 @@ public class RecetasInsertarBean implements Serializable{
    private RecetasEJB recetasEJB;
    @EJB
    private ConsultaEJB consultasEJB;
-   
+   @EJB 
+   private MedicoEJB medicoEJB;
    private ConsultaEntity consulta;
    private RecetaEntity receta;
    List<ConsultaEntity> consultas= new ArrayList<ConsultaEntity>();
-   
+   UsuarioEntity user= new UsuarioEntity();
+   MedicoEntity medico= new MedicoEntity();
    
     public RecetasInsertarBean() {
         
     }
     @PostConstruct
-    public void init(){          
-        consultas=recetasEJB.listarConsultas();
-        consulta= new ConsultaEntity();
-        receta= new RecetaEntity();
+    public void init(){    
+       user = (UsuarioEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+       medico = medicoEJB.obtenerMedicoPorUsuario(user.getUsername());
+       consultas=recetasEJB.listarConsultas(medico.getIdMedico());
+       consulta= new ConsultaEntity();
+       receta= new RecetaEntity();
     }
     
     public void insetarReceta(){

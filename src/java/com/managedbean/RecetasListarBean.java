@@ -5,14 +5,18 @@
  */
 package com.managedbean;
 
+import com.ejb.MedicoEJB;
 import com.ejb.RecetasEJB;
 import com.entities.ConsultaEntity;
+import com.entities.MedicoEntity;
 import com.entities.RecetaEntity;
+import com.entities.UsuarioEntity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 
@@ -25,19 +29,25 @@ import javax.faces.view.ViewScoped;
 public class RecetasListarBean implements Serializable {
 
     @EJB
-    private RecetasEJB recetasEJB;
+    private MedicoEJB medicoEJB;
+    @EJB
+    private RecetasEJB recetasEJB;    
     List<RecetaEntity> recetas= new ArrayList<RecetaEntity>();
+    MedicoEntity medico= new MedicoEntity();
+    UsuarioEntity user= new UsuarioEntity();    
     
    
     public RecetasListarBean() {
     }
     
     @PostConstruct
-    public void init(){      
-        recetas=recetasEJB.listarRecetass();        
+    public void init(){        
+       user = (UsuarioEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+       medico = medicoEJB.obtenerMedicoPorUsuario(user.getUsername());
+       recetas=recetasEJB.listarRecetas(medico.getIdMedico());
     }
-
-   
+    
+       
     public String verReceta(){
         return "/admin/recetas/recetasDetalle.xhtml";
     }    
@@ -48,6 +58,22 @@ public class RecetasListarBean implements Serializable {
 
     public void setRecetas(List<RecetaEntity> recetas) {
         this.recetas = recetas;
+    }
+
+    public MedicoEntity getMedico() {
+        return medico;
+    }
+
+    public void setMedico(MedicoEntity medico) {
+        this.medico = medico;
+    }
+
+    public UsuarioEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UsuarioEntity user) {
+        this.user = user;
     }
 
    

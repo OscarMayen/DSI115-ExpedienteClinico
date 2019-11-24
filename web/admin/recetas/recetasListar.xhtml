@@ -13,24 +13,37 @@
                 <p:commandButton  value="Nueva receta" action="/admin/recetas/recetasInsertar.xhtml?faces-redirect=true"/>             
                 <h2><h:outputText value="Lista de recetas"/></h2>
                 
-                <p:dataTable value="#{recetasListarBean.recetas}" var="item">                 
+                <p:dataTable tableStyle="width:auto" value="#{recetasListarBean.recetas}" 
+                             var="item"
+                             rows="10"
+                             paginator="true"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15" currentPageReportTemplate="Página:({currentPage} de {totalPages})"
+                             >
                     <p:column>
-                        <f:facet name="header">
+                        <f:facet  name="header">
                             <h:outputText value="Nombre del paciente"/>
                         </f:facet>
                         <h:outputText value="#{item.nombrePaciente}"/>
                     </p:column>
+                  
                     <p:column>
                         <f:facet name="header">
-                            <h:outputText value="Apellido del paciente"/>
+                            <h:outputText value="Dui del paciente"/>
                         </f:facet>
-                        <h:outputText value="#{item.apellidoPaciente}"/>
+                        <h:outputText value="#{item.idConsulta.idPaciente.idPersona.dui}"/>
                     </p:column>
                     <p:column>
                         <f:facet name="header">
                             <h:outputText value="Nombre del medico"/>
                         </f:facet>
                         <h:outputText value="#{item.nombreMedico}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Fecha de creacion"/>
+                        </f:facet>
+                        <p:calendar size="8"  disabled="true" value="#{item.idConsulta.fechaConsulta}"/>
                     </p:column>
                     <p:column>
                         <f:facet name="header">
@@ -47,6 +60,7 @@
                         <h:commandButton class="btn btn-primary" action="#{recetasListarBean.verReceta()}" value="Ver">
                             <f:param name="idrec" value="#{item.idReceta}" />
                         </h:commandButton>                        
+                        <h:commandButton disabled="true" class="btn btn-primary" value="Imprimir"/>
                     </p:column>
                 </p:dataTable>
                 
