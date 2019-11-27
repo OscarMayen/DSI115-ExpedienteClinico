@@ -48,30 +48,6 @@
             <div class="col">
                 <f:view>
                     
-                    <br/>
-                    <h:form>
-                        <p:growl id="msgs" showDetail="true" />
-
-                        <p:fieldset legend="Filtros" style="margin-bottom:20px">
-                            <h:panelGrid columns="2" cellpadding="5">
-                                <h:outputLabel>
-                                    Dui:
-                                    <h:inputText value="#{medicoListar.dui}" id="filtroDui"/>
-                                </h:outputLabel>
-                                
-                                <h:outputLabel>
-                                    Especialidad:
-                                    <h:inputText value="#{medicoListar.esp}" id="filtroEsp"/>
-                                </h:outputLabel>
-                                
-                                <h:outputLabel>
-                                    Buscar:
-                                    <p:commandButton id="filtrar" value="Filtrar" update="@(:tabla)" actionListener="#{medicoListar.filtrar()}" />
-                                </h:outputLabel>
-                            </h:panelGrid>
-                        </p:fieldset>
-                    </h:form>
-
                     <h:form>
                         <h1><h:outputText value="Listado de médicos"/></h1>
                         <h:link outcome="/admin/medico/medicoInsertar" value="Nuevo Medico" class="btn btn-success"/>
@@ -83,13 +59,13 @@
                          {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                          rowsPerPageTemplate="5,10,15"
                          currentPageReportTemplate="Página:({currentPage} de {totalPages})">
-                            <p:column headerText="Nombres">
+                            <p:column headerText="Nombres" filterBy="#{item.idPersona.nombrePersona}">
                                 <h:outputText value="#{item.idPersona.nombrePersona}"/>
                             </p:column>
-                            <p:column headerText="Apellidos">
+                            <p:column filterBy="#{item.idPersona.apellidoPersona}" headerText="Apellidos">
                                 <h:outputText value="#{item.idPersona.apellidoPersona}"/>
                             </p:column>
-                            <p:column headerText="Dui">
+                            <p:column headerText="Dui" filterBy="#{item.idPersona.dui}">
                                 <h:outputText value="#{item.idPersona.dui}"/>
                             </p:column>
                             

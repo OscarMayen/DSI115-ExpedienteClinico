@@ -24,28 +24,28 @@
                 <h:form id="formDetalleUsuario">
 
                     <p:growl id="growl" showDetail="true" sticky="true" /> 
-                    <p:fieldset legend="Modificar usuario" style="font-size: 15px; font-weight: bold;" >
+                    <p:fieldset legend="Consultar usuario" style="font-size: 15px; font-weight: bold;" >
                         <p:panelGrid columns="4" >
 
                             <p:outputLabel for="nombreU" value="Nombre" />
                             <p:inputText id="nombreU" value="#{usuarioDetalleBean.usuario.idPersona.nombrePersona}"   
-                                         size="30" required="true" disabled="true"/>
+                                         size="30" required="true" readonly="true"/>
 
                             <p:outputLabel for="apellidoU" value="Apellido"/>
                             <p:inputText id="apellidoU" value="#{usuarioDetalleBean.usuario.idPersona.apellidoPersona}"    
-                                         size="30" required="true" disabled="true"/>
+                                         size="30" required="true" readonly="true"/>
 
                             <p:outputLabel for="telefono1U" value="Telefono"/>
                             <p:inputMask id="telefono1U" value="#{usuarioDetalleBean.usuario.idPersona.telefono}"   
-                                         mask="9999-9999" size="30" required="true" disabled="true"/>
+                                         mask="9999-9999" size="30" required="true" readonly="true"/>
 
                             <p:outputLabel for="telefono2U"  value="Telefono  (Opcional)"/>
                             <p:inputMask  id="telefono2U" value="#{usuarioDetalleBean.usuario.idPersona.telefonoOpcional}"  
-                                          mask="9999-9999" size="30" disabled="true"/>
+                                          mask="9999-9999" size="30" readonly="true"/>
 
                             <p:outputLabel for="duiU" value="Dui"/>
                             <p:inputMask id="duiU" value="#{usuarioDetalleBean.usuario.idPersona.dui}"   
-                                         mask="9999999-9" size="30" required="true" disabled="true"/>
+                                         mask="9999999-9" size="30" required="true" readonly="true"/>
 
                             <p:outputLabel for="fechaNacimientoU" value="Fecha de Nacimiento"/>
                             <p:calendar   value="#{usuarioDetalleBean.usuario.idPersona.fechaNacimiento}" 
@@ -71,12 +71,12 @@
                         <p:panelGrid columns="4"  >
 
                             <p:outputLabel for="usernameUsuM" value="Usuario" />
-                            <p:inputText id="usernameUsuM" value="#{usuarioDetalleBean.usuario.username}"  disabled="true"
+                            <p:inputText id="usernameUsuM" value="#{usuarioDetalleBean.usuario.username}" readonly="true"
                                          size="30" required="true"/>
 
                             <p:outputLabel for="contraseniaUsuM" value="Contraseña"/>
                             <p:password id="contraseniaUsuM" value="#{usuarioDetalleBean.usuario.password}"
-                                        disabled="true"
+                                        readonly="true"
                                         size="15" required="true"/>
 
                             <p:outputLabel value="Seleccione el Rol" />

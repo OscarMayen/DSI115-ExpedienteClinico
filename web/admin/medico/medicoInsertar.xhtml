@@ -13,163 +13,106 @@
             <ui:define name="titulo">
                 Nuevo médico
             </ui:define>
-
-            <ui:define name="css">
-                <style>
-                    .btn{
-
-                        margin-top: 2%;
-                        margin-bottom: 2%;
-
-                    }
-
-                    #btn{
-                        margin-left: 35%;
-                    }
-                </style>
-                <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
-                <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-                <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-            </ui:define>
-
             <ui:define name="contenido">
-                <div class="col-md-8 offset-md-2 bootstrap-iso"> 
-                    <h2>Nuevo médico</h2>
-                    <h:panelGroup layout="block" class="alert-danger" rendered="#{not empty facesContext.messageList}">
-                        <h:messages />
-                    </h:panelGroup>
-                    <h:form>
-                        <div style="width: 100%; height: 20px; border-bottom: 1px solid black; margin-top: 3%; margin-bottom: 3%; text-align: center">
-                            <span style="font-size: 1.5em; background-color: #F3F5F6; padding: 0 10px;">
-                                Datos personales <!--Padding is optional-->
-                            </span>
-                        </div>
+                 <h2>Nuevo Medico</h2>
+                 
+                 <h:form id="formNuevoMedico">
 
-                        <div class="form-group">
-                            <label for="nombresMedico">Nombres</label>
-                            <h:inputText value="#{usuarioMedicoBean.persona.nombrePersona}" title="nombresMedico"
-                                         class="form-control" id="nombresMedico"  
-                                         required="true" requiredMessage="El campo nombres es obligatorio.">
-                            </h:inputText>
-                        </div>
-                        <div class="form-group">
-                            <label for="apellidosMedico">Apellidos</label>
-                            <h:inputText value="#{usuarioMedicoBean.persona.apellidoPersona}" title="apellidosMedico"
-                                         class="form-control" id="apellidosMedico" 
-                                         required="true" requiredMessage="El campo apellidos es obligatorio"/>
-                        </div>
-                        <div class="form-group">
-                            <label for="telefonoMedico">Telefono</label>
-                            <h:inputText value="#{usuarioMedicoBean.persona.telefono}" title="telefonoMedico"
-                                         class="form-control" id="telefonoMedico" maxlength="9" 
-                                         required="true" requiredMessage="El campo telefono es obligatorio."
-                                         validatorMessage="Telefono con formato incorrecto, debe tener el siguiente formato: 2222-2222" >
-                                <f:validateRegex pattern="[267][0-9]{3}-[0-9]{4}" />
-                            </h:inputText>
-                        </div>
+                    <p:growl id="growl" showDetail="true" sticky="true" /> 
+                    <p:fieldset legend="Nuevo Medico" style="font-size: 15px; font-weight: bold;" >
+                        <p:panelGrid columns="4" >
 
-                        <div class="form-group">
-                            <label for="sexoMedico">Sexo</label>
-                            <h:selectOneRadio value="#{usuarioMedicoBean.persona.genero}" title="sexoMedico"
-                                              id="sexoMedico" required="true" requiredMessage="El campo sexo es obligatorio.">
-                                <f:selectItem itemValue="Masculino" itemLabel="Masculino"/>
-                                <f:selectItem itemValue="Femenino" itemLabel="Femenino"/>
-                            </h:selectOneRadio>
-                        </div>
+                            <p:outputLabel for="nombreMed" value="Nombre" />
+                            <p:inputText id="nombreMed" value="#{usuarioMedicoBean.persona.nombrePersona}"   
+                                         size="30" required="true"/>
 
-                        <div class="form-group">
-                            <label for="duiMedico">Dui</label>
-                            <h:inputText value="#{usuarioMedicoBean.persona.dui}" title="duiMedico"
-                                         class="form-control" id="duiMedico" 
-                                         maxlength="10" validatorMessage="Dui con formato incorrecto, debe tener el siguiente formato: 12345678-1"
-                                         required="true" requiredMessage="El campo dui es obligatio.">
-                                <f:validateRegex pattern="[0-9]{8}-[0-9]{1}" />
-                            </h:inputText>
-                        </div>
-                        <div class="form-group">
-                            <label for="fechaNacimientoMedico">Fecha de nacimiento </label><br/>
-                            <p:calendar  value="#{usuarioMedicoBean.persona.fechaNacimiento}" title="fechaNacimientoMedico"
-                                         id="fechaNacimientoMedico" placeholder="dd/MM/yyyy" 
-                                         locale="es"  pattern="dd/MM/yyyy" 
-                                         required="true" requiredMessage="El campo fecha de nacimiento es obligatorio."/>
-                        </div>
+                            <p:outputLabel for="apellidoMed" value="Apellido"/>
+                            <p:inputText id="apellidoMed" value="#{usuarioMedicoBean.persona.apellidoPersona}"    
+                                         size="30" required="true"/>
+
+                            <p:outputLabel for="telefono1Med" value="Telefono"/>
+                            <p:inputMask id="telefono1Med" value="#{usuarioMedicoBean.persona.telefono}"   
+                                         mask="9999-9999" size="30" required="true"/>
+
                         
-                        <div>
-                        <p:selectBooleanCheckbox value="#{usuarioMedicoBean.persona.estadoPersonal}"   
+                            <p:outputLabel for="duiMed" value="Dui"/>
+                            <p:inputMask id="duiMed" value="#{usuarioMedicoBean.persona.dui}"   
+                                         mask="99999999-9" size="30" required="true"/>
+
+                            <p:outputLabel for="fechaNacimientoMed" value="Fecha de Nacimiento"/>
+                            <p:calendar   value="#{usuarioMedicoBean.persona.fechaNacimiento}" 
+                                          id="fechaNacimientoMed" placeholder="dd/MM/yyyy" 
+                                          locale="es"  pattern="dd/MM/yyyy" 
+                                          required="true" size="30"/>
+
+                            <p:outputLabel value="Sexo" for="generoMed"/>
+                            <p:selectOneRadio id="generoMed" value="#{usuarioMedicoBean.persona.genero}"  
+                                              label="Genero" required="true">
+                                <f:selectItem itemLabel="Masculino" itemValue="Masculino"/>
+                                <f:selectItem itemLabel="Femenino" itemValue="Femenino" />
+                            </p:selectOneRadio>
+
+                            <p:outputLabel value="Estado Medico en la institucion" />
+                            <p:selectBooleanCheckbox value="#{usuarioMedicoBean.persona.estadoPersonal}"   
                                                      itemLabel="Activo" />
-                        </div>
+                        </p:panelGrid>
+                    </p:fieldset><br></br>
 
-                        <div style="width: 100%; height: 20px; border-bottom: 1px solid black; margin-top: 3%; margin-bottom: 3%; text-align: center">
-                            <span style="font-size: 1.5em; background-color: #F3F5F6; padding: 0 10px;">
-                                Datos del médico <!--Padding is optional-->
-                            </span>
-                        </div>
-                        
-                        <h4>Especialidades del médico</h4>
-
+                    <h6><strong>DATOS DEL MEDICO</strong></h6>
+                    
+                    <h6><strong>Especialidades del medico</strong></h6>
+                    <p:fieldset>                        
                         <p:selectManyCheckbox id="grid" value="#{usuarioMedicoBean.especilidadesSeleccionadas}" layout="responsive" columns="3">
-                            <f:selectItems value="#{usuarioMedicoBean.especialidadesMedico}" var="esp" itemLabel="#{esp.nombreEspecialidad}" itemValue="#{esp}" />
-                        </p:selectManyCheckbox>
+                        <f:selectItems value="#{usuarioMedicoBean.especialidadesMedico}" var="esp" itemLabel="#{esp.nombreEspecialidad}" itemValue="#{esp}" />
+                        </p:selectManyCheckbox>                        
+                    </p:fieldset><br></br>
+                    
+                    <h6><strong>Redes sociales</strong></h6>
+                    <p:fieldset  style="font-size: 15px; font-weight: bold;" >
+                        <p:panelGrid columns="4"  >
 
-                        <h4>Redes sociales</h4>
-                        
-                        <div class="form-group">
-                            <label for="redSocialFacebook">Facebook(url):</label>
-                            <h:inputText value="#{usuarioMedicoBean.facebook.url}" title="redSocialFacebook"
-                                         class="form-control" id="redSocialFacebook" />
-                        </div>
-                        <div class="form-group">
-                            <label for="redSocialTwitter">Twitter(url):</label>
-                            <h:inputText value="#{usuarioMedicoBean.twitter.url}" title="redSocialTwitter"
-                                         class="form-control" id="redSocialTwitter"/>
-                        </div>
-                        
-                        
-                        <div class="form-group">
-                            <label for="redSocialGmail">Gmail(url):</label>
-                            <h:inputText value="#{usuarioMedicoBean.gmail.url}" title="redSocialGmail"
-                                         class="form-control" id="redSocialGmail"/>
-                        </div>
-                        
+                            <p:outputLabel for="redSocialFacebook" value="Facebook(url):" />
+                            <p:inputText id="redSocialFacebook" value="#{usuarioMedicoBean.facebook.url}"  size="30" required="true"/>
+                            
+                            <p:outputLabel for="redSocialTwitter" value="Twitter(url):" />
+                            <p:inputText id="redSocialTwitter" value="#{usuarioMedicoBean.twitter.url}"  size="30" required="true"/>
+                            
+                            <p:outputLabel for="redSocialGmail" value="Gmail(url):" />
+                            <p:inputText id="redSocialGmail" value="#{usuarioMedicoBean.gmail.url}" required="true"/>
+                                                        
 
-                        <div style="width: 100%; height: 20px; border-bottom: 1px solid black; margin-top: 3%; margin-bottom: 3%; text-align: center">
-                            <span style="font-size: 1.5em; background-color: #F3F5F6; padding: 0 10px;">
-                                Datos del usuario <!--Padding is optional-->
-                            </span>
-                        </div>
+                            
+                        </p:panelGrid>
+                    </p:fieldset><br></br>
+                    
+                    <h6><strong>Datos de usuario</strong></h6>
+                    <p:fieldset>
+                        <p:panelGrid columns="4">
+                             <p:outputLabel for="username" value="Usuario" />
+                            <p:inputText id="username" value="#{usuarioMedicoBean.usuario.username}"  size="30" required="true"/>
 
-                        <div class="form-group">
-                            <label for="usuarioMedico">Usuario</label>
-                            <h:inputText value="#{usuarioMedicoBean.usuario.username}" title="usuarioMedico"
-                                         class="form-control" id="usuarioMedico" 
-                                         required="true" requiredMessage="El campo usuario es obligatorio."/>
-                        </div>
-                        <div class="form-group">
-                            <label for="contraniaUsuario">Contraseña</label>
-                            <h:inputSecret value="#{usuarioMedicoBean.usuario.password}" title="contraniaUsuario"
-                                           class="form-control" id="contraniaUsuario" 
-                                           required="true" requiredMessage="El campo contraseña es obligatorio."/>
-                        </div>
+                            <p:outputLabel for="contrasenia" value="Contraseña"/>
+                            <p:password id="contrasenia" value="#{usuarioMedicoBean.usuario.password}"   
+                                        size="15" required="true"/>
 
-                        <div class="form-group">
-                            <h:outputLabel value="Seleccione un rol:" for="codigoRol" />
-                            <h:selectOneMenu id="codigoRol" class="form-control"
-                                             value="#{usuarioMedicoBean.usuario.idRol}" title="Rol">
+                            <p:outputLabel value="Seleccione el Rol" />
+                            <p:selectOneMenu id="rolUsu" value="#{usuarioMedicoBean.usuario.idRol}">
                                 <f:selectItem
                                     itemValue="#{usuarioMedicoBean.getRolMedico()}"
                                     itemLabel="#{usuarioMedicoBean.getRolMedico().nombreRol}"/>
-                            </h:selectOneMenu>
-                        </div>
+                                                />
+                            </p:selectOneMenu>
 
-                        <h:commandButton value="Guardar" action="#{usuarioMedicoBean.insertarUsuarioMedico()}" class="btn btn-success"/>&nbsp;&nbsp;
-                        <h:link outcome="/admin/medico/medicoListar" value="Cancelar" class="btn btn-danger"/>
-                    </h:form>
+               
+                        </p:panelGrid>
+                    </p:fieldset>
+                    <p:commandButton value="Guardar" action="#{usuarioMedicoBean.insertarUsuarioMedico()}" update="@form" /> 
+                    <p:linkButton outcome="/admin/medico/medicoListar.xhtml" value="Cancelar" />
 
-                </div>
+
+                </h:form>
             </ui:define>
-            <ui:define name="scripts">
-                <h:outputScript name="js/spanishLocale.js"/>
-            </ui:define>
+         
         </ui:composition>
 
     </body>

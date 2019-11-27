@@ -13,93 +13,76 @@
             <ui:define name="titulo">
                 Detalle médico
             </ui:define>
-
-            <ui:define name="css">
-                <style>
-                    .btn{
-
-                        margin-top: 2%;
-                        margin-bottom: 2%;
-
-                    }
-
-                    #btn{
-                        margin-left: 35%;
-                    }
-                </style>
-                <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
-                <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-                <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-            </ui:define>
+            
 
             <ui:define name="contenido">
-                <div class="col-md-8 offset-md-2"> 
+               
                     <h2>Datos del médico</h2>
 
                     <h:form>
-                        <div style="width: 100%; height: 20px; border-bottom: 1px solid black; margin-top: 3%; margin-bottom: 3%; text-align: center">
-                            <span style="font-size: 1.5em; background-color: #F3F5F6; padding: 0 10px;">
-                                Datos personales <!--Padding is optional-->
-                            </span>
-                        </div>
-                        <div class="form-group">
+                       
+                    <p:growl id="growl" showDetail="true" sticky="true" /> 
+                    <p:fieldset legend="Consultar Medico" style="font-size: 15px; font-weight: bold;" >
+                        <p:panelGrid columns="4" >
 
-                            <label for="nombre">Nombre</label>
-                            <h:inputText  value="#{medicoDetalleBean.medico.idPersona.nombrePersona}" class="form-control" id="nombre" required="true" disabled="true"/>
-                        </div>
+                            <p:outputLabel for="nombreMed" value="Nombre" />
+                            <p:inputText id="nombreMed" readonly="true" value="#{medicoDetalleBean.medico.idPersona.nombrePersona}"   
+                                         size="30" required="true"/>
 
-                        <div class="form-group">
+                            <p:outputLabel for="apellidoMed" value="Apellido"/>
+                            <p:inputText id="apellidoMed" readonly="true" value="#{medicoDetalleBean.medico.idPersona.apellidoPersona}"    
+                                         size="30" required="true"/>
 
-                            <label for="apellido">Apellidos</label>
-                            <h:inputText  value="#{medicoDetalleBean.medico.idPersona.apellidoPersona}" class="form-control" id="apellido" required="true" disabled="true"/>
-                        </div>
-                        <div class="form-group">
-                            <label for="telefono">Telefono</label>
-                            <h:inputText value="#{medicoDetalleBean.medico.idPersona.telefono}" class="form-control" id="telefono" maxlength="9" required="true" disabled="true"/>
-                        </div>
+                            <p:outputLabel for="telefono1Med" value="Telefono"/>
+                            <p:inputMask id="telefono1Med" readonly="true" value="#{medicoDetalleBean.medico.idPersona.telefono}"   
+                                         mask="9999-9999" size="30" required="true"/>
 
-                        <div class="form-group">
-                            <label for="sexo">Sexo</label>
-                            <h:selectOneRadio value="#{medicoDetalleBean.medico.idPersona.genero}" id="sexo" disabled="true">
-                                <f:selectItem itemValue="Masculino" itemLabel="MASCULINO "/>
-                                <f:selectItem itemValue="Femenino" itemLabel="FEMENINO "/>
-                            </h:selectOneRadio>
-                        </div>
+                        
+                            <p:outputLabel for="duiMed" value="Dui"/>
+                            <p:inputMask id="duiMed" readonly="true" value="#{medicoDetalleBean.medico.idPersona.dui}"   
+                                         mask="99999999-9" size="30" required="true"/>
 
-                        <div class="form-group">
-                            <label for="dui">Dui</label>
-                            <h:inputText value="#{medicoDetalleBean.medico.idPersona.dui}" class="form-control" id="dui" maxlength="10" required="true" disabled="true"/>
-                        </div>
-                        <div class="form-group">
-                            <label for="fechaNacimiento">Fecha de nacimiento </label><br/>
-                            <p:calendar id="fechaNacimiento" value="#{medicoDetalleBean.medico.idPersona.fechaNacimiento}" placeholder="yyyy/MM/dd" 
-                                        locale="es"  pattern="dd/MM/yyyy" required="true" disabled="true"/>
-                        </div>
+                            <p:outputLabel for="fechaNacimientoMed" value="Fecha de Nacimiento"/>
+                            <p:calendar   value="#{medicoDetalleBean.medico.idPersona.fechaNacimiento}" 
+                                          id="fechaNacimientoMed" placeholder="dd/MM/yyyy" 
+                                          locale="es"  pattern="dd/MM/yyyy" 
+                                          required="true" size="30"
+                                          disabled="true"
+                                          />
 
-                        <div style="width: 100%; height: 20px; border-bottom: 1px solid black; margin-top: 3%; margin-bottom: 3%; text-align: center">
-                            <span style="font-size: 1.5em; background-color: #F3F5F6; padding: 0 10px;">
-                                Datos del médico <!--Padding is optional-->
-                            </span>
-                        </div>
+                            <p:outputLabel value="Sexo" for="generoMed"/>
+                            <p:selectOneRadio disabled="true" id="generoMed" value="#{medicoDetalleBean.medico.idPersona.genero}"  
+                                              label="Genero" required="true">
+                                <f:selectItem itemLabel="Masculino" itemValue="Masculino"/>
+                                <f:selectItem itemLabel="Femenino" itemValue="Femenino" />
+                            </p:selectOneRadio>
 
-                        <p:dataList value="#{medicoDetalleBean.medico.especialidadEntityList}" var="esp" type="ordered">
-                            <f:facet name="header">
-                                Especialidades
-                            </f:facet>
-                            #{esp.nombreEspecialidad}
-                        </p:dataList>
-                        <br/>
-                        <p:dataList value="#{medicoDetalleBean.medico.redsocialEntityList}" var="red" type="ordered">
-                            <f:facet name="header">
-                                Redes sociales
-                            </f:facet>
-                            #{red.nombre}: #{red.url}
-                        </p:dataList>
+                            <p:outputLabel value="Estado Medico en la institucion" />
+                            <p:selectBooleanCheckbox disabled="true" value="#{medicoDetalleBean.medico.idPersona.estadoPersonal}"   
+                                                     itemLabel="Activo" />
+                        </p:panelGrid>
+                    </p:fieldset><br></br>
 
-                        <h:link outcome="/admin/medico/medicoListar" value="Volver" class="btn btn-primary"/>
+                    <h6><strong>DATOS DEL MEDICO</strong></h6>
+                    
+                    <h6><strong>Especialidades</strong></h6>
+                    <p:fieldset style="font-size: 15px; font-weight: bold;" >                        
+                        <p:dataList  value="#{medicoDetalleBean.medico.especialidadEntityList}" type="ordered" var="esp" >                            
+                        #{esp.nombreEspecialidad}
+                        </p:dataList>                        
+                    </p:fieldset><br></br>
+                    
+                    <h6><strong>Redes sociales</strong></h6>
+                    <p:fieldset  style="font-size: 15px; font-weight: bold;" >
+                         <p:dataList  value="#{medicoDetalleBean.medico.redsocialEntityList}" type="ordered" var="red" >                            
+                             #{red.nombre}: #{red.url}
+                        </p:dataList>     
+                    </p:fieldset><br></br>
+                                                         
+                    <p:linkButton outcome="/admin/medico/medicoListar.xhtml" value="Regresar" />
+
                     </h:form>
 
-                </div>
             </ui:define>
 
         </ui:composition>
