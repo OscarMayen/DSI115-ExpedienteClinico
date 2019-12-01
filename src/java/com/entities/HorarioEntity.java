@@ -8,6 +8,7 @@ package com.entities;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -34,13 +36,13 @@ public class HorarioEntity implements Serializable {
     @Basic(optional = false)
     private Integer idHorario;
     @JoinColumn(name = "idMedico", referencedColumnName = "idMedico")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private MedicoEntity idMedico;
     @JoinColumn(name = "idDia", referencedColumnName = "idDia")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private DiasdisponiblesEntity idDia;
     @JoinColumn(name = "idHora", referencedColumnName = "idHora")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private HorasdisponiblesEntity idHora;
 
     public HorarioEntity() {

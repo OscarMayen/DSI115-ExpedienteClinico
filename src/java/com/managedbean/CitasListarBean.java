@@ -9,6 +9,7 @@ import com.ejb.CitasEJB;
 import com.ejb.MedicoEJB;
 import com.ejb.PacienteEJB;
 import com.entities.CitasEntity;
+import com.entities.HorarioEntity;
 import com.entities.MedicoEntity;
 import com.entities.PacienteEntity;
 import com.entities.UsuarioEntity;
@@ -16,6 +17,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -69,6 +71,10 @@ public class CitasListarBean implements Serializable {
 
     private boolean esGuardar;
 
+    private List<MedicoEntity> listaDeMedicos;
+
+    private List<HorarioEntity> horarioMedico;
+
     public CitasListarBean() {
     }
 
@@ -78,6 +84,7 @@ public class CitasListarBean implements Serializable {
         usuarioEntity = (UsuarioEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
         medicoEntity = this.medicoEJB.obtenerMedicoPorUsuario(usuarioEntity.getUsername());
         event = new DefaultScheduleEvent();
+        listaDeMedicos = medicoEJB.listarMedico();
         listarCitasMedico();
     }
 
@@ -117,6 +124,30 @@ public class CitasListarBean implements Serializable {
         this.esGuardar = esGuardar;
     }
 
+    public List<MedicoEntity> getListaDeMedicos() {
+        return listaDeMedicos;
+    }
+
+    public void setListaDeMedicos(List<MedicoEntity> listaDeMedicos) {
+        this.listaDeMedicos = listaDeMedicos;
+    }
+
+    public MedicoEntity getMedicoEntity() {
+        return medicoEntity;
+    }
+
+    public void setMedicoEntity(MedicoEntity medicoEntity) {
+        this.medicoEntity = medicoEntity;
+    }
+
+    public List<HorarioEntity> getHorarioMedico() {
+        return horarioMedico;
+    }
+
+    public void setHorarioMedico(List<HorarioEntity> horarioMedico) {
+        this.horarioMedico = horarioMedico;
+    }
+
     public void addEvent() throws ParseException {
         if (event.getId() == null) {
 
@@ -145,10 +176,10 @@ public class CitasListarBean implements Serializable {
                 citaEntity.setFechaCita(this.formatearFecha(this.event.getStartDate()));
                 citaEntity.setFechaCitaFinal(this.formatearFecha(this.event.getEndDate()));
                 if (this.validarFechaHoraCita(citaEntity.getFechaCita(), citaEntity.getFechaCitaFinal())) {
-                    if (this.validarColisionesEditar(citaEntity.getFechaCita(), citaEntity.getFechaCitaFinal(),citaEntity.getIdCita())) {
+                    if (this.validarColisionesEditar(citaEntity.getFechaCita(), citaEntity.getFechaCitaFinal(), citaEntity.getIdCita())) {
                         this.addMessage(new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                                "¡Error!","Hay citas que colisionan"));
-                        
+                                "¡Error!", "Hay citas que colisionan"));
+
                     } else {
                         citaEntity.setIdMedico(medicoEntity);
                         pacienteEntity = pacienteEJB.busquedaPacientePorDui(this.duiPaciente);
@@ -209,22 +240,31 @@ public class CitasListarBean implements Serializable {
                 this.addMessage(new FacesMessage(FacesMessage.SEVERITY_ERROR,
                         "¡Error!", "Hay colision con alguna cita"));
             } else {
-                nuevaCita.setIdMedico(medicoEntity);
-                pacienteEntity = pacienteEJB.busquedaPacientePorDui(this.duiPaciente);
-                if (pacienteEntity == null) {
-                    this.addMessage(new FacesMessage(FacesMessage.SEVERITY_WARN,
-                            "¡Advertencia!", "No existe ningún paciente con ese dui"
-                    ));
+                if (medicoEntity != null && 
+                        this.verificarDisponibilidadMedico(nuevaCita.getFechaCita(), nuevaCita.getFechaCitaFinal())) {
+                    
+                    nuevaCita.setIdMedico(medicoEntity);
+                    pacienteEntity = pacienteEJB.busquedaPacientePorDui(this.duiPaciente);
+                    if (pacienteEntity == null) {
+                        this.addMessage(new FacesMessage(FacesMessage.SEVERITY_WARN,
+                                "¡Advertencia!", "No existe ningún paciente con ese dui"
+                        ));
+                    } else {
+                        nuevaCita.setIdPaciente(pacienteEntity);
+                        this.citasEJB.insertCita(nuevaCita);
+                        this.event.setDynamicProperty("idEvent", nuevaCita.getIdCita());
+                        this.event.setDynamicProperty("paciente", this.pacienteEntity.getIdPersona().getDui());
+                        this.addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
+                                "¡Información!", "Cita creada con éxito"
+                        ));
+                        eventModel.addEvent(event);
+                    }
                 } else {
-                    nuevaCita.setIdPaciente(pacienteEntity);
-                    this.citasEJB.insertCita(nuevaCita);
-                    this.event.setDynamicProperty("idEvent", nuevaCita.getIdCita());
-                    this.event.setDynamicProperty("paciente", this.pacienteEntity.getIdPersona().getDui());
-                    this.addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
-                            "¡Información!", "Cita creada con éxito"
-                    ));
-                    eventModel.addEvent(event);
+                    this.addMessage(new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                            "¡Error!",
+                            "Elija el médico al cual le asignara la cita y verifique el rango de disponibilidad del médico"));
                 }
+
             }
 
         } else {
@@ -236,6 +276,27 @@ public class CitasListarBean implements Serializable {
     }
 
     public void listarCitasMedico() {
+        List<CitasEntity> citas = this.citasEJB.listarCitas(this.medicoEntity.getIdMedico());
+        for (CitasEntity cita : citas) {
+            DefaultScheduleEvent scheduleEvent = new DefaultScheduleEvent();
+            scheduleEvent.setDynamicProperty("idEvent", cita.getIdCita());
+            scheduleEvent.setTitle(cita.getTitulo());
+            try {
+                scheduleEvent.setStartDate(this.formatearFecha(cita.getFechaCita()));
+                scheduleEvent.setEndDate(this.formatearFecha(cita.getFechaCitaFinal()));
+            } catch (ParseException ex) {
+                Logger.getLogger(CitasListarBean.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            scheduleEvent.setDynamicProperty("paciente", cita.getIdPaciente().getIdPersona().getDui());
+            eventModel.addEvent(scheduleEvent);
+        }
+    }
+
+    public void listarCitasDelMedico() {
+        System.out.println("medico" + medicoEntity.getIdPersona().getNombrePersona());
+        eventModel.clear();
+        this.horarioMedico = this.medicoEJB.obtenerHorarioMedico(medicoEntity.getIdMedico());
         List<CitasEntity> citas = this.citasEJB.listarCitas(this.medicoEntity.getIdMedico());
         for (CitasEntity cita : citas) {
             DefaultScheduleEvent scheduleEvent = new DefaultScheduleEvent();
@@ -334,9 +395,9 @@ public class CitasListarBean implements Serializable {
         }
         return ban;
     }
-    
-    private boolean validarColisionesEditar(Date fechaI, Date fechaF,Integer id) throws ParseException {
-        List<CitasEntity> lista = citasEJB.listarCitasPorFechaEditar(fechaI, this.medicoEntity.getIdMedico(),id);
+
+    private boolean validarColisionesEditar(Date fechaI, Date fechaF, Integer id) throws ParseException {
+        List<CitasEntity> lista = citasEJB.listarCitasPorFechaEditar(fechaI, this.medicoEntity.getIdMedico(), id);
         boolean ban = false;
         String fi = formatoHora.format(fechaI);
         String ff = formatoHora.format(fechaF);
@@ -364,7 +425,7 @@ public class CitasListarBean implements Serializable {
         }
         return ban;
     }
-    
+
     public void onEventMove(ScheduleEntryMoveEvent eventDrag) throws Exception {
         this.event = (DefaultScheduleEvent) eventDrag.getScheduleEvent();
         citaEntity = this.citasEJB.obtenerCita((Integer) event.getDynamicProperties().get("idEvent"));
@@ -373,19 +434,19 @@ public class CitasListarBean implements Serializable {
         System.out.println(citaEntity.getFechaCitaFinal());
         auxI = citaEntity.getFechaCita();
         auxF = citaEntity.getFechaCitaFinal();
-        
+
         if (event.getStartDate().compareTo(new Date()) >= 1
                 || event.getStartDate().compareTo(new Date()) == 0) {
-            
+
             citaEntity.setFechaCita(this.formatearFecha(this.event.getStartDate()));
             citaEntity.setFechaCitaFinal(this.formatearFecha(this.event.getEndDate()));
-            
+
             if (this.validarColisionesEditarM(citaEntity.getFechaCita(),
                     citaEntity.getFechaCitaFinal(),
                     citaEntity.getIdCita())) {
                 this.addMessage(new FacesMessage(FacesMessage.SEVERITY_ERROR,
                         "¡Error!", "El evento colisiona"));
-                
+
                 this.event.setStartDate(auxI);
                 this.event.setEndDate(auxF);
                 System.out.println(citaEntity.getIdCita());
@@ -408,19 +469,18 @@ public class CitasListarBean implements Serializable {
                 }
                 this.event = new DefaultScheduleEvent();
             }
-        }else{
+        } else {
             this.event.setStartDate(auxI);
             this.event.setEndDate(auxF);
             System.out.println(this.event.getStartDate());
             System.out.println(this.event.getEndDate());
             PrimeFaces.current().executeScript("PF('myschedule').update();");
             this.addMessage(new FacesMessage(FacesMessage.SEVERITY_ERROR,
-            "¡Error!","la fecha no será actualizada, no puede editar un cita a una fecha caducada"));
+                    "¡Error!", "la fecha no será actualizada, no puede editar un cita a una fecha caducada"));
         }
         this.event = new DefaultScheduleEvent();
-        
+
     }
-    
 
     private boolean validarColisionesEditarM(Date fechaI, Date fechaF, Integer id) throws ParseException {
         List<CitasEntity> lista = citasEJB.listarCitasPorFechaEditar(fechaI, this.medicoEntity.getIdMedico(), id);
@@ -452,4 +512,134 @@ public class CitasListarBean implements Serializable {
         return ban;
     }
 
+    private boolean verificarDisponibilidadMedico(Date fechaInicio, Date fechaFinal) throws ParseException {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(fechaInicio);
+        int dia = calendar.get(Calendar.DAY_OF_WEEK);
+        String nombreDia = null                                       ,
+                 horaInicio = formatoHora.format(fechaInicio),
+                 horaFinal = formatoHora.format(fechaFinal) ;
+        Date horaInicioComparar = formatoHora.parse(horaInicio) ,
+                horaFinalComparar = formatoHora.parse(horaFinal)  ;
+
+        boolean resultado = false;
+        switch (dia) {
+            case 1:
+                nombreDia = "Domingo";
+                for (HorarioEntity horarioEntity : horarioMedico) {
+                    if(horarioEntity.getIdDia().getNombreDia().equals(nombreDia)){
+                        Date horaInicioDisponibilidad = formatoHora.parse(horarioEntity.getIdHora().getHoraInicio()),
+                                horaFinalDisponibilidad = formatoHora.parse(horarioEntity.getIdHora().getHoraFin());
+                        
+                        if(verificarRangoDeDisponibilidad(horaInicioComparar,horaFinalComparar,
+                                        horaInicioDisponibilidad, horaFinalDisponibilidad)){
+                            resultado = true;
+                        }
+                    }
+                }
+                break;
+            case 2:
+                nombreDia = "Lunes";
+                for (HorarioEntity horarioEntity : horarioMedico) {
+                    if(horarioEntity.getIdDia().getNombreDia().equals(nombreDia)){
+                        Date horaInicioDisponibilidad = formatoHora.parse(horarioEntity.getIdHora().getHoraInicio()),
+                                horaFinalDisponibilidad = formatoHora.parse(horarioEntity.getIdHora().getHoraFin());
+                        
+                        if(verificarRangoDeDisponibilidad(horaInicioComparar,horaFinalComparar,
+                                        horaInicioDisponibilidad, horaFinalDisponibilidad)){
+                            resultado = true;
+                        }
+                    }
+                }
+                break;
+            case 3:
+                nombreDia = "Martes";
+                for (HorarioEntity horarioEntity : horarioMedico) {
+                    if(horarioEntity.getIdDia().getNombreDia().equals(nombreDia)){
+                        Date horaInicioDisponibilidad = formatoHora.parse(horarioEntity.getIdHora().getHoraInicio()),
+                                horaFinalDisponibilidad = formatoHora.parse(horarioEntity.getIdHora().getHoraFin());
+                        
+                        if(verificarRangoDeDisponibilidad(horaInicioComparar,horaFinalComparar,
+                                        horaInicioDisponibilidad, horaFinalDisponibilidad)){
+                            resultado = true;
+                        }
+                    }
+                }
+                break;
+            case 4:
+                nombreDia = "Miércoles";
+                for (HorarioEntity horarioEntity : horarioMedico) {
+                    if(horarioEntity.getIdDia().getNombreDia().equals(nombreDia)){
+                        Date horaInicioDisponibilidad = formatoHora.parse(horarioEntity.getIdHora().getHoraInicio()),
+                                horaFinalDisponibilidad = formatoHora.parse(horarioEntity.getIdHora().getHoraFin());
+                        
+                        if(verificarRangoDeDisponibilidad(horaInicioComparar,horaFinalComparar,
+                                        horaInicioDisponibilidad, horaFinalDisponibilidad)){
+                            resultado = true;
+                        }
+                    }
+                }
+                break;
+            case 5:
+                nombreDia = "Jueves";
+                for (HorarioEntity horarioEntity : horarioMedico) {
+                    if(horarioEntity.getIdDia().getNombreDia().equals(nombreDia)){
+                        Date horaInicioDisponibilidad = formatoHora.parse(horarioEntity.getIdHora().getHoraInicio()),
+                                horaFinalDisponibilidad = formatoHora.parse(horarioEntity.getIdHora().getHoraFin());
+                        
+                        if(verificarRangoDeDisponibilidad(horaInicioComparar,horaFinalComparar,
+                                        horaInicioDisponibilidad, horaFinalDisponibilidad)){
+                            resultado = true;
+                        }
+                    }
+                }
+                break;
+            case 6:
+                nombreDia = "Viernes";
+                for (HorarioEntity horarioEntity : horarioMedico) {
+                    if(horarioEntity.getIdDia().getNombreDia().equals(nombreDia)){
+                        Date horaInicioDisponibilidad = formatoHora.parse(horarioEntity.getIdHora().getHoraInicio()),
+                                horaFinalDisponibilidad = formatoHora.parse(horarioEntity.getIdHora().getHoraFin());
+                        
+                        if(verificarRangoDeDisponibilidad(horaInicioComparar,horaFinalComparar,
+                                        horaInicioDisponibilidad, horaFinalDisponibilidad)){
+                            resultado = true;
+                        }
+                    }
+                }
+                break;
+            case 7:
+                nombreDia = "Sabado";
+                for (HorarioEntity horarioEntity : horarioMedico) {
+                    if(horarioEntity.getIdDia().getNombreDia().equals(nombreDia)){
+                        Date horaInicioDisponibilidad = formatoHora.parse(horarioEntity.getIdHora().getHoraInicio()),
+                                horaFinalDisponibilidad = formatoHora.parse(horarioEntity.getIdHora().getHoraFin());
+                        
+                        if(verificarRangoDeDisponibilidad(horaInicioComparar,horaFinalComparar,
+                                        horaInicioDisponibilidad, horaFinalDisponibilidad)){
+                            resultado = true;
+                        }
+                    }
+                }
+                break;
+        }
+        return resultado;
+    }
+    
+    private boolean verificarRangoDeDisponibilidad(
+            Date horaCitaInicio,Date horaCitaFinal,
+            Date horaDisponibleInicio, Date horaDisponibleFinal){
+        
+        if(horaCitaInicio.compareTo(horaDisponibleInicio)>=0 &&
+                horaCitaInicio.compareTo(horaDisponibleFinal)<=-1){
+            if(horaCitaFinal.compareTo(horaDisponibleInicio)>=1 &&
+                    horaCitaFinal.compareTo(horaDisponibleFinal)<=0){
+                return true;
+            }else{
+                return false;
+            }
+        }else {
+            return false;
+        }
+    }
 }

@@ -113,12 +113,12 @@
 				<textFieldExpression><![CDATA[$F{TELEFONO}]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement x="0" y="52" width="555" height="133" uuid="c577210d-6fe9-447d-97ba-a112fb6e0b05"/>
+				<reportElement x="0" y="64" width="553" height="121" uuid="1542cdf3-4911-49d9-818b-985909b468f1"/>
 				<subreportParameter name="id">
 					<subreportParameterExpression><![CDATA[$P{id}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "historialDePaciente_subreport1.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["/home/josue/Escritorio/CicloVIII/DSI215/segundo sprint/Sprint2_Proyecto/pruebaLogin/DSI115-ExpedienteClinico/web/admin/reportes/reporteDePaciente/historialDePaciente_subreport1.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>

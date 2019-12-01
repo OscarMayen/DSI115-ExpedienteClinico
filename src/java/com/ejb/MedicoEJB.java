@@ -62,6 +62,11 @@ public class MedicoEJB {
         Query query = em.createQuery("SELECT esp from EspecialidadEntity esp where esp.idEspecialidad not in("+esp+")");
         return query.getResultList();
     }
+    
+    public List obtenerHorarioMedico(Integer id){
+        Query query = em.createQuery("SELECT DISTINCT h from HorarioEntity h  JOIN  h.idMedico m JOIN  h.idDia dd JOIN  h.idHora hd where h.idMedico.idMedico = "+id);
+        return query.getResultList();
+    }
 
     public List<MedicoEntity> listarMedico() {
         Query query = em.createNamedQuery("MedicoEntity.findAll");

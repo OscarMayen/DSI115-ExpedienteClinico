@@ -10,15 +10,22 @@
     <ui:define name="titulo">
         Calendario de citas
     </ui:define>
+    <ui:define name="css">
+        <style>
+            .container-fluid{
+                display: flex;
+            }
+        </style>
+    </ui:define>
     <ui:define name="contenido">
 
-        <h:form>
+        <h:form style="width:50%; margin-right: 5%;">
             <p:growl id="messages" showDetail="true" />
 
 
-            <h3 style="margin-top: 0; margin-left: 180px">Calendario de citas</h3>
+            <h3 style="margin-top: 0; margin-left: 0%">Calendario de citas</h3>
             <h:panelGrid columnClasses="value">
-                <p:schedule id="schedule" draggable="true" style="margin-left:180px; width: 650px !important;"
+                <p:schedule id="schedule" draggable="true" style="margin-left:0%; width: 100% !important;"
                             displayEventEnd="true" resizable="false" value="#{citasListarBean.eventModel}"
                             widgetVar="myschedule" timeZone="America/El_Salvador" locale="es">
 
@@ -27,7 +34,8 @@
                     <p:ajax event="eventMove" listener="#{citasListarBean.onEventMove}"  update="messages"/>
 
                 </p:schedule>
-           </h:panelGrid>
+
+            </h:panelGrid>
 
             <p:dialog widgetVar="eventDialog" header="Detalles del evento" showEffect="clip" hideEffect="clip">
                 <h:panelGrid id="eventDetails" columns="2">
@@ -49,6 +57,38 @@
                     <p:commandButton rendered="#{!citasListarBean.esGuardar}" id="deleteButton" value="Borrar" update="messages" action="#{citasListarBean.delEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
                 </h:panelGrid>
             </p:dialog>    
+        </h:form>
+        <h:form style="width:40%;">
+            <h3>Detalle del médico</h3>
+            <p:panelGrid columns="1" layout="grid">
+                <p:fieldset legend="Filtro" style="margin-bottom:20px">
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <p:outputLabel for="selectOneB" value="SelectOne" />
+                        <p:selectOneMenu value="#{citasListarBean.medicoEntity}"
+                                         id="selectOneB">
+                            <f:selectItem itemLabel="Seleccione..." itemValue="" />
+                            <f:selectItems value="#{citasListarBean.listaDeMedicos}"
+                                           var="medicos" itemLabel="#{medicos.idPersona.nombrePersona}"
+                                           itemValue="#{medicos}"/>
+                        </p:selectOneMenu>
+                    </h:panelGrid>
+                    <p:commandButton value="Buscar" update="@(id=schedule),@(id=horarioDisponible)"
+                                     action="#{citasListarBean.listarCitasDelMedico()}"/>
+                </p:fieldset>
+                <p:dataTable id="horarioDisponible" var="horario" value="#{citasListarBean.horarioMedico}">
+                    <p:column headerText="Dia">
+                        <h:outputText value="#{horario.idDia.nombreDia}" />
+                    </p:column>
+
+                    <p:column headerText="Hora inicio">
+                        <h:outputText value="#{horario.idHora.horaInicio}" />
+                    </p:column>
+
+                    <p:column headerText="Hora fin">
+                        <h:outputText value="#{horario.idHora.horaFin}" />
+                    </p:column>
+                </p:dataTable>
+            </p:panelGrid>
         </h:form>
     </ui:define>
 
