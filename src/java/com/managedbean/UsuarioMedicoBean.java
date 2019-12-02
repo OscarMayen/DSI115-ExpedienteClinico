@@ -184,7 +184,8 @@ public class UsuarioMedicoBean implements Serializable {
     }
 
     public RolEntity getRolMedico() {
-        return rolEJB.obtenerRol(2);
+        //return rolEJB.obtenerRol(2);
+        return rolEJB.obtenerRolMedicoExacto("Medico");
     }
 
     public List<EspecialidadEntity> getListarEspecialidades() {

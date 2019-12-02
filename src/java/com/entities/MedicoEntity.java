@@ -62,8 +62,7 @@ public class MedicoEntity implements Serializable {
     @JoinColumn(name = "idPersona", referencedColumnName = "idPersona")
    @OneToOne(cascade=CascadeType.ALL)
     private PersonaEntity idPersona;
-    @OneToMany(mappedBy = "idMedico")
-    private List<ConsultaEntity> consultaEntityList;
+    
 
     
     public MedicoEntity() {
@@ -111,14 +110,6 @@ public class MedicoEntity implements Serializable {
 
     public void setIdPersona(PersonaEntity idPersona) {
         this.idPersona = idPersona;
-    }
-
-    public List<ConsultaEntity> getConsultaEntityList() {
-        return consultaEntityList;
-    }
-
-    public void setConsultaEntityList(List<ConsultaEntity> consultaEntityList) {
-        this.consultaEntityList = consultaEntityList;
     }
 
     @Override

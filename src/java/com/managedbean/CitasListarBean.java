@@ -80,7 +80,6 @@ public class CitasListarBean implements Serializable {
     public void init() {
         eventModel = new DefaultScheduleModel();
         usuarioEntity = (UsuarioEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
-        medicoEntity = this.medicoEJB.obtenerMedicoPorUsuario(usuarioEntity.getUsername());
         event = new DefaultScheduleEvent();
         listaDeMedicos = medicoEJB.listarMedico();
     }

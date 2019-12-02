@@ -39,9 +39,10 @@ and open the template in the editor.
                     <h:link rendered="#{request.isUserInRole('Medico')}" outcome="/admin/antecedentes/listarAntecedentes" value=" Gestion Antecedentes" class="list-group-item list-group-item-action bg-light"/>
                     <h:link rendered="#{request.isUserInRole('admin')}" outcome="/admin/sala/salaListar" value="Gestion Salas" class="list-group-item list-group-item-action bg-light"/>
                     <h:link rendered="#{request.isUserInRole('admin')}" outcome="/admin/especialidad/especialidadListar" value="Gestion Especialidades" class="list-group-item list-group-item-action bg-light"/>
-                    <h:link rendered="#{request.isUserInRole('Medico')}" outcome="/admin/citas/citasListar" value="Calendario de Citas" class="list-group-item list-group-item-action bg-light" /> 
+                    <h:link rendered="#{request.isUserInRole('archivista')}" outcome="/admin/citas/citasListar" value="Calendario de Citas" class="list-group-item list-group-item-action bg-light" /> 
                     <h:link rendered="#{request.isUserInRole('admin')}" outcome="/admin/mobiliario/mobiliarioListar" value="Gestion Mobiliario" class="list-group-item list-group-item-action bg-light"/>
                     <h:link rendered="#{request.isUserInRole('Medico')}" outcome="/admin/recetas/recetasListar" value="Gestion de Recetas" class="list-group-item list-group-item-action bg-light"/>
+                    <h:link rendered="#{request.isUserInRole('archivista')}" outcome="/admin/paciente/pacienteListar" value="Gestion Pacientes" class="list-group-item list-group-item-action bg-light"/>
                 </div>
             </div>
             <!-- /#sidebar-wrapper -->

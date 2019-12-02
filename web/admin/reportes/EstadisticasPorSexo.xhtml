@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../../plantillas/plantilla.xhtml">
+
+            <ui:define name="titulo">
+                Reporte de pacientes
+            </ui:define>
+
+            <ui:define name="css">
+               
+            </ui:define>
+
+            <ui:define name="contenido">
+                
+                <h:form>
+                    <br></br>
+                    <p:calendar id="fechaInicial" navigator="true" showButtonPanel="false" placeholder="yyyy/MM/dd" 
+                                value="#{reporteCantidadSexoBean.fechaI}" locale="es"  pattern="yyyy/MM/dd"/>  &nbsp;&nbsp;
+
+                    <p:calendar id="fechaFinal" navigator="true" showButtonPanel="false" placeholder="yyyy/MM/dd" 
+                                value="#{reporteCantidadSexoBean.fechaF}" locale="es"  pattern="yyyy/MM/dd" />  &nbsp;&nbsp;
+                    <h:commandLink id="reporte" target="_blank" value="reporte" actionListener="#{reporteCantidadSexoBean.verReporte()}" title="Ver reporte de clientes"/>                        
+                </h:form>
+            </ui:define>
+
+            <ui:define name="scripts">
+                
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

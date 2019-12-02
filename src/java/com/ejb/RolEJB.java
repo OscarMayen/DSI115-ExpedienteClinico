@@ -31,6 +31,11 @@ public class RolEJB {
         Query query = em.createNamedQuery("RolEntity.findAll");
         return query.getResultList();
     }
+    
+    public RolEntity obtenerRolMedicoExacto(String rol){
+        Query query = em.createQuery("select r from RolEntity r where r.nombreRol  = '"+rol+"'");
+        return (RolEntity) query.getSingleResult();
+    }
 
     public void persist(Object object) {
         em.persist(object);
