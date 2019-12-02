@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="05dc22bc-ec3c-4926-a771-1bc8644196bc">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[select per.*,med.*,con.*,count(con.idConsulta) as cantidadConsultas
+from expedienteclinico.consulta as con
+inner join expedienteclinico.medico as med on con.idMedico=med.idMedico 
+inner join expedienteclinico.persona as per on med.idPersona=per.idPersona
+group by med.idMedico;]]>
+	</queryString>
+	<field name="idPersona" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombrePersona" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="apellidoPersona" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="telefono" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dui" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="genero" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fechaNacimiento" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="telefonoOpcional" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="estadoPersonal" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idMedico" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idConsulta" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idPaciente" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idSignosVitales" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idSala" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fechaConsulta" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cantidadConsultas" class="java.lang.Long"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="84">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="84" forecolor="#00CC99" uuid="f636d8a8-d078-47ff-895c-5d02ea706051"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[B. BRAUN MEDICAL CENTRAL AMERICA & CARIBE
+REPORTE DE CANTIDAD DE CONSULTAS QUE HA DADO CADA MEDICO]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="50">
+			<staticText>
+				<reportElement x="17" y="0" width="524" height="50" forecolor="#00CC99" uuid="566bc3d6-41e4-43d2-9ed8-ee8fb6d2751c"/>
+				<textElement textAlignment="Center">
+					<font size="24"/>
+				</textElement>
+				<text><![CDATA[Consultas atendidas]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="53" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" uuid="5c9bdc25-378e-43ad-ab40-7da78456f81b"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRE DOCTOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="118" y="0" width="100" height="20" uuid="6ac3cd39-10f0-4040-9da5-a03aa12cc5fa"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[APELLIDO DOCTOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="218" y="0" width="100" height="20" uuid="478fb9b3-5516-4b35-8f95-6211b040b4c8"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DUI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="318" y="0" width="100" height="20" uuid="5eee2639-8190-42c4-a072-2e1565159929"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TELEFONO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="441" y="0" width="100" height="43" uuid="7a5309a1-962a-488c-bb9d-400fde63586f"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CANTIDAD DE CONSULTAS ATENDIDAS]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20" uuid="58b03131-e396-4c90-9b88-16c4773689ca"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{nombrePersona}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="118" y="0" width="100" height="20" uuid="667a5936-593d-42f5-a47b-9fb290b98b34"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{apellidoPersona}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="218" y="0" width="100" height="20" uuid="500a77e0-5e77-485b-a795-14bdf237dcbb"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{dui}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="318" y="0" width="100" height="20" uuid="dec1ba4a-2e24-4679-a7a0-66448456bc56"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{telefono}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="441" y="0" width="100" height="20" uuid="6a976302-4103-4821-875a-793f17a066b9"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{cantidadConsultas}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="50">
+			<textField>
+				<reportElement x="418" y="30" width="80" height="20" uuid="3e713e8c-9cbf-4df0-9fc7-f964230db5df"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="501" y="30" width="40" height="20" uuid="6f70c213-ae78-453f-a565-6790b693cb24"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement x="0" y="30" width="100" height="20" uuid="2b16fd2d-ac34-43a7-be14-8af7a9910c81"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>
