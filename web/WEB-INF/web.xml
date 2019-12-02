@@ -54,9 +54,10 @@
     <security-constraint>
         <display-name>Archivista</display-name>
         <web-resource-collection>
-            <web-resource-name>reourseAdministrador</web-resource-name>
+            <web-resource-name>reourseArchivista</web-resource-name>
             <description/>
             <url-pattern>/faces/admin/paciente/*</url-pattern>
+            <url-pattern>/faces/admin/citas/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <description/>
@@ -70,6 +71,7 @@
             <description/>
             <url-pattern>/faces/admin/consulta/*</url-pattern>
             <url-pattern>/faces/admin/antecedentes/*</url-pattern>
+            <url-pattern>/faces/admin/citas/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <description/>

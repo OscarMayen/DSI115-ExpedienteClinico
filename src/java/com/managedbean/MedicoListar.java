@@ -33,7 +33,7 @@ import javax.faces.context.FacesContext;
 public class MedicoListar implements Serializable {
 
     
-        @EJB
+    @EJB
     private PersonaEJB personaEJB;
 
     @EJB
