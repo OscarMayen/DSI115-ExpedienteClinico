@@ -48,6 +48,11 @@ public class CitasEJB {
         return (CitasEntity) query.getSingleResult();
     }
     
+    public Object obtenerFechas(Integer id){
+        Query query = em.createQuery("SELECT c.fechaCita,c.fechaCitaFinal from CitasEntity c where c.idCita = "+id);
+        return query.getSingleResult();
+    }
+    
     public List<CitasEntity> listarCitas(Integer idMedico){
         Query query = em.createQuery("SELECT c FROM CitasEntity c INNER JOIN c.idMedico m WHERE m.idMedico ="+idMedico);
         return query.getResultList();

@@ -27,7 +27,8 @@
             <h:panelGrid columnClasses="value">
                 <p:schedule id="schedule" draggable="true" style="margin-left:0%; width: 100% !important;"
                             displayEventEnd="true" resizable="false" value="#{citasListarBean.eventModel}"
-                            widgetVar="myschedule" timeZone="America/El_Salvador" locale="es">
+                            widgetVar="myschedule" timeZone="America/El_Salvador" locale="es"
+                            allDaySlot="false">
 
                     <p:ajax event="dateSelect" listener="#{citasListarBean.onDateSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
                     <p:ajax event="eventSelect" listener="#{citasListarBean.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
@@ -63,7 +64,7 @@
             <p:panelGrid columns="1" layout="grid">
                 <p:fieldset legend="Filtro" style="margin-bottom:20px">
                     <h:panelGrid columns="2" cellpadding="5">
-                        <p:outputLabel for="selectOneB" value="SelectOne" />
+                        <p:outputLabel for="selectOneB" value="Médico" />
                         <p:selectOneMenu value="#{citasListarBean.medicoEntity}"
                                          id="selectOneB">
                             <f:selectItem itemLabel="Seleccione..." itemValue="" />

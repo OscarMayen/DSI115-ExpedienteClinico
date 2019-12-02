@@ -65,8 +65,6 @@ public class MedicoEntity implements Serializable {
     @OneToMany(mappedBy = "idMedico")
     private List<ConsultaEntity> consultaEntityList;
 
-    @OneToMany(mappedBy = "idMedico")
-    private List<HorarioEntity> horarioEntityList;
     
     public MedicoEntity() {
     }

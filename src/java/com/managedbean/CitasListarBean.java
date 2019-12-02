@@ -65,8 +65,6 @@ public class CitasListarBean implements Serializable {
     private PacienteEntity pacienteEntity;
     private UsuarioEntity usuarioEntity;
     private CitasEntity citaEntity;
-    private Date auxI;
-    private Date auxF;
     private String duiPaciente;
 
     private boolean esGuardar;
@@ -85,7 +83,6 @@ public class CitasListarBean implements Serializable {
         medicoEntity = this.medicoEJB.obtenerMedicoPorUsuario(usuarioEntity.getUsername());
         event = new DefaultScheduleEvent();
         listaDeMedicos = medicoEJB.listarMedico();
-        listarCitasMedico();
     }
 
     public PacienteEntity getPacienteEntity() {
@@ -388,7 +385,15 @@ public class CitasListarBean implements Serializable {
                     && fechaFinal.compareTo(fechaListaF) <= -1)) {
                 ban = true;
                 break;
-            } else {
+            } else if( (fechaListaI.compareTo(fechaInicio)>=0
+                    && fechaListaI.compareTo(fechaFinal) <= -1)){
+                ban = true;
+                break;
+            }else if( (fechaListaF.compareTo(fechaInicio) >= 0
+                    && fechaListaF.compareTo(fechaFinal) <= -1) ){
+                ban = true;
+                break;
+            }else{
                 ban = false;
             }
 
@@ -418,7 +423,15 @@ public class CitasListarBean implements Serializable {
                     && fechaFinal.compareTo(fechaListaF) <= -1)) {
                 ban = true;
                 break;
-            } else {
+            } else if( (fechaListaI.compareTo(fechaInicio)>=0
+                    && fechaListaI.compareTo(fechaFinal) <= -1)){
+                ban = true;
+                break;
+            }else if( (fechaListaF.compareTo(fechaInicio) >= 0
+                    && fechaListaF.compareTo(fechaFinal) <= -1) ){
+                ban = true;
+                break;
+            }else{
                 ban = false;
             }
 
@@ -428,12 +441,10 @@ public class CitasListarBean implements Serializable {
 
     public void onEventMove(ScheduleEntryMoveEvent eventDrag) throws Exception {
         this.event = (DefaultScheduleEvent) eventDrag.getScheduleEvent();
+        Object object = this.citasEJB.obtenerFechas((Integer) event.getDynamicProperties().get("idEvent"));
+        Object[] o = (Object[]) object;
+        
         citaEntity = this.citasEJB.obtenerCita((Integer) event.getDynamicProperties().get("idEvent"));
-        System.out.println(citaEntity.getIdCita());
-        System.out.println(citaEntity.getFechaCita());
-        System.out.println(citaEntity.getFechaCitaFinal());
-        auxI = citaEntity.getFechaCita();
-        auxF = citaEntity.getFechaCitaFinal();
 
         if (event.getStartDate().compareTo(new Date()) >= 1
                 || event.getStartDate().compareTo(new Date()) == 0) {
@@ -447,14 +458,11 @@ public class CitasListarBean implements Serializable {
                 this.addMessage(new FacesMessage(FacesMessage.SEVERITY_ERROR,
                         "¡Error!", "El evento colisiona"));
 
-                this.event.setStartDate(auxI);
-                this.event.setEndDate(auxF);
-                System.out.println(citaEntity.getIdCita());
-                System.out.println(this.event.getStartDate());
-                System.out.println(this.event.getEndDate());
+                this.event.setStartDate((Date) o[0]);
+                this.event.setEndDate((Date) o[1]);
+                
                 PrimeFaces.current().executeScript("PF('myschedule').update();");
             } else {
-                System.out.println("entro no se como");
                 if (this.citasEJB.actualizarFechaEvento(citaEntity) == 1) {
 
                     this.addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -470,10 +478,8 @@ public class CitasListarBean implements Serializable {
                 this.event = new DefaultScheduleEvent();
             }
         } else {
-            this.event.setStartDate(auxI);
-            this.event.setEndDate(auxF);
-            System.out.println(this.event.getStartDate());
-            System.out.println(this.event.getEndDate());
+            this.event.setStartDate((Date) o[0]);
+            this.event.setEndDate((Date) o[1]);
             PrimeFaces.current().executeScript("PF('myschedule').update();");
             this.addMessage(new FacesMessage(FacesMessage.SEVERITY_ERROR,
                     "¡Error!", "la fecha no será actualizada, no puede editar un cita a una fecha caducada"));
@@ -504,7 +510,15 @@ public class CitasListarBean implements Serializable {
                     && fechaFinal.compareTo(fechaListaF) <= -1)) {
                 ban = true;
                 break;
-            } else {
+            } else if( (fechaListaI.compareTo(fechaInicio)>=0
+                    && fechaListaI.compareTo(fechaFinal) <= -1)){
+                ban = true;
+                break;
+            }else if( (fechaListaF.compareTo(fechaInicio) >= 0
+                    && fechaListaF.compareTo(fechaFinal) <= -1) ){
+                ban = true;
+                break;
+            }else{
                 ban = false;
             }
 
