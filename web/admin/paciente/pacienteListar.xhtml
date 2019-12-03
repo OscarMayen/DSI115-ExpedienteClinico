@@ -56,11 +56,11 @@
                     <h:outputText value="#{paciente.idPersona.apellidoPersona}" />
                 </p:column>
 
-                <p:column headerText="Telefono de emergencia">
+                <p:column filterBy="#{paciente.telefonoEmergencia}" headerText="Telefono de emergencia">
                     <h:outputText value="#{paciente.telefonoEmergencia}" />
                 </p:column>
 
-                <p:column headerText="Nombre responsable">
+                <p:column filterBy="#{paciente.nombreResponsable}" headerText="Nombre responsable">
                     <h:outputText value="#{paciente.nombreResponsable}" />
                 </p:column>
 

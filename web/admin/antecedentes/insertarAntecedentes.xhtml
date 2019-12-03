@@ -18,7 +18,7 @@
             
               <h6><strong>DATOS DEL PACIENTE</strong></h6>
                     <p:fieldset  style="font-size: 15px; font-weight: bold;" >
-                        <p:panelGrid columns="7"  >
+                        <p:panelGrid id="grid" columns="7"  >
 
                             <p:outputLabel for="duiPa" value="Dui:"/>
                             <p:outputLabel   id="duiPa" value="#{antecendentesInsertarBean.patient.idPersona.dui}"/> 
@@ -33,11 +33,11 @@
                      <p:fieldset  style="font-size: 15px; font-weight: bold;width: 100%" >
                         <p:panelGrid style="width:100%" columns="2"  >
                             <p:outputLabel for="alergias" style="width:100%" value="Alergias"/>
-                            <p:inputTextarea  id="alergias" style="width:100%" value="#{antecendentesInsertarBean.aler}"/>
+                            <p:inputTextarea required="true" id="alergias" style="width:100%" value="#{antecendentesInsertarBean.aler}"/>
                             <p:outputLabel for="ancedentesF" style="width:100%" value="Antecedentes Familiares"/>
-                            <p:inputTextarea  id="ancedentesF" style="width:100%" value="#{antecendentesInsertarBean.antefam}"/>
+                            <p:inputTextarea required="true" id="ancedentesF" style="width:100%" value="#{antecendentesInsertarBean.antefam}"/>
                             <p:outputLabel for="ancedentesP" style="width:100%" value="Antecedentes Personales"/>
-                            <p:inputTextarea  id="ancedentesP" style="width:100%" value="#{antecendentesInsertarBean.anteper}"/>                         
+                            <p:inputTextarea required="true" id="ancedentesP" style="width:100%" value="#{antecendentesInsertarBean.anteper}"/>                         
                             <p:commandButton style="width: 50%;margin-left: 30%"  update="form" value="Guadar" actionListener="#{antecendentesInsertarBean.insertarDatos()}"/>
                             <p:linkButton style="width: 50%; margin-left: 30%" outcome="/admin/antecedentes/listarAntecedentes?face-redirect=true" value="CANCELAR" />
                         </p:panelGrid>
@@ -56,23 +56,23 @@
                                          rows="10" paginator="true"                                        
                                          paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                          rowsPerPageTemplate="5,10,15" currentPageReportTemplate="Página:({currentPage} de {totalPages})">                                
-                                <p:column headerText="CORRELATIVO">
+                                <p:column filterBy="#{pac.idPaciente}" headerText="CORRELATIVO">
                                     <h:outputText value="#{pac.idPaciente}" />
                                 </p:column>
 
-                                <p:column headerText="DUI">
+                                <p:column filterBy="#{pac.idPersona.dui}" headerText="DUI">
                                     <h:outputText value="#{pac.idPersona.dui}" />
                                 </p:column>
 
-                                <p:column headerText="Nombre">
+                                <p:column filterBy="#{pac.idPersona.nombrePersona}" headerText="Nombre">
                                     <h:outputText value="#{pac.idPersona.nombrePersona}" />
                                 </p:column>
 
-                                <p:column headerText="Apellido">
+                                <p:column filterBy="#{pac.idPersona.apellidoPersona}" headerText="Apellido">
                                     <h:outputText value="#{pac.idPersona.apellidoPersona}" />
                                 </p:column>
                                 <p:column headerText="Seleccionar">
-                                    <p:commandButton update="form" onclick="PF('dlgPaciente').hide();" icon="ui-icon-check" style="margin-left: 30%"  action="#{antecendentesInsertarBean.obtenerPaciente(pac.idPaciente)}"/>
+                                    <p:commandButton update=":form:grid" process="@this" onclick="PF('dlgPaciente').hide();" icon="ui-icon-check" style="margin-left: 30%"  action="#{antecendentesInsertarBean.obtenerPaciente(pac.idPaciente)}"/>
                                 </p:column>
 
                             </p:dataTable>

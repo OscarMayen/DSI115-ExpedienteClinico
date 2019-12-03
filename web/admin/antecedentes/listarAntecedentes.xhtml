@@ -13,25 +13,25 @@
                 <h2><h:outputText value="Lista de antecedentes"/></h2>
                 
                 <p:dataTable value="#{antecedentesListarBean.antecedentes}" var="item">                 
-                    <p:column>
+                    <p:column filterBy="#{item.alergico}">
                         <f:facet name="header">
                             <h:outputText value="Alergias"/>
                         </f:facet>
                         <h:outputText value="#{item.alergico}"/>
                     </p:column>
-                    <p:column>
+                    <p:column filterBy="#{item.anteFamiliar}">
                         <f:facet name="header">
                             <h:outputText value="Antecedentes familiaes"/>
                         </f:facet>
                         <h:outputText value="#{item.anteFamiliar}"/>
                     </p:column>
-                    <p:column>
+                    <p:column filterBy="#{item.idPaciente.idPersona.nombrePersona}">
                         <f:facet name="header">
                             <h:outputText value="Nombre"/>
                         </f:facet>
                         <h:outputText value="#{item.idPaciente.idPersona.nombrePersona}"/>
                     </p:column>
-                    <p:column>
+                    <p:column filterBy="#{item.idPaciente.idPersona.dui}">
                         <f:facet name="header">
                             <h:outputText value="Dui"/>
                         </f:facet>

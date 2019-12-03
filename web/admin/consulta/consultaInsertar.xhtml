@@ -155,19 +155,19 @@
                                          rowsPerPageTemplate="5,10,15" currentPageReportTemplate="Página:({currentPage} de {totalPages})">
                                 <p:ajax event="rowSelect" listener="#{consultaInsertarBean.onSelecttblPaciente}" update="@form"/>
 
-                                <p:column headerText="CORRELATIVO">
+                                <p:column filterBy="#{pac.idPaciente}" headerText="CORRELATIVO">
                                     <h:outputText value="#{pac.idPaciente}" />
                                 </p:column>
 
-                                <p:column headerText="DUI">
+                                <p:column filterBy="#{pac.idPersona.dui}" headerText="DUI">
                                     <h:outputText value="#{pac.idPersona.dui}" />
                                 </p:column>
 
-                                <p:column headerText="Nombre">
+                                <p:column filterBy="#{pac.idPersona.nombrePersona}" headerText="Nombre">
                                     <h:outputText value="#{pac.idPersona.nombrePersona}" />
                                 </p:column>
 
-                                <p:column headerText="Apellido">
+                                <p:column filterBy="#{pac.idPersona.apellidoPersona}" headerText="Apellido">
                                     <h:outputText value="#{pac.idPersona.apellidoPersona}" />
                                 </p:column>
 

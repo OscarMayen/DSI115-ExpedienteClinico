@@ -28,9 +28,9 @@
                         </p:panelGrid>
                     </p:fieldset><br></br>
                     
-                    <h6><strong>Receta</strong></h6>
+                    <h6><strong><p:outputLabel for="receta" value="Receta:" /></strong></h6>
                      <p:fieldset  style="font-size: 15px; font-weight: bold;width: 100%" >
-                        <p:panelGrid style="width:100%" columns="3"  >                            
+                        <p:panelGrid style="width:100%" columns="3"  >                                                
                             <p:inputTextarea required="true" id="receta" style="width:100%" value="#{recetasInsertarBean.receta.descripcionReceta}"/>                                                     
                             <p:commandButton style="width: 50%;margin-left: 30%"  update="form" value="Guadar" actionListener="#{recetasInsertarBean.insetarReceta()}"/>
                             <p:linkButton style="width: 50%; margin-left: 30%" outcome="/admin/recetas/recetasListar?face-redirect=true" value="Cancelar" />
@@ -50,20 +50,20 @@
                                          rows="10" paginator="true"                                        
                                          paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                          rowsPerPageTemplate="5,10,15" currentPageReportTemplate="Página:({currentPage} de {totalPages})">                                
-                                <p:column headerText="CORRELATIVO">
+                                <p:column filterBy="#{con.idConsulta}" headerText="CORRELATIVO">
                                     <h:outputText value="#{con.idConsulta}" />
                                 </p:column>
 
-                                <p:column headerText="Nombre del medico">
+                                <p:column filterBy="#{con.idMedico.idPersona.nombrePersona}" headerText="Nombre del medico">
                                     <h:outputText value="#{con.idMedico.idPersona.nombrePersona}" />
                                 </p:column>
 
-                                <p:column headerText="Nombre del paciente">
+                                <p:column filterBy="#{con.idPaciente.idPersona.nombrePersona}" headerText="Nombre del paciente">
                                     <h:outputText value="#{con.idPaciente.idPersona.nombrePersona}" />
                                 </p:column>
 
-                                <p:column headerText="Fecha de la consulta">
-                                    <p:calendar disabled="true" value="#{con.fechaConsulta}" />
+                                <p:column filterBy="#{con.fechaConsulta}" headerText="Fecha de la consulta">
+                                    <p:calendar size="8" disabled="true" value="#{con.fechaConsulta}" />
                                 </p:column>
                                 <p:column headerText="Seleccionar">
                                     <p:commandButton update="form" process="@this" onclick="PF('dlgConsulta').hide();" icon="ui-icon-check" style="margin-left: 30%"  action="#{recetasInsertarBean.obtenerConsulta(con.idConsulta)}"/>

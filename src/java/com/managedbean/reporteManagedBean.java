@@ -66,8 +66,8 @@ public class reporteManagedBean implements Serializable{
      
        public void verReporteRecetas() throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException{
 //         Instancia hacia la clase reporteClientes   
-           System.out.println(paciente.getIdPaciente());
-           System.out.println(medico.getIdMedico());
+            System.out.println("SOSOSOSLSSOSLSOSSL");
+           
         invocarReporte r = new invocarReporte();
         
         FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -79,6 +79,7 @@ public class reporteManagedBean implements Serializable{
         FacesContext.getCurrentInstance().responseComplete();    
         }
         else{
+            System.out.println("ELSELESELESLESLSLELLSLSLE");
         String ruta = servletContext.getRealPath("/admin/reportes/ReporteRecetasNoParametros.jasper");                
         r.getReporteRecetas(ruta);
         FacesContext.getCurrentInstance().responseComplete();    

@@ -1,0 +1,107 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns="http://www.w3.org/1999/xhtml"
+                template="./../../plantillas/plantilla.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:define name="contenido">
+        <h:form id="formpac">
+            <table  border="2px solid black" cellpadding="10" cellspacing="10">
+                <tr>
+                    <td>                        
+                        <strong><p>Seleccione paciente para el filtro</p></strong>
+                            <p:fieldset  style="font-size: 15px; font-weight: bold;" >
+                                <p:panelGrid columns="3"  >
+                                    <p:outputLabel style="font-weight: bold" for="nomPa" value="Nombre Paciente:"/>
+                                    <p:outputLabel   id="nomPa" value="#{reporteManagedBean.paciente.idPersona.nombrePersona}"/>                     
+                                    <p:commandButton style="margin-left: 35px; margin-bottom: 15px" id="btnBusqPac" icon="ui-icon-search" type="button"
+                                                     onclick="PF('dlgPaciente').show();"/>
+                                </p:panelGrid>
+                            </p:fieldset>                    
+                    </td>
+                    <td>
+                        <strong><p>Seleccione medico para el filtro</p></strong>
+                        <p:fieldset  style="font-size: 15px; font-weight: bold;" >
+                                <p:panelGrid columns="3"  >
+                                    <p:outputLabel style="font-weight: bold" for="nomMe" value="Nombre Medico:"/>
+                                    <p:outputLabel   id="nomMe" value="#{reporteManagedBean.medico.idPersona.nombrePersona}"/>                     
+                                    <p:commandButton style="margin-left: 35px; margin-bottom: 15px" id="btnBusqMed" icon="ui-icon-search" type="button"
+                                                     onclick="PF('dlgMedico').show();"/>
+                                </p:panelGrid>
+                            </p:fieldset>  
+                    </td>
+                    <td>
+                        <h:commandLink id="reporte" target="_blank"  value="Ver reporte" actionListener="#{reporteManagedBean.verReporteRecetas()}" />
+                    </td>
+                </tr>
+            </table>
+            
+            <p:dialog id="dlgPaciente" header="Buscar Paciente" widgetVar="dlgPaciente" modal="true" 
+                              width="60%" closeOnEscape="true" style="font-size: 15px; font-weight: bold;" >
+                        
+                        <p:panel id="pnlTablePaciente" style="margin-top:5px" >
+                            <p:dataTable id="tblPacienteBusq" var="pac" value="#{reporteManagedBean.pacientes}"
+                                         rowIndexVar="index" widgetVar="tblPacienteBusq"
+                                         rows="10" paginator="true"                                        
+                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         rowsPerPageTemplate="5,10,15" currentPageReportTemplate="Página:({currentPage} de {totalPages})">                                
+                                <p:column headerText="CORRELATIVO">
+                                    <h:outputText value="#{pac.idPaciente}" />
+                                </p:column>
+
+                                <p:column headerText="DUI" filterBy="#{pac.idPersona.dui}">
+                                    <h:outputText value="#{pac.idPersona.dui}" />
+                                </p:column>
+
+                                <p:column headerText="Nombre">
+                                    <h:outputText value="#{pac.idPersona.nombrePersona}" />
+                                </p:column>
+
+                                <p:column headerText="Apellido">
+                                    <h:outputText value="#{pac.idPersona.apellidoPersona}" />
+                                </p:column>
+                                <p:column headerText="Seleccionar">
+                                    <p:commandButton update=":formpac:nomPa" process="@this" onclick="PF('dlgPaciente').hide();" icon="ui-icon-check" style="margin-left: 30%"  action="#{reporteManagedBean.obtenerPaciente(pac.idPaciente)}"/>
+                                </p:column>
+
+                            </p:dataTable>
+                        </p:panel>
+                    </p:dialog>
+            <p:dialog id="dlgMedico" header="Buscar Medico" widgetVar="dlgMedico" modal="true" 
+                              width="60%" closeOnEscape="true" style="font-size: 15px; font-weight: bold;" >
+                        
+                        <p:panel id="pnlTableMedico" style="margin-top:5px" >
+                            <p:dataTable id="tblMedicoBusq" var="med" value="#{reporteManagedBean.medicos}"
+                                         rowIndexVar="index" widgetVar="tblMedicoBusq"
+                                         rows="10" paginator="true"                                        
+                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         rowsPerPageTemplate="5,10,15" currentPageReportTemplate="Página:({currentPage} de {totalPages})">                                
+                                <p:column headerText="CORRELATIVO">
+                                    <h:outputText value="#{med.idMedico}" />
+                                </p:column>
+
+                                <p:column headerText="DUI" filterBy="#{med.idPersona.dui}">
+                                    <h:outputText value="#{med.idPersona.dui}" />
+                                </p:column>
+
+                                <p:column headerText="Nombre">
+                                    <h:outputText value="#{med.idPersona.nombrePersona}" />
+                                </p:column>
+
+                                <p:column headerText="Apellido">
+                                    <h:outputText value="#{med.idPersona.apellidoPersona}" />
+                                </p:column>
+                                <p:column headerText="Seleccionar">
+                                    <p:commandButton update=":formpac:nomMe" process="@this" onclick="PF('dlgMedico').hide();" icon="ui-icon-check" style="margin-left: 30%"  action="#{reporteManagedBean.obtenerMedico(med.idMedico)}"/>
+                                </p:column>
+
+                            </p:dataTable>
+                        </p:panel>
+                    </p:dialog>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

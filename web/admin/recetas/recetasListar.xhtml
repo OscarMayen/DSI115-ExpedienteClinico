@@ -19,33 +19,34 @@
                              paginator="true"
                              paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                              rowsPerPageTemplate="5,10,15" currentPageReportTemplate="Página:({currentPage} de {totalPages})"
+                             
                              >
-                    <p:column>
+                    <p:column filterBy="#{item.nombrePaciente}">
                         <f:facet  name="header">
                             <h:outputText value="Nombre del paciente"/>
                         </f:facet>
                         <h:outputText value="#{item.nombrePaciente}"/>
                     </p:column>
                   
-                    <p:column>
+                    <p:column filterBy="#{item.idConsulta.idPaciente.idPersona.dui}">
                         <f:facet name="header">
                             <h:outputText value="Dui del paciente"/>
                         </f:facet>
                         <h:outputText value="#{item.idConsulta.idPaciente.idPersona.dui}"/>
                     </p:column>
-                    <p:column>
+                    <p:column filterBy="#{item.nombreMedico}">
                         <f:facet name="header">
                             <h:outputText value="Nombre del medico"/>
                         </f:facet>
                         <h:outputText value="#{item.nombreMedico}"/>
                     </p:column>
-                    <p:column>
+                    <p:column  filterBy="#{item.idConsulta.fechaConsulta}">
                         <f:facet name="header">
                             <h:outputText value="Fecha de creacion"/>
                         </f:facet>
                         <p:calendar size="8"  disabled="true" value="#{item.idConsulta.fechaConsulta}"/>
                     </p:column>
-                    <p:column>
+                    <p:column filterBy="#{item.descripcionReceta}">
                         <f:facet name="header">
                             <h:outputText value="Decripcion de la receta"/>
                         </f:facet>
@@ -57,10 +58,10 @@
                         <f:facet name="header">
                             <h:outputText value="Operaciones"/>
                         </f:facet>
-                        <h:commandButton class="btn btn-primary" action="#{recetasListarBean.verReceta()}" value="Ver">
+                        <h:commandLink class="btn btn-primary btn-block" action="#{recetasListarBean.verReceta()}" value="Ver">
                             <f:param name="idrec" value="#{item.idReceta}" />
-                        </h:commandButton>                        
-                        <h:commandButton disabled="true" class="btn btn-primary" value="Imprimir"/>
+                        </h:commandLink>                        
+                        <h:commandLink  class="btn btn-primary btn-block" actionListener="#{reporteManagedBean.verReporteReceta(item.idReceta)}" value="Imprimir"/>
                     </p:column>
                 </p:dataTable>
                 

@@ -47,11 +47,11 @@
                                          #{diagnostico.idConsulta.idMedico.idPersona.apellidoPersona}"  />
                         </p:column>
 
-                        <p:column headerText="Sala/Consultorio">
+                        <p:column filterBy="#{diagnostico.idConsulta.idSala.nombreSala}" headerText="Sala/Consultorio">
                             <h:outputText value="#{diagnostico.idConsulta.idSala.nombreSala}" />
                         </p:column>
                         
-                        <p:column headerText="Diagnostico">
+                        <p:column filterBy="#{diagnostico.descripcion}" headerText="Diagnostico">
                             <h:outputText value="#{diagnostico.descripcion}" />
                         </p:column>
 
