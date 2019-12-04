@@ -1,0 +1,118 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../../plantillas/plantilla.xhtml">
+
+            <ui:define name="titulo">
+                Consulta Detalle
+            </ui:define>
+
+            <ui:define name="css">
+
+            </ui:define>
+
+            <ui:define name="contenido">
+
+                <h:form id="formDetalleConsulta">
+
+                    <br></br>
+                    <h6><strong>DATOS DEL MEDICO</strong></h6>
+                    <p:fieldset style="font-size: 15px; font-weight: bold;" >
+                        <p:panelGrid columns="7"  >
+
+                            <p:outputLabel for="duiM" value="Dui"/>
+                            <p:inputMask style="width: 100%" id="duiM" 
+                                         value="#{consultaDetalleBean.diagnostico.idConsulta.idMedico.idPersona.dui}" 
+                                         disabled="true" mask="99999999-9" size="15"/>
+
+                            <p:outputLabel for="nombreM" value="Nombre" />
+                            <p:inputText id="nombreM" style="width: 100%" 
+                                         value="#{consultaDetalleBean.diagnostico.idConsulta.idMedico.idPersona.nombrePersona}" 
+                                         disabled="true" size="30"/>
+
+                            <p:outputLabel for="apellidoM" value="Apellido"/>
+                            <p:inputText style="width: 100%" id="apellidoM" 
+                                         value="#{consultaDetalleBean.diagnostico.idConsulta.idMedico.idPersona.apellidoPersona}"  
+                                         disabled="true" size="30"/>
+
+                        </p:panelGrid>
+                    </p:fieldset><br></br>
+
+                    
+                    
+                    <h6><strong>DATOS DEL PACIENTE</strong></h6>
+                    <p:fieldset style="font-size: 15px; font-weight: bold;" >
+                        <p:panelGrid columns="7"  >
+
+                            <p:outputLabel for="duiPa" value="Dui"/>
+                            <p:inputMask style="width: 100%" id="duiPa" 
+                                         value="#{consultaDetalleBean.diagnostico.idConsulta.idPaciente.idPersona.dui}"
+                                         disabled="true" mask="99999999-9" size="15"/>
+
+                            <p:outputLabel for="nombrePa" value="Nombre" />
+                            <p:inputText id="nombrePa" style="width: 100%" 
+                                         value="#{consultaDetalleBean.diagnostico.idConsulta.idPaciente.idPersona.nombrePersona}" 
+                                         disabled="true" size="30"/>
+
+                            <p:outputLabel for="apellidoPa" value="Apellido"/>
+                            <p:inputText style="width: 100%" id="apellidoPa" 
+                                         value="#{consultaDetalleBean.diagnostico.idConsulta.idPaciente.idPersona.apellidoPersona}"  
+                                         disabled="true" size="30"/>
+
+                        </p:panelGrid>
+                    </p:fieldset><br></br>
+                    
+                    <h6><strong>DATOS DE LA CONSULTA</strong></h6>
+                    <p:fieldset  style="font-size: 15px; font-weight: bold;" >
+                        <p:panelGrid columns="4" style="width: 100%" >
+
+                            <p:outputLabel for="peso" value="Peso (kg)"/>
+                            <p:spinner style="width: 100%" id="peso" 
+                                       value="#{consultaDetalleBean.diagnostico.idConsulta.idSignosVitales.peso}"  
+                                       stepFactor="0.01" min="0.0" disabled="true"  />
+
+                            <p:outputLabel for="altura" value="Altura (mts)" />
+                            <p:spinner style="width: 100%" id="altura" 
+                                       value="#{consultaDetalleBean.diagnostico.idConsulta.idSignosVitales.altura}" 
+                                       stepFactor="0.01" min="0.0" disabled="true"  />
+
+
+                            <p:outputLabel for="presion" value="Presion"/>
+                            <p:inputText style="width: 100%" id="presion" 
+                                         value="#{consultaDetalleBean.diagnostico.idConsulta.idSignosVitales.presion}"   
+                                         size="30" disabled="true"/>
+
+                            <p:outputLabel for="diagnostico" value="Diagnostico"/>
+                            <p:inputTextarea style="width: 100%" id="diagnostico" 
+                                             value="#{consultaDetalleBean.diagnostico.descripcion}"
+                                             rows="6" cols="70" disabled="true"/>
+                            
+                            <p:outputLabel for="sala" value="Sala"/>
+                            <p:inputText style="width: 100%" id="sala" 
+                                         value="#{consultaDetalleBean.diagnostico.idConsulta.idSala.nombreSala}" 
+                                         size="15" disabled="true"/>
+
+                        </p:panelGrid>
+
+                    </p:fieldset><br></br>
+
+
+                </h:form>
+
+            </ui:define>
+
+            <ui:define name="scripts">
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

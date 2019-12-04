@@ -31,5 +31,10 @@ public class DiagnosticoEJB {
         Query query = em.createNamedQuery("DiagnosticoEntity.findAll");
         return query.getResultList();
     }
+    
+    public DiagnosticoEntity obtenerDiagnosticoPorConsulta(int id){
+        Query query = em.createQuery("select d from DiagnosticoEntity d JOIN d.idConsulta c where c.idConsulta='"+id+"'");
+        return (DiagnosticoEntity) query.getSingleResult();
+    }
 
 }

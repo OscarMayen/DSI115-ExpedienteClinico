@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../../plantillas/plantilla.xhtml">
+
+            <ui:define name="titulo">
+                Detalle Sala
+            </ui:define>
+
+            <ui:define name="css">
+
+            </ui:define>
+
+            <ui:define name="contenido">
+
+                <h:form>
+
+                    <p:fieldset legend="Detalle Sala" style="font-size: 15px; font-weight: bold;" >
+                        <p:panelGrid columns="2" >
+                            <p:outputLabel for="nombreSa" value="Nombre" />
+                            <p:inputText id="nombreSa" 
+                                         value="#{salaDetalleBean.sala.nombreSala}"   
+                                         size="30" required="true" disabled="true"/>
+
+                            <p:outputLabel value="Estado de Sala/Consultorio" />
+                            <p:selectBooleanCheckbox   value="#{salaDetalleBean.sala.estadoSala}" 
+                                                       itemLabel="Habilitado" disabled="true"/>
+
+                            <p:outputLabel value="Mobiliario" />
+                            <p:commandButton value="SELECIONE EL MOBILIARIO" oncomplete="PF('dlgMobiliario').show();"
+                                             disabled="true" />
+                        </p:panelGrid>
+
+                    </p:fieldset>
+                    <br></br>
+
+                    <br></br>
+                   
+                    <p:dataTable id="tablaSalaMobiliario" var="sm" value="#{salaDetalleBean.listaSalaMobiliario}" rows="10"
+                                 paginator="true" 
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="5,10,15" currentPageReportTemplate="Página:({currentPage} de {totalPages})">
+
+
+                        <p:column headerText="Mobiliario">
+                            <h:outputText value="#{sm.idMobiliario.nombreMobiliario}"/>
+                        </p:column>
+
+                        <p:column headerText="Cantidad">
+                            <h:outputText value="#{sm.cantidad}"/>
+                        </p:column>
+
+                        
+                    </p:dataTable>
+
+                </h:form>
+
+
+            </ui:define>
+
+            <ui:define name="scripts">
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

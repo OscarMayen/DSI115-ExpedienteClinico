@@ -57,4 +57,13 @@ public class SalaListarBean implements Serializable{
         return "/admin/sala/salaEditar.xhtml"; 
     }
     
+    public String verSala(int id)
+    {
+        //this.sala = new SalaEntity();
+        
+        //sala = salaEjb.obtenerSala(id);
+
+        return "/admin/sala/salaDetalle.xhtml"; 
+    }
+    
 }

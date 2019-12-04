@@ -52,4 +52,13 @@ public class DiagnosticosListarBean {
         String outcome ="/admin/consulta/consultaInsertar?faces-redirect=true";
         return outcome;
     }
+    
+    public String verDetalleConsulta(int id)
+    {
+        //this.sala = new SalaEntity();
+        
+        //sala = salaEjb.obtenerSala(id);
+
+        return "/admin/consulta/consultaDetalle.xhtml"; 
+    }
 }

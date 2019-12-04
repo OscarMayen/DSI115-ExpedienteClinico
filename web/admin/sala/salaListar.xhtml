@@ -44,7 +44,10 @@
                     <h:commandButton class="btn btn-primary" action="#{salaListarBean.editSala(sala.idSala)}" value="Editar">
                         <f:param name="id"  value="#{sala.idSala}"/>
                     </h:commandButton>
-
+                    &nbsp;&nbsp;
+                    <h:commandButton class="btn btn-primary" action="#{salaListarBean.verSala(sala.idSala)}" value="Ver ">
+                        <f:param name="id"  value="#{sala.idSala}"/>
+                    </h:commandButton>
 
                 </p:column>
             </p:dataTable>

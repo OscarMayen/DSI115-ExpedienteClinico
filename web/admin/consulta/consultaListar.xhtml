@@ -15,7 +15,7 @@
             </ui:define>
 
             <ui:define name="css">
-                
+
             </ui:define>
 
             <ui:define name="contenido">
@@ -29,8 +29,8 @@
                                  paginator="true"
                                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                  rowsPerPageTemplate="5,10,15" currentPageReportTemplate="Página:({currentPage} de {totalPages})">
-                        
-                        
+
+
                         <p:column filterBy="#{diagnostico.idConsulta.idPaciente.idPersona.dui}"  headerText="Dui Paciente">
                             <h:outputText value="#{diagnostico.idConsulta.idPaciente.idPersona.dui}"  />
                         </p:column>
@@ -42,19 +42,28 @@
                         </p:column>
 
                         <p:column filterBy="#{diagnostico.idConsulta.idMedico.idPersona.nombrePersona}" 
-                           headerText="Medico">
-                           <h:outputText value="#{diagnostico.idConsulta.idMedico.idPersona.nombrePersona} 
-                                         #{diagnostico.idConsulta.idMedico.idPersona.apellidoPersona}"  />
+                                  headerText="Medico">
+                            <h:outputText value="#{diagnostico.idConsulta.idMedico.idPersona.nombrePersona} 
+                                          #{diagnostico.idConsulta.idMedico.idPersona.apellidoPersona}"  />
                         </p:column>
 
                         <p:column filterBy="#{diagnostico.idConsulta.idSala.nombreSala}" headerText="Sala/Consultorio">
                             <h:outputText value="#{diagnostico.idConsulta.idSala.nombreSala}" />
                         </p:column>
-                        
+
                         <p:column filterBy="#{diagnostico.descripcion}" headerText="Diagnostico">
                             <h:outputText value="#{diagnostico.descripcion}" />
                         </p:column>
 
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Operaciones" />
+                            </f:facet>
+                            <h:commandButton class="btn btn-primary" action="#{diagnosticosListar.verDetalleConsulta(diagnostico.idConsulta.idConsulta)}" value="Ver">
+                                <f:param name="id"  value="#{diagnostico.idConsulta.idConsulta}"/>
+                            </h:commandButton>
+
+                        </p:column>
 
                     </p:dataTable>
                 </h:form>
