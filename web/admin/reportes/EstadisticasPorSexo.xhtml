@@ -14,24 +14,34 @@
             </ui:define>
 
             <ui:define name="css">
-               
+
             </ui:define>
 
             <ui:define name="contenido">
-                
+
                 <h:form>
                     <br></br>
-                    <p:calendar id="fechaInicial" navigator="true" showButtonPanel="false" placeholder="yyyy/MM/dd" 
-                                value="#{reporteCantidadSexoBean.fechaI}" locale="es"  pattern="yyyy/MM/dd"/>  &nbsp;&nbsp;
+                    <p:fieldset legend="Generar Reporte">
+                        <p:panelGrid columns="7">
+                            <h:outputLabel value="Fecha Inicial"/>
+                            <p:calendar id="fechaInicial" navigator="true" showButtonPanel="false" placeholder="yyyy/MM/dd" 
+                                        value="#{reporteCantidadSexoBean.fechaI}" locale="es"  pattern="yyyy/MM/dd"/>  &nbsp;&nbsp;
 
-                    <p:calendar id="fechaFinal" navigator="true" showButtonPanel="false" placeholder="yyyy/MM/dd" 
-                                value="#{reporteCantidadSexoBean.fechaF}" locale="es"  pattern="yyyy/MM/dd" />  &nbsp;&nbsp;
-                    <h:commandLink id="reporte" target="_blank" value="reporte" actionListener="#{reporteCantidadSexoBean.verReporte()}" title="Ver reporte de clientes"/>                        
+                            <h:outputLabel value="Fecha Inicial"/>
+                            <p:calendar id="fechaFinal" navigator="true" showButtonPanel="false" placeholder="yyyy/MM/dd" 
+                                        value="#{reporteCantidadSexoBean.fechaF}" locale="es"  pattern="yyyy/MM/dd" />  &nbsp;&nbsp;
+                            
+                            <h:commandLink id="reporte" target="_blank" value="Ver Reporte" 
+                                           actionListener="#{reporteCantidadSexoBean.verReporte()}" 
+                                           title="Ver reporte de clientes"
+                                           style="color: #007bff; font-weight: bold; text-decoration:underline"/>                        
+                        </p:panelGrid>
+                    </p:fieldset>
                 </h:form>
             </ui:define>
 
             <ui:define name="scripts">
-                
+                <h:outputScript name="js/spanishLocale.js"/>
             </ui:define>
 
         </ui:composition>

@@ -21,18 +21,22 @@
             <ui:define name="contenido">
 
                 <h:form>
-                    <p:panelGrid columns="3">
-                        <p:outputLabel value="Seleccione sala" />
-                        <p:selectOneMenu style="width: 100%" id="sala" value="#{reporteAsignacionMobiliarioBean.sala}">
-                            <f:selectItems  value="#{reporteAsignacionMobiliarioBean.listaSala}" var="sala" 
-                                            itemValue="#{sala}" 
-                                            itemLabel="#{sala.nombreSala}"
-                                            />
-                        </p:selectOneMenu>
-                        <h:commandLink id="reporte" target="_blank" 
-                                       actionListener="#{reporteAsignacionMobiliarioBean.verReporte()}"
-                                       value="Ver Reporte"  title="Ver reporte"/>                        
-                    </p:panelGrid>
+                    <br></br>
+                    <p:fieldset legend="Generar Reporte">
+                        <p:panelGrid columns="3">
+                            <p:outputLabel value="Seleccione sala" />
+                            <p:selectOneMenu style="width: 100%" id="sala" value="#{reporteAsignacionMobiliarioBean.sala}">
+                                <f:selectItems  value="#{reporteAsignacionMobiliarioBean.listaSala}" var="sala" 
+                                                itemValue="#{sala}" 
+                                                itemLabel="#{sala.nombreSala}"
+                                                />
+                            </p:selectOneMenu>
+                            <h:commandLink id="reporte" target="_blank" 
+                                           actionListener="#{reporteAsignacionMobiliarioBean.verReporte()}"
+                                           value="Ver Reporte"  title="Ver Reporte"
+                                           style="color: #007bff; font-weight: bold; text-decoration:underline"/>                        
+                        </p:panelGrid>
+                    </p:fieldset>
                 </h:form>
             </ui:define>
 

@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../../plantillas/plantilla.xhtml">
+
+            <ui:define name="titulo">
+                Reporte de salas
+            </ui:define>
+
+            <ui:define name="css">
+
+            </ui:define>
+
+            <ui:define name="contenido">
+                <h:form>
+                    <br></br>
+                    <br></br>
+                    <p:fieldset legend="Generar Reporte">
+                    <p:panelGrid columns="3">
+                        <p:outputLabel value="Estado de la sala: " for="estadoS"/>
+                        <p:selectOneRadio id="estadoS" value="#{reporteSalaBean.estado}" 
+                                          label="Estado" required="true">
+                            <f:selectItem itemLabel="Habilitado" itemValue="1"/>
+                            <f:selectItem itemLabel="Inhabilitado" itemValue="0"/>
+                        </p:selectOneRadio>
+                         <h:commandLink id="reporte" target="_blank" 
+                                       actionListener="#{reporteSalaBean.verReporte()}"
+                                       value="Ver Reporte"  title="Ver reporte"
+                                       style="color: #007bff; font-weight: bold; text-decoration:underline"/> 
+
+                    </p:panelGrid>
+                    </p:fieldset>
+                </h:form>
+
+            </ui:define>
+
+            <ui:define name="scripts">
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

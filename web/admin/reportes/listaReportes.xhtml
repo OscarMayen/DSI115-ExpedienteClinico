@@ -58,7 +58,7 @@
                 </tr>
                 <tr>
                     <td>Reporte de Usuarios</td>
-                    <td>Reporte que muestra Totos los usuarios que laboran en la institucion.</td>                    
+                    <td>Reporte que muestra todos los usuarios que laboran en la institucion.</td>                    
                     <td>
                         <h:commandLink id="reporteConsultasPorMedico" target="_blank" value="Ver reporte" actionListener="#{reporteManagedBean.verReporteUsuarios()}" />
                     </td>
@@ -72,9 +72,16 @@
                 </tr>
                 <tr>
                     <td>Reporte de asignacion de mobiliario</td>
-                    <td>  Reporte que muestra el mobiliario asignado a una determinada sala</td>                    
+                    <td>  Reporte muestra el mobiliario asignado a una determinada sala</td>                    
                     <td>
                          <h:link id="listaMobiliarioAsignacion" value="Ver reporte" outcome="/admin/reportes/ReporteMobiliarioAsignacion.xhtml" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Reporte Salas</td>
+                    <td>  Reporte muestra las salas habilitadas e inhabilitadas con las que cuenta la institucion</td>                    
+                    <td>
+                         <h:link id="listaSalas" value="Ver reporte" outcome="/admin/reportes/ReporteSalas.xhtml" />
                     </td>
                 </tr>
             </table>                    

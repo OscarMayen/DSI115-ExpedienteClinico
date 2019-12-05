@@ -26,38 +26,45 @@ where s.nombreSala =$P{nombreSala}]]>
 	<title>
 		<band height="102" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="93f6945f-2e03-4168-a8b8-717afc56b2a9" x="40" y="16" width="485" height="50"/>
-				<textElement textAlignment="Center">
+				<reportElement x="43" y="16" width="406" height="22" uuid="93f6945f-2e03-4168-a8b8-717afc56b2a9"/>
+				<textElement textAlignment="Justified">
 					<font fontName="Arial" size="18" isBold="true"/>
 				</textElement>
-				<text><![CDATA[         B. Braun Medical Central America & Caribe            Reporte de Asignacion de Mobiliario de  ]]></text>
+				<text><![CDATA[     B. Braun Medical Central America & Caribe ]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="f0276431-0a2e-4201-9951-8a3b2b7679f8" x="208" y="66" width="167" height="30"/>
+				<reportElement x="192" y="60" width="167" height="30" uuid="f0276431-0a2e-4201-9951-8a3b2b7679f8"/>
 				<textElement>
 					<font fontName="Arial" size="18" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nombreSala}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="43" y="38" width="406" height="22" uuid="423efdb4-fc26-4607-b212-40ae5ca53999"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[       Reporte de Asignacion de Mobiliario del  ]]></text>
+			</staticText>
 		</band>
 	</title>
 	<columnHeader>
 		<band height="44" splitType="Stretch">
 			<rectangle>
-				<reportElement uuid="5bff04bd-e1bd-45e4-858b-bcb5b2e1cafe" x="136" y="18" width="145" height="26"/>
+				<reportElement x="128" y="18" width="145" height="26" uuid="5bff04bd-e1bd-45e4-858b-bcb5b2e1cafe"/>
 			</rectangle>
 			<rectangle>
-				<reportElement uuid="8c230531-2599-4fc8-88cc-d49e43530282" x="281" y="18" width="111" height="26"/>
+				<reportElement x="273" y="18" width="111" height="26" uuid="8c230531-2599-4fc8-88cc-d49e43530282"/>
 			</rectangle>
 			<staticText>
-				<reportElement uuid="ec4e7012-9d55-48dc-a893-fbe1e9e41e42" x="188" y="24" width="54" height="20"/>
+				<reportElement x="172" y="24" width="54" height="20" uuid="ec4e7012-9d55-48dc-a893-fbe1e9e41e42"/>
 				<textElement textAlignment="Center">
 					<font fontName="Arial" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Mobiliario]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="65f06f7e-4f84-4bcf-abb9-f537d8816134" x="309" y="24" width="50" height="20"/>
+				<reportElement x="308" y="24" width="50" height="20" uuid="65f06f7e-4f84-4bcf-abb9-f537d8816134"/>
 				<textElement>
 					<font fontName="Arial" isBold="true"/>
 				</textElement>
@@ -68,20 +75,20 @@ where s.nombreSala =$P{nombreSala}]]>
 	<detail>
 		<band height="20" splitType="Stretch">
 			<rectangle>
-				<reportElement uuid="8c230531-2599-4fc8-88cc-d49e43530282" x="136" y="0" width="145" height="20"/>
+				<reportElement x="128" y="0" width="145" height="20" uuid="8c230531-2599-4fc8-88cc-d49e43530282"/>
 			</rectangle>
 			<rectangle>
-				<reportElement uuid="5bff04bd-e1bd-45e4-858b-bcb5b2e1cafe" x="281" y="0" width="111" height="20"/>
+				<reportElement x="273" y="0" width="111" height="20" uuid="5bff04bd-e1bd-45e4-858b-bcb5b2e1cafe"/>
 			</rectangle>
 			<textField>
-				<reportElement uuid="e017baf4-9e7a-4981-8394-889496b4cbd6" x="142" y="0" width="100" height="20"/>
+				<reportElement x="142" y="0" width="100" height="20" uuid="e017baf4-9e7a-4981-8394-889496b4cbd6"/>
 				<textElement>
 					<font fontName="Arial"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nombreMobiliario}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="e8d9063f-43c7-407b-8d1b-1f65275deb6a" x="325" y="1" width="23" height="19"/>
+				<reportElement x="325" y="0" width="23" height="19" uuid="e8d9063f-43c7-407b-8d1b-1f65275deb6a"/>
 				<textElement>
 					<font fontName="Arial"/>
 				</textElement>
@@ -92,18 +99,24 @@ where s.nombreSala =$P{nombreSala}]]>
 	<pageFooter>
 		<band height="38" splitType="Stretch">
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement uuid="09a97287-935b-4644-9d81-1bf9d52dfc51" x="13" y="10" width="100" height="20"/>
-				<textElement/>
+				<reportElement x="13" y="10" width="129" height="20" uuid="09a97287-935b-4644-9d81-1bf9d52dfc51"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="6943335e-e8d0-40ea-80b3-6b562a3c7dca" x="425" y="10" width="61" height="20"/>
-				<textElement textAlignment="Right"/>
+				<reportElement x="425" y="10" width="61" height="20" uuid="6943335e-e8d0-40ea-80b3-6b562a3c7dca"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="12"/>
+				</textElement>
 				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement uuid="dd96e142-47f2-4eb0-a96b-827cfdeb0571" x="486" y="10" width="40" height="20"/>
-				<textElement/>
+				<reportElement x="486" y="10" width="55" height="20" uuid="dd96e142-47f2-4eb0-a96b-827cfdeb0571"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 		</band>
