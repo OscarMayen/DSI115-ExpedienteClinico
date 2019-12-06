@@ -184,20 +184,25 @@ public class CitasListarBean implements Serializable {
                                     "¡Advertencia!", "No existe ningún paciente con ese dui"
                             ));
                         } else {
-                            citaEntity.setIdPaciente(pacienteEntity);
-                            citaEntity.setTitulo(this.event.getTitle());
-                            this.citasEJB.actualizarDatosEvento(citaEntity);
-                            this.event.setTitle(citaEntity.getTitulo());
-                            this.event.setStartDate(citaEntity.getFechaCita());
-                            this.event.setEndDate(citaEntity.getFechaCitaFinal());
-                            this.event.setDynamicProperty("idEvent", citaEntity.getIdCita());
-                            this.event.setDynamicProperty("paciente", this.pacienteEntity.getIdPersona().getDui());
-                            this.addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
-                                    "¡Información!", "Cita actualizada con éxito"
-                            ));
-                            this.eventModel.updateEvent(event);
-                            this.event = new DefaultScheduleEvent();
-                            PrimeFaces.current().executeScript("PF('myschedule').update();PF('eventDialog').hide();");
+                            if (this.verificarDisponibilidadMedico(citaEntity.getFechaCita(), citaEntity.getFechaCitaFinal())) {
+                                citaEntity.setIdPaciente(pacienteEntity);
+                                citaEntity.setTitulo(this.event.getTitle());
+                                this.citasEJB.actualizarDatosEvento(citaEntity);
+                                this.event.setTitle(citaEntity.getTitulo());
+                                this.event.setStartDate(citaEntity.getFechaCita());
+                                this.event.setEndDate(citaEntity.getFechaCitaFinal());
+                                this.event.setDynamicProperty("idEvent", citaEntity.getIdCita());
+                                this.event.setDynamicProperty("paciente", this.pacienteEntity.getIdPersona().getDui());
+                                this.addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
+                                        "¡Información!", "Cita actualizada con éxito"
+                                ));
+                                this.eventModel.updateEvent(event);
+                                this.event = new DefaultScheduleEvent();
+                                PrimeFaces.current().executeScript("PF('myschedule').update();PF('eventDialog').hide();");
+                            } else {
+                                this.addMessage(new FacesMessage(FacesMessage.SEVERITY_ERROR, "¡Error!", "Verifique la disponibilidad del médico"));
+                            }
+
                         }
                     }
 
@@ -232,35 +237,40 @@ public class CitasListarBean implements Serializable {
         nuevaCita.setFechaCitaFinal(this.formatearFecha(this.event.getEndDate()));
 
         if (this.validarFechaHoraCita(nuevaCita.getFechaCita(), nuevaCita.getFechaCitaFinal())) {
-            if (this.validarColisiones(nuevaCita.getFechaCita(), nuevaCita.getFechaCitaFinal())) {
-                this.addMessage(new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                        "¡Error!", "Hay colision con alguna cita"));
-            } else {
-                if (medicoEntity != null && 
-                        this.verificarDisponibilidadMedico(nuevaCita.getFechaCita(), nuevaCita.getFechaCitaFinal())) {
-                    
-                    nuevaCita.setIdMedico(medicoEntity);
-                    pacienteEntity = pacienteEJB.busquedaPacientePorDui(this.duiPaciente);
-                    if (pacienteEntity == null) {
-                        this.addMessage(new FacesMessage(FacesMessage.SEVERITY_WARN,
-                                "¡Advertencia!", "No existe ningún paciente con ese dui"
-                        ));
-                    } else {
-                        nuevaCita.setIdPaciente(pacienteEntity);
-                        this.citasEJB.insertCita(nuevaCita);
-                        this.event.setDynamicProperty("idEvent", nuevaCita.getIdCita());
-                        this.event.setDynamicProperty("paciente", this.pacienteEntity.getIdPersona().getDui());
-                        this.addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
-                                "¡Información!", "Cita creada con éxito"
-                        ));
-                        eventModel.addEvent(event);
-                    }
-                } else {
+            if (medicoEntity != null) {
+                if (this.validarColisiones(nuevaCita.getFechaCita(), nuevaCita.getFechaCitaFinal())) {
                     this.addMessage(new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                            "¡Error!",
-                            "Elija el médico al cual le asignara la cita y verifique el rango de disponibilidad del médico"));
-                }
+                            "¡Error!", "Hay colision con alguna cita"));
+                } else {
+                    if (medicoEntity != null
+                            && this.verificarDisponibilidadMedico(nuevaCita.getFechaCita(), nuevaCita.getFechaCitaFinal())) {
 
+                        nuevaCita.setIdMedico(medicoEntity);
+                        pacienteEntity = pacienteEJB.busquedaPacientePorDui(this.duiPaciente);
+                        if (pacienteEntity == null) {
+                            this.addMessage(new FacesMessage(FacesMessage.SEVERITY_WARN,
+                                    "¡Advertencia!", "No existe ningún paciente con ese dui"
+                            ));
+                        } else {
+                            nuevaCita.setIdPaciente(pacienteEntity);
+                            this.citasEJB.insertCita(nuevaCita);
+                            this.event.setDynamicProperty("idEvent", nuevaCita.getIdCita());
+                            this.event.setDynamicProperty("paciente", this.pacienteEntity.getIdPersona().getDui());
+                            this.addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
+                                    "¡Información!", "Cita creada con éxito"
+                            ));
+                            eventModel.addEvent(event);
+                        }
+                    } else {
+                        this.addMessage(new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                                "¡Error!",
+                                "Elija el médico al cual le asignara la cita y verifique el rango de disponibilidad del médico"));
+                    }
+
+                }
+            } else {
+                this.addMessage(new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                        "¡Error!", "Debe elejir un médico, para asignar una cita"));
             }
 
         } else {
@@ -384,15 +394,15 @@ public class CitasListarBean implements Serializable {
                     && fechaFinal.compareTo(fechaListaF) <= -1)) {
                 ban = true;
                 break;
-            } else if( (fechaListaI.compareTo(fechaInicio)>=0
-                    && fechaListaI.compareTo(fechaFinal) <= -1)){
+            } else if ((fechaListaI.compareTo(fechaInicio) >= 0
+                    && fechaListaI.compareTo(fechaFinal) <= -1)) {
                 ban = true;
                 break;
-            }else if( (fechaListaF.compareTo(fechaInicio) >= 0
-                    && fechaListaF.compareTo(fechaFinal) <= -1) ){
+            } else if ((fechaListaF.compareTo(fechaInicio) >= 0
+                    && fechaListaF.compareTo(fechaFinal) <= -1)) {
                 ban = true;
                 break;
-            }else{
+            } else {
                 ban = false;
             }
 
@@ -422,15 +432,15 @@ public class CitasListarBean implements Serializable {
                     && fechaFinal.compareTo(fechaListaF) <= -1)) {
                 ban = true;
                 break;
-            } else if( (fechaListaI.compareTo(fechaInicio)>=0
-                    && fechaListaI.compareTo(fechaFinal) <= -1)){
+            } else if ((fechaListaI.compareTo(fechaInicio) >= 0
+                    && fechaListaI.compareTo(fechaFinal) <= -1)) {
                 ban = true;
                 break;
-            }else if( (fechaListaF.compareTo(fechaInicio) >= 0
-                    && fechaListaF.compareTo(fechaFinal) <= -1) ){
+            } else if ((fechaListaF.compareTo(fechaInicio) >= 0
+                    && fechaListaF.compareTo(fechaFinal) <= -1)) {
                 ban = true;
                 break;
-            }else{
+            } else {
                 ban = false;
             }
 
@@ -442,7 +452,7 @@ public class CitasListarBean implements Serializable {
         this.event = (DefaultScheduleEvent) eventDrag.getScheduleEvent();
         Object object = this.citasEJB.obtenerFechas((Integer) event.getDynamicProperties().get("idEvent"));
         Object[] o = (Object[]) object;
-        
+
         citaEntity = this.citasEJB.obtenerCita((Integer) event.getDynamicProperties().get("idEvent"));
 
         if (event.getStartDate().compareTo(new Date()) >= 1
@@ -459,22 +469,30 @@ public class CitasListarBean implements Serializable {
 
                 this.event.setStartDate((Date) o[0]);
                 this.event.setEndDate((Date) o[1]);
-                
+
                 PrimeFaces.current().executeScript("PF('myschedule').update();");
             } else {
-                if (this.citasEJB.actualizarFechaEvento(citaEntity) == 1) {
+                if (this.verificarDisponibilidadMedico(citaEntity.getFechaCita(), citaEntity.getFechaCitaFinal())) {
+                    if (this.citasEJB.actualizarFechaEvento(citaEntity) == 1) {
 
-                    this.addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
-                            "Información", "Fecha del evento actualizada"
-                    ));
-                    PrimeFaces.current().executeScript("PF('myschedule').update();");
-                } else {
-                    this.addMessage(new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                            "Información", "Algo salió mal"
-                    ));
+                        this.addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
+                                "Información", "Fecha del evento actualizada"
+                        ));
+                        PrimeFaces.current().executeScript("PF('myschedule').update();");
+                    } else {
+                        this.addMessage(new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                                "Información", "Algo salió mal"
+                        ));
+                        PrimeFaces.current().executeScript("PF('myschedule').update();");
+                    }
+                    this.event = new DefaultScheduleEvent();
+                }else{
+                    this.addMessage(new FacesMessage(FacesMessage.SEVERITY_ERROR,"¡Error!","Verifique la disponibilidad del médico"));
+                    this.event.setStartDate((Date) o[0]);
+                    this.event.setEndDate((Date) o[1]);
                     PrimeFaces.current().executeScript("PF('myschedule').update();");
                 }
-                this.event = new DefaultScheduleEvent();
+
             }
         } else {
             this.event.setStartDate((Date) o[0]);
@@ -509,15 +527,15 @@ public class CitasListarBean implements Serializable {
                     && fechaFinal.compareTo(fechaListaF) <= -1)) {
                 ban = true;
                 break;
-            } else if( (fechaListaI.compareTo(fechaInicio)>=0
-                    && fechaListaI.compareTo(fechaFinal) <= -1)){
+            } else if ((fechaListaI.compareTo(fechaInicio) >= 0
+                    && fechaListaI.compareTo(fechaFinal) <= -1)) {
                 ban = true;
                 break;
-            }else if( (fechaListaF.compareTo(fechaInicio) >= 0
-                    && fechaListaF.compareTo(fechaFinal) <= -1) ){
+            } else if ((fechaListaF.compareTo(fechaInicio) >= 0
+                    && fechaListaF.compareTo(fechaFinal) <= -1)) {
                 ban = true;
                 break;
-            }else{
+            } else {
                 ban = false;
             }
 
@@ -529,23 +547,23 @@ public class CitasListarBean implements Serializable {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(fechaInicio);
         int dia = calendar.get(Calendar.DAY_OF_WEEK);
-        String nombreDia = null                                       ,
-                 horaInicio = formatoHora.format(fechaInicio),
-                 horaFinal = formatoHora.format(fechaFinal) ;
-        Date horaInicioComparar = formatoHora.parse(horaInicio) ,
-                horaFinalComparar = formatoHora.parse(horaFinal)  ;
+        String nombreDia = null,
+                horaInicio = formatoHora.format(fechaInicio),
+                horaFinal = formatoHora.format(fechaFinal);
+        Date horaInicioComparar = formatoHora.parse(horaInicio),
+                horaFinalComparar = formatoHora.parse(horaFinal);
 
         boolean resultado = false;
         switch (dia) {
             case 1:
                 nombreDia = "Domingo";
                 for (HorarioEntity horarioEntity : horarioMedico) {
-                    if(horarioEntity.getIdDia().getNombreDia().equals(nombreDia)){
+                    if (horarioEntity.getIdDia().getNombreDia().equals(nombreDia)) {
                         Date horaInicioDisponibilidad = formatoHora.parse(horarioEntity.getIdHora().getHoraInicio()),
                                 horaFinalDisponibilidad = formatoHora.parse(horarioEntity.getIdHora().getHoraFin());
-                        
-                        if(verificarRangoDeDisponibilidad(horaInicioComparar,horaFinalComparar,
-                                        horaInicioDisponibilidad, horaFinalDisponibilidad)){
+
+                        if (verificarRangoDeDisponibilidad(horaInicioComparar, horaFinalComparar,
+                                horaInicioDisponibilidad, horaFinalDisponibilidad)) {
                             resultado = true;
                         }
                     }
@@ -554,12 +572,12 @@ public class CitasListarBean implements Serializable {
             case 2:
                 nombreDia = "Lunes";
                 for (HorarioEntity horarioEntity : horarioMedico) {
-                    if(horarioEntity.getIdDia().getNombreDia().equals(nombreDia)){
+                    if (horarioEntity.getIdDia().getNombreDia().equals(nombreDia)) {
                         Date horaInicioDisponibilidad = formatoHora.parse(horarioEntity.getIdHora().getHoraInicio()),
                                 horaFinalDisponibilidad = formatoHora.parse(horarioEntity.getIdHora().getHoraFin());
-                        
-                        if(verificarRangoDeDisponibilidad(horaInicioComparar,horaFinalComparar,
-                                        horaInicioDisponibilidad, horaFinalDisponibilidad)){
+
+                        if (verificarRangoDeDisponibilidad(horaInicioComparar, horaFinalComparar,
+                                horaInicioDisponibilidad, horaFinalDisponibilidad)) {
                             resultado = true;
                         }
                     }
@@ -568,12 +586,12 @@ public class CitasListarBean implements Serializable {
             case 3:
                 nombreDia = "Martes";
                 for (HorarioEntity horarioEntity : horarioMedico) {
-                    if(horarioEntity.getIdDia().getNombreDia().equals(nombreDia)){
+                    if (horarioEntity.getIdDia().getNombreDia().equals(nombreDia)) {
                         Date horaInicioDisponibilidad = formatoHora.parse(horarioEntity.getIdHora().getHoraInicio()),
                                 horaFinalDisponibilidad = formatoHora.parse(horarioEntity.getIdHora().getHoraFin());
-                        
-                        if(verificarRangoDeDisponibilidad(horaInicioComparar,horaFinalComparar,
-                                        horaInicioDisponibilidad, horaFinalDisponibilidad)){
+
+                        if (verificarRangoDeDisponibilidad(horaInicioComparar, horaFinalComparar,
+                                horaInicioDisponibilidad, horaFinalDisponibilidad)) {
                             resultado = true;
                         }
                     }
@@ -582,12 +600,12 @@ public class CitasListarBean implements Serializable {
             case 4:
                 nombreDia = "Miércoles";
                 for (HorarioEntity horarioEntity : horarioMedico) {
-                    if(horarioEntity.getIdDia().getNombreDia().equals(nombreDia)){
+                    if (horarioEntity.getIdDia().getNombreDia().equals(nombreDia)) {
                         Date horaInicioDisponibilidad = formatoHora.parse(horarioEntity.getIdHora().getHoraInicio()),
                                 horaFinalDisponibilidad = formatoHora.parse(horarioEntity.getIdHora().getHoraFin());
-                        
-                        if(verificarRangoDeDisponibilidad(horaInicioComparar,horaFinalComparar,
-                                        horaInicioDisponibilidad, horaFinalDisponibilidad)){
+
+                        if (verificarRangoDeDisponibilidad(horaInicioComparar, horaFinalComparar,
+                                horaInicioDisponibilidad, horaFinalDisponibilidad)) {
                             resultado = true;
                         }
                     }
@@ -596,12 +614,12 @@ public class CitasListarBean implements Serializable {
             case 5:
                 nombreDia = "Jueves";
                 for (HorarioEntity horarioEntity : horarioMedico) {
-                    if(horarioEntity.getIdDia().getNombreDia().equals(nombreDia)){
+                    if (horarioEntity.getIdDia().getNombreDia().equals(nombreDia)) {
                         Date horaInicioDisponibilidad = formatoHora.parse(horarioEntity.getIdHora().getHoraInicio()),
                                 horaFinalDisponibilidad = formatoHora.parse(horarioEntity.getIdHora().getHoraFin());
-                        
-                        if(verificarRangoDeDisponibilidad(horaInicioComparar,horaFinalComparar,
-                                        horaInicioDisponibilidad, horaFinalDisponibilidad)){
+
+                        if (verificarRangoDeDisponibilidad(horaInicioComparar, horaFinalComparar,
+                                horaInicioDisponibilidad, horaFinalDisponibilidad)) {
                             resultado = true;
                         }
                     }
@@ -610,12 +628,12 @@ public class CitasListarBean implements Serializable {
             case 6:
                 nombreDia = "Viernes";
                 for (HorarioEntity horarioEntity : horarioMedico) {
-                    if(horarioEntity.getIdDia().getNombreDia().equals(nombreDia)){
+                    if (horarioEntity.getIdDia().getNombreDia().equals(nombreDia)) {
                         Date horaInicioDisponibilidad = formatoHora.parse(horarioEntity.getIdHora().getHoraInicio()),
                                 horaFinalDisponibilidad = formatoHora.parse(horarioEntity.getIdHora().getHoraFin());
-                        
-                        if(verificarRangoDeDisponibilidad(horaInicioComparar,horaFinalComparar,
-                                        horaInicioDisponibilidad, horaFinalDisponibilidad)){
+
+                        if (verificarRangoDeDisponibilidad(horaInicioComparar, horaFinalComparar,
+                                horaInicioDisponibilidad, horaFinalDisponibilidad)) {
                             resultado = true;
                         }
                     }
@@ -624,12 +642,12 @@ public class CitasListarBean implements Serializable {
             case 7:
                 nombreDia = "Sabado";
                 for (HorarioEntity horarioEntity : horarioMedico) {
-                    if(horarioEntity.getIdDia().getNombreDia().equals(nombreDia)){
+                    if (horarioEntity.getIdDia().getNombreDia().equals(nombreDia)) {
                         Date horaInicioDisponibilidad = formatoHora.parse(horarioEntity.getIdHora().getHoraInicio()),
                                 horaFinalDisponibilidad = formatoHora.parse(horarioEntity.getIdHora().getHoraFin());
-                        
-                        if(verificarRangoDeDisponibilidad(horaInicioComparar,horaFinalComparar,
-                                        horaInicioDisponibilidad, horaFinalDisponibilidad)){
+
+                        if (verificarRangoDeDisponibilidad(horaInicioComparar, horaFinalComparar,
+                                horaInicioDisponibilidad, horaFinalDisponibilidad)) {
                             resultado = true;
                         }
                     }
@@ -638,20 +656,20 @@ public class CitasListarBean implements Serializable {
         }
         return resultado;
     }
-    
+
     private boolean verificarRangoDeDisponibilidad(
-            Date horaCitaInicio,Date horaCitaFinal,
-            Date horaDisponibleInicio, Date horaDisponibleFinal){
-        
-        if(horaCitaInicio.compareTo(horaDisponibleInicio)>=0 &&
-                horaCitaInicio.compareTo(horaDisponibleFinal)<=-1){
-            if(horaCitaFinal.compareTo(horaDisponibleInicio)>=1 &&
-                    horaCitaFinal.compareTo(horaDisponibleFinal)<=0){
+            Date horaCitaInicio, Date horaCitaFinal,
+            Date horaDisponibleInicio, Date horaDisponibleFinal) {
+
+        if (horaCitaInicio.compareTo(horaDisponibleInicio) >= 0
+                && horaCitaInicio.compareTo(horaDisponibleFinal) <= -1) {
+            if (horaCitaFinal.compareTo(horaDisponibleInicio) >= 1
+                    && horaCitaFinal.compareTo(horaDisponibleFinal) <= 0) {
                 return true;
-            }else{
+            } else {
                 return false;
             }
-        }else {
+        } else {
             return false;
         }
     }

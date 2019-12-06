@@ -85,36 +85,71 @@ REPORTE DE CANTIDAD DE CONSULTAS QUE HA DADO CADA MEDICO]]></text>
 	<columnHeader>
 		<band height="53" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="100" height="20" uuid="5c9bdc25-378e-43ad-ab40-7da78456f81b"/>
-				<textElement textAlignment="Center">
+				<reportElement x="17" y="0" width="100" height="53" uuid="5c9bdc25-378e-43ad-ab40-7da78456f81b"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[NOMBRE DOCTOR]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="118" y="0" width="100" height="20" uuid="6ac3cd39-10f0-4040-9da5-a03aa12cc5fa"/>
-				<textElement textAlignment="Center">
+				<reportElement x="118" y="0" width="100" height="53" uuid="6ac3cd39-10f0-4040-9da5-a03aa12cc5fa"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[APELLIDO DOCTOR]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="218" y="0" width="100" height="20" uuid="478fb9b3-5516-4b35-8f95-6211b040b4c8"/>
-				<textElement textAlignment="Center">
+				<reportElement x="218" y="0" width="100" height="53" uuid="478fb9b3-5516-4b35-8f95-6211b040b4c8"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[DUI]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="318" y="0" width="100" height="20" uuid="5eee2639-8190-42c4-a072-2e1565159929"/>
-				<textElement textAlignment="Center">
+				<reportElement x="318" y="0" width="100" height="53" uuid="5eee2639-8190-42c4-a072-2e1565159929"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[TELEFONO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="441" y="0" width="100" height="43" uuid="7a5309a1-962a-488c-bb9d-400fde63586f"/>
-				<textElement textAlignment="Center">
+				<reportElement x="418" y="0" width="100" height="53" uuid="7a5309a1-962a-488c-bb9d-400fde63586f"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[CANTIDAD DE CONSULTAS ATENDIDAS]]></text>
@@ -122,29 +157,64 @@ REPORTE DE CANTIDAD DE CONSULTAS QUE HA DADO CADA MEDICO]]></text>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="25" splitType="Stretch">
+		<band height="20" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="100" height="20" uuid="58b03131-e396-4c90-9b88-16c4773689ca"/>
+				<reportElement x="17" y="0" width="100" height="20" uuid="58b03131-e396-4c90-9b88-16c4773689ca"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{nombrePersona}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="118" y="0" width="100" height="20" uuid="667a5936-593d-42f5-a47b-9fb290b98b34"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{apellidoPersona}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="218" y="0" width="100" height="20" uuid="500a77e0-5e77-485b-a795-14bdf237dcbb"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{dui}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="318" y="0" width="100" height="20" uuid="dec1ba4a-2e24-4679-a7a0-66448456bc56"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{telefono}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="441" y="0" width="100" height="20" uuid="6a976302-4103-4821-875a-793f17a066b9"/>
+				<reportElement x="418" y="0" width="100" height="20" uuid="6a976302-4103-4821-875a-793f17a066b9"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{cantidadConsultas}]]></textFieldExpression>
 			</textField>

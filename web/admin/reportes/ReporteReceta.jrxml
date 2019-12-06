@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="05dc22bc-ec3c-4926-a771-1bc8644196bc">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="96"/>
 	<parameter name="idReceta" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -56,19 +56,51 @@ REPORTE DE RECETA]]></text>
 	<columnHeader>
 		<band height="33" splitType="Stretch">
 			<staticText>
-				<reportElement x="119" y="0" width="100" height="20" uuid="9cb20844-6aaf-4fdd-8c0d-c63c517e53c5"/>
+				<reportElement x="100" y="0" width="100" height="33" uuid="9cb20844-6aaf-4fdd-8c0d-c63c517e53c5"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
 				<text><![CDATA[APELLIDO PACIENTE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="244" y="0" width="100" height="20" uuid="43dc8c98-996e-45d2-8297-55d94e04b066"/>
+				<reportElement x="200" y="0" width="100" height="33" uuid="43dc8c98-996e-45d2-8297-55d94e04b066"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
 				<text><![CDATA[NOMBRE MEDICO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="374" y="0" width="146" height="20" uuid="7c816da3-21a9-49eb-ae0d-df4c0707871c"/>
+				<reportElement x="300" y="0" width="255" height="33" uuid="7c816da3-21a9-49eb-ae0d-df4c0707871c"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
 				<text><![CDATA[DESCRIPCION RECETA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="0" width="100" height="20" uuid="e412646e-18ba-459e-9877-5ce4cf634d2e"/>
+				<reportElement x="0" y="0" width="100" height="33" uuid="e412646e-18ba-459e-9877-5ce4cf634d2e"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
 				<text><![CDATA[NOMBRE PACIENTE]]></text>
 			</staticText>
 		</band>
@@ -76,15 +108,39 @@ REPORTE DE RECETA]]></text>
 	<detail>
 		<band height="222" splitType="Stretch">
 			<textField>
-				<reportElement x="119" y="0" width="100" height="20" uuid="90028207-5fb8-4f78-838e-699782c35d8d"/>
+				<reportElement x="100" y="0" width="100" height="130" uuid="90028207-5fb8-4f78-838e-699782c35d8d"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{apellidoPaciente}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="244" y="0" width="100" height="20" uuid="00806def-880e-44b4-9fac-b2e1e9254742"/>
+				<reportElement x="200" y="0" width="100" height="130" uuid="00806def-880e-44b4-9fac-b2e1e9254742"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{nombreMedico}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="374" y="0" width="146" height="130" uuid="47e764af-ce93-4af7-bb28-0ebd5a6e12e8"/>
+				<reportElement x="300" y="0" width="255" height="130" uuid="47e764af-ce93-4af7-bb28-0ebd5a6e12e8"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{descripcionReceta}]]></textFieldExpression>
 			</textField>
 			<line>
@@ -102,7 +158,15 @@ REPORTE DE RECETA]]></text>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="0" width="100" height="20" uuid="3dae2f38-c8fd-4299-a51a-7b488cfd897f"/>
+				<reportElement x="0" y="0" width="100" height="130" uuid="3dae2f38-c8fd-4299-a51a-7b488cfd897f"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{nombrePaciente}]]></textFieldExpression>
 			</textField>
 		</band>
