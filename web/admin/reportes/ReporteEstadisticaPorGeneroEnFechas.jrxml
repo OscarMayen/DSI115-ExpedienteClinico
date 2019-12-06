@@ -45,7 +45,7 @@ group by(genero);]]>
 	<title>
 		<band height="95" splitType="Stretch">
 			<staticText>
-				<reportElement x="30" y="22" width="485" height="68" uuid="4d084a46-8e66-42cd-bb03-9e5efd256530"/>
+				<reportElement uuid="4d084a46-8e66-42cd-bb03-9e5efd256530" x="30" y="22" width="485" height="68"/>
 				<textElement textAlignment="Center">
 					<font fontName="Arial" size="18" isBold="true"/>
 				</textElement>
@@ -59,20 +59,20 @@ group by(genero);]]>
 	<columnHeader>
 		<band height="33" splitType="Stretch">
 			<rectangle>
-				<reportElement x="154" y="13" width="119" height="20" uuid="6c0b3305-bb93-455b-9517-72ac29b0c3a3"/>
+				<reportElement uuid="6c0b3305-bb93-455b-9517-72ac29b0c3a3" x="154" y="13" width="119" height="20"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="272" y="13" width="119" height="20" uuid="376d79e5-979c-4b61-a1d2-bad4974c2824"/>
+				<reportElement uuid="376d79e5-979c-4b61-a1d2-bad4974c2824" x="272" y="13" width="119" height="20"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="189" y="18" width="50" height="15" uuid="27a71549-b450-4366-819f-603096f49fab"/>
+				<reportElement uuid="27a71549-b450-4366-819f-603096f49fab" x="189" y="18" width="50" height="15"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[GENERO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="303" y="18" width="64" height="15" uuid="2f75c64b-179b-4174-aa95-5e65a7e56427"/>
+				<reportElement uuid="2f75c64b-179b-4174-aa95-5e65a7e56427" x="303" y="18" width="64" height="15"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
@@ -83,17 +83,19 @@ group by(genero);]]>
 	<detail>
 		<band height="23" splitType="Stretch">
 			<rectangle>
-				<reportElement x="154" y="0" width="119" height="23" uuid="31e23911-440b-465a-a35c-e9c9377263e8"/>
+				<reportElement uuid="31e23911-440b-465a-a35c-e9c9377263e8" x="154" y="0" width="119" height="23"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="272" y="0" width="119" height="23" uuid="31e23911-440b-465a-a35c-e9c9377263e8"/>
+				<reportElement uuid="31e23911-440b-465a-a35c-e9c9377263e8" x="272" y="0" width="119" height="23"/>
 			</rectangle>
 			<textField>
-				<reportElement x="189" y="3" width="56" height="20" uuid="4b0181ea-5ef9-46cc-a475-91dd895b99e0"/>
+				<reportElement uuid="4b0181ea-5ef9-46cc-a475-91dd895b99e0" x="189" y="3" width="56" height="20"/>
+				<textElement/>
 				<textFieldExpression><![CDATA[$F{genero}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="322" y="3" width="27" height="20" uuid="ecbb0e4e-9f0c-4307-8e64-326d0b341fac"/>
+				<reportElement uuid="ecbb0e4e-9f0c-4307-8e64-326d0b341fac" x="322" y="3" width="27" height="20"/>
+				<textElement/>
 				<textFieldExpression><![CDATA[$F{CANTIDAD}]]></textFieldExpression>
 			</textField>
 		</band>
@@ -104,29 +106,47 @@ group by(genero);]]>
 	<pageFooter>
 		<band height="40" splitType="Stretch">
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="17" y="20" width="100" height="20" uuid="18b1eebd-7a5b-4fbe-b7ca-52d88603f97b"/>
+				<reportElement uuid="18b1eebd-7a5b-4fbe-b7ca-52d88603f97b" x="17" y="20" width="100" height="20"/>
+				<textElement/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="390" y="20" width="80" height="20" uuid="1df04b3a-f8bd-4663-84a6-a8cdd0d7919c"/>
+				<reportElement uuid="1df04b3a-f8bd-4663-84a6-a8cdd0d7919c" x="390" y="20" width="80" height="20"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement x="470" y="20" width="62" height="20" uuid="0638864b-eb09-4e11-878c-136fd1d5c1f1"/>
+				<reportElement uuid="0638864b-eb09-4e11-878c-136fd1d5c1f1" x="470" y="20" width="62" height="20"/>
+				<textElement/>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="109" splitType="Stretch">
+		<band height="234" splitType="Stretch">
 			<staticText>
-				<reportElement x="47" y="19" width="485" height="68" uuid="c8744bc7-ad9a-4ecb-b4bb-45be7227a164"/>
+				<reportElement uuid="c8744bc7-ad9a-4ecb-b4bb-45be7227a164" x="47" y="19" width="485" height="41"/>
 				<textElement textAlignment="Center">
 					<font fontName="Arial" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[El reporte muestra la cantidad de personas que se han enfermado clasificado por sexo en base a las consultas realizadas]]></text>
 			</staticText>
+			<pie3DChart>
+				<chart>
+					<reportElement uuid="49ce5116-7b75-46e5-89e5-4e74a977fa43" x="84" y="70" width="371" height="146"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<keyExpression><![CDATA[$F{genero}]]></keyExpression>
+					<valueExpression><![CDATA[$F{CANTIDAD}]]></valueExpression>
+				</pieDataset>
+				<pie3DPlot>
+					<plot/>
+					<itemLabel/>
+				</pie3DPlot>
+			</pie3DChart>
 		</band>
 	</summary>
 </jasperReport>
